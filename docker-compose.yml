@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  erp_cash_db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=erp_cash
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - .:/app/backend
+    ports:
+      - 5432:5432
+
+  erp_cash:
+    image: narkmaster/erp-cash
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - erp_cash_db
+
+  frontend_vue:
+    image: julfikar4028/erp_cash_frontend
+    stdin_open: true
+    build: .
+    command: npm run serve
+    volumes:
+      - .:/app/frontend
+      - ./node_modules:/app/frontend/node_modules
+    ports:
+      - 5000:5000
+ 
