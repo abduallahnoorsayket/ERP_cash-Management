@@ -9,8 +9,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - .:/app/backend
+    expose: 
+      - 5433
     ports:
-      - 5432:5432
+      - 5433:5433
+    command: -p 5433
 
   erp_cash:
     image: narkmaster/erp-cash
@@ -28,6 +31,9 @@ services:
     volumes:
       - .:/app/frontend
       - ./node_modules:/app/frontend/node_modules
+    expose: 
+      - 8080
     ports:
-      - 5000:5000
+      - 8080:8080
+      
  

@@ -7,9 +7,20 @@ import Login from '../components/pages/Login'
 import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 // import ModuleLayout from '../components/layouts/ModuleLayout'
+const userData = JSON.parse(localStorage.getItem("userData"))
 
-
-
+// route guard
+function guardMyRoute(to, from, next) {
+    to.matched.some((record) => {
+      if (record.meta.authentication_required) {
+        if (permissions.superuser_status || record.meta.title === "common") {
+          next();
+        } else if (userData.id && permissions.hasPermission(record.meta.title)) {
+          next();
+        } else next("/");
+      } else next();
+    });
+  }
 
 
 
@@ -28,7 +39,9 @@ const routes = [
     {
         path: '/dashboard',
         component: Dashboard,
-        name: 'Dashboard'
+        name: 'Dashboard',
+        beforeEnter: guardMyRoute,
+        meta: { title: "common", authentication_required: true },
 
     },
     {
