@@ -114,7 +114,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
-           localStorage.setItem("userData", response.data);
+           localStorage.setItem("userData",  JSON.stringify(response.data));
           this.$router.push("/dashboard");
         })
         .catch((error) => {

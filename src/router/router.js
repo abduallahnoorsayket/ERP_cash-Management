@@ -1,13 +1,14 @@
-/*System Importing*/
-// import Vue from 'vue'
-// import VueRouter from 'vue-router'
+
 import { createWebHistory, createRouter } from 'vue-router';
 /*Custom Components Importing*/
 import Login from '../components/pages/Login'
 import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 // import ModuleLayout from '../components/layouts/ModuleLayout'
+import permissions from '../permisson'
+
 const userData = JSON.parse(localStorage.getItem("userData"))
+console.log('13',userData)
 
 // route guard
 function guardMyRoute(to, from, next) {

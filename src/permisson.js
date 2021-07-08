@@ -3,16 +3,16 @@ var model = []
 const app_label = []
 var all_permissions = []
 const userData = JSON.parse(localStorage.getItem("userData"))
-const superuser_status = userData.superuser_status
+var superuser_status = null
+if (userData) {
+    superuser_status = userData.superuser_status ? userData.superuser_status : false
 
-// // removeDuplicates()
-// removeDuplicates(data){
-//     return data.filter((value, index) => data.indexOf(value) === index)
-// }
+}
+
 
 // allPermissions()
 function allPermissions() {
-    console.log('====', localStorage.getItem("groups"))
+
     let groups_obj = userData.groups ? userData.groups : [];
     let user_permissions_obj = userData.user_permissions ? userData.user_permissions : [];
 
@@ -47,7 +47,9 @@ function allPermissions() {
 }
 
 // calling allPermissions()
-allPermissions()
+if (userData) {
+    allPermissions()
+}
 
 // hasPermission()
 function hasPermission(permission_name) {
