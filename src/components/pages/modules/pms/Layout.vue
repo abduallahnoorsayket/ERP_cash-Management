@@ -2,7 +2,13 @@
   <ModuleLayout>
     <template v-slot:module_header_menu>
       <Header></Header>
+      
     </template>
+
+    <template v-slot:module_content>
+      <slot name="module_content"></slot>
+    </template>
+
   </ModuleLayout>
 </template>
 

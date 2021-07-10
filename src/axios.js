@@ -27,8 +27,12 @@ const ax_ins_obj = {
   baseURL: 'http://127.0.0.1:8000/api/',
 }
 
-const token = localStorage.getItem("token");
-
+const userData = JSON.parse(localStorage.getItem("userData"));
+const token =  userData.token
+console.log('typeof',typeof (userData));
+console.log('33', userData);
+console.log('34', token);
+console.log('====================================');
 if (token) {
     ax_ins_obj.headers['Authorization'] = `token ${token}`;
 }

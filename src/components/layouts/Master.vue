@@ -8,7 +8,9 @@
     <div class="content-page">
       <div class="content">
         <div class="container-fluid">
+
           <slot name="content"></slot>
+
         </div>
       </div>
       <Footer />
@@ -32,6 +34,6 @@ export default {
 <style scoped>
 body[data-layout="horizontal"] .content-page {
   margin-left: 0 !important;
-  margin-top: 70px !important;
+  /* margin-top: 70px !important; */
 }
 </style>

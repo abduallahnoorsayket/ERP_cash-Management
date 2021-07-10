@@ -10,7 +10,7 @@
             </a>
           </li>
 
-          <li class="has-submenu">
+          <!-- <li class="has-submenu">
             <a href="#">
               <i class="mdi mdi-purse-outline"></i>User Interface
               <div class="arrow-down"></div>
@@ -34,38 +34,22 @@
                 </ul>
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <li class="has-submenu">
             <a href="#">
-              <i class="mdi mdi-package-variant-closed"></i>Admin UI
+              <i class="mdi mdi-package-variant-closed"></i>Project Management
               <div class="arrow-down"></div
             ></a>
             <ul class="submenu">
-              <li><a href="admin-masonry.html">Masonry</a></li>
-              <li><a href="admin-notification.html">Notification</a></li>
-              <li><a href="admin-range-slider.html">Range Slider</a></li>
-              <li><a href="admin-sweetalert.html">Sweet Alert</a></li>
-              <li class="has-submenu">
-                <a href="#"
-                  >Icons
-                  <div class="arrow-down"></div
-                ></a>
-                <ul class="submenu">
-                  <li>
-                    <a href="icons-materialdesign.html">Material Design</a>
-                  </li>
-                  <li>
-                    <a href="icons-fontawesome.html">Font awesome</a>
-                  </li>
-                  <li><a href="icons-themify.html">Themify Icons</a></li>
-                </ul>
-              </li>
-              <li><a href="widgets.html">Widgets</a></li>
+              <li><router-link to="/project-list">Project List - Basic</router-link></li>
+              <li><a href="admin-notification.html">Project List - Advance</a></li>
+              <li><a href="admin-range-slider.html">Project Create</a></li>
+              
             </ul>
           </li>
 
-          <li class="has-submenu">
+          <!-- <li class="has-submenu">
             <a href="#">
               <i class="mdi mdi-layers-outline"></i>Components
               <div class="arrow-down"></div
@@ -125,9 +109,9 @@
                 </ul>
               </li>
             </ul>
-          </li>
+          </li> -->
 
-          <li class="has-submenu last-elements">
+          <!-- <li class="has-submenu last-elements">
             <a href="#">
               <i class="mdi mdi-flip-horizontal"></i>Layouts
               <div class="arrow-down"></div
@@ -143,8 +127,8 @@
               </li>
               <li><a href="layouts-boxed.html">Boxed Layout</a></li>
             </ul>
-          </li>
-
+          </li> -->
+<!-- 
           <li class="has-submenu last-elements">
             <a href="#">
               <i class="mdi mdi-cards-outline"></i>Pages
@@ -160,7 +144,7 @@
               <li><a href="pages-confirm-mail.html">Confirm Mail</a></li>
               <li><a href="pages-404.html">Error 404</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
         <!-- End navigation menu -->
 

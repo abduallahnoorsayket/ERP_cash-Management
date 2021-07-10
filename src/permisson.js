@@ -3,6 +3,7 @@ var model = []
 const app_label = []
 var all_permissions = []
 const userData = JSON.parse(localStorage.getItem("userData"))
+console.log('6', userData)
 var superuser_status = null
 if (userData) {
     superuser_status = userData.superuser_status ? userData.superuser_status : false
@@ -11,15 +12,17 @@ if (userData) {
 
 
 // allPermissions()
-function allPermissions() {
+ function  allPermissions() {
 
     let groups_obj = userData.groups ? userData.groups : [];
     let user_permissions_obj = userData.user_permissions ? userData.user_permissions : [];
-
+console.log('====================================');
+console.log('19', groups_obj,user_permissions_obj);
+console.log('====================================');
 
     if (groups_obj) {
         groups_obj.map(item => {
-            item.permissions.map(inner_item => {
+          item.permissions.map(inner_item => {
                 all_permissions.push(inner_item.codename)
                 if (!app_label.includes(inner_item.content_type.app_label)) {
                     app_label.push(inner_item.content_type.app_label)
@@ -32,7 +35,7 @@ function allPermissions() {
         })
     }
     if (user_permissions_obj) {
-        user_permissions_obj.map(item => {
+         user_permissions_obj.map(item => {
             all_permissions.push(item.codename)
             if (!app_label.includes(item.content_type.app_label)) {
                 app_label.push(item.content_type.app_label)

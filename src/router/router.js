@@ -5,10 +5,11 @@ import Login from '../components/pages/Login'
 import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 // import ModuleLayout from '../components/layouts/ModuleLayout'
-import permissions from '../permisson'
+import ProjectList from '@/components/pages/modules/pms/project/ProjectList'
+import permissions from '@/permisson'
 
 const userData = JSON.parse(localStorage.getItem("userData"))
-console.log('13',userData)
+
 
 // route guard
 function guardMyRoute(to, from, next) {
@@ -49,6 +50,12 @@ const routes = [
         path: '/pms',
         component: Home,
         name: 'Home'
+
+    },
+    {
+        path: '/project-list',
+        component: ProjectList,
+        name: 'ProjectList'
 
     },
 

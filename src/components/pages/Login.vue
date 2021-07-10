@@ -108,14 +108,17 @@ export default {
     handleSubmit() {
     
       axios
-        .post("http://127.0.0.1:8000/api/login", {
+        .post("/login", {
           username: this.username,
           password: this.password,
         })
         .then((response) => {
           console.log(response);
            localStorage.setItem("userData",  JSON.stringify(response.data));
-          this.$router.push("/dashboard");
+
+          // this.$router.push("/dashboard");
+            console.log(120);
+          window.location.href = "/dashboard";
         })
         .catch((error) => {
           console.log(error);

@@ -9,7 +9,9 @@
           </div>
         </div>
       </div>
+      <!-- List component -->
       <ModuleList/>
+      
     </template>
   </Master>
 </template>
