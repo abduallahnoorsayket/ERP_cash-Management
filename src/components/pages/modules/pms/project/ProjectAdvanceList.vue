@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Project List" />
+      <PageTitle title="Project Advance List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -81,7 +81,7 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 export default {
-  name: "ProjectList",
+  name: "ProjectAdvanceList",
   components: {
     Layout,
     PageTitle,

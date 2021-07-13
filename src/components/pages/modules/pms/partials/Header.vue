@@ -42,10 +42,9 @@
               <div class="arrow-down"></div
             ></a>
             <ul class="submenu">
-              <li><router-link to="/project-list">Project List - Basic</router-link></li>
-              <li><a href="admin-notification.html">Project List - Advance</a></li>
-              <li><a href="admin-range-slider.html">Project Create</a></li>
-              
+              <li><router-link to="/project-basic-list">Project List - Basic</router-link></li>
+              <li><router-link to="/project-advance-list">Project List - Advance</router-link></li>
+              <li><router-link to="/project-create">Project Create</router-link></li>
             </ul>
           </li>
 

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div class="page-title-box">
-        <div class="page-title-btn btn-group float-right">
+        <!-- <div class="page-title-btn btn-group float-right">
           <button
             type="button"
             class="
@@ -23,7 +23,7 @@
             <li class="dropdown-divider"></li>
             <li><a href="#" class="dropdown-item">Separated link</a></li>
           </ul>
-        </div>
+        </div> -->
         <h4 class="page-title">{{title}}</h4>
       </div>
     </div>

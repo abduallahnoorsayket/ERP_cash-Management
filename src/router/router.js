@@ -4,9 +4,8 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Login from '../components/pages/Login'
 import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
-// import ModuleLayout from '../components/layouts/ModuleLayout'
-import ProjectList from '@/components/pages/modules/pms/project/ProjectList'
 import permissions from '@/permisson'
+import projectRoutes from '../components/pages/modules/pms/project/routes'
 
 const userData = JSON.parse(localStorage.getItem("userData"))
 
@@ -30,7 +29,7 @@ function guardMyRoute(to, from, next) {
 // Vue.use(VueRouter);
 
 
-const routes = [
+const baseRoutes = [
 
     {
         path: '/',
@@ -51,16 +50,14 @@ const routes = [
         component: Home,
         name: 'Home'
 
-    },
-    {
-        path: '/project-list',
-        component: ProjectList,
-        name: 'ProjectList'
-
-    },
-
+    },  
 
 ];
+
+const routes = [].concat(baseRoutes,projectRoutes)
+
+
+
 
 
 export const router = createRouter({
