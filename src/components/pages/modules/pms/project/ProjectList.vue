@@ -36,14 +36,14 @@
                       <td>{{ project.start_date }}</td>
                       <td>{{ project.expected_complete_date }}</td>
                       <td>{{ project.complete_date }}</td>
-                      <td>{{ project.status }}</td>
+                      <td>{{ project.status_list[project.status] }}</td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
                         
                           <button
                             type="button"
                             class="
-                              btn btn-primary
+                              btn btn-primary btn-sm
                               dropdown-toggle 
                               waves-effect waves-light
                             "
@@ -56,10 +56,10 @@
                           <ul class="dropdown-menu">
                            
                             <li>
-                              <a href="#" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </a>
+                              <router-link :to="{name: 'ProjectEdit', params: { id: project.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
                             <li>
-                              <a href="#" class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                              <a href="#" @click="deleteClient(project.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
                         </div>
@@ -80,6 +80,8 @@
 import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
+import Swal from "sweetalert2";
+
 export default {
   name: "ProjectList",
   components: {
@@ -98,6 +100,28 @@ export default {
         this.all_project_list = response.data.results;
       });
     },
+      deleteClient: function (id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          axios.delete("projects/" + id + "/").then((response) => {
+            if (response.status === 204) {
+              this.getProjectList();
+            }
+          });
+          Swal.fire("Deleted!", "Project has been deleted!!", "success");
+        } else {
+          Swal.fire("Cancelled", "Project has not been deleted !", "error");
+        }
+      });
+    }
   },
   created() {
     this.getProjectList();

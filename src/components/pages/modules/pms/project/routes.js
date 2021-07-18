@@ -1,6 +1,7 @@
 import ProjectList from './ProjectList'
 import ProjectAdvanceList from './ProjectAdvanceList'
 import ProjectCreate from './ProjectCreate'
+import ProjectEdit from './ProjectEdit'
 
 
 const projectRoutes = [
@@ -23,6 +24,13 @@ const projectRoutes = [
         name: 'ProjectAdvanceList'
 
     },
+    {
+        path: '/project-edit/:id',
+        component: ProjectEdit,
+        name: 'ProjectEdit'
+
+    },
+  
    
    
 

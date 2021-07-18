@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <!-- css  start -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css"  id="app-stylesheet" />
+    <link href="<%= BASE_URL %>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
+    <link href="<%= BASE_URL %>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%= BASE_URL %>assets/css/app.min.css" rel="stylesheet" type="text/css"  id="app-stylesheet" />
     <!-- css  end -->
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
@@ -20,16 +20,16 @@
     <!-- built files will be auto injected -->
     
      <!-- Vendor js -->
-     <script src="assets/js/vendor.min.js"></script>
+     <script src="<%= BASE_URL %>assets/js/vendor.min.js"></script>
 
      <!--Morris Chart-->
-     <script src="assets/libs/morris-js/morris.min.js"></script>
-     <script src="assets/libs/raphael/raphael.min.js"></script>
+     <script src="<%= BASE_URL %>assets/libs/morris-js/morris.min.js"></script>
+     <script src="<%= BASE_URL %>assets/libs/raphael/raphael.min.js"></script>
 
      <!-- Dashboard init js-->
-     <script src="assets/js/pages/dashboard.init.js"></script>
+     <script src="<%= BASE_URL %>assets/js/pages/dashboard.init.js"></script>
      
      <!-- App js -->
-     <script src="assets/js/app.min.js"></script>
+     <script src="<%= BASE_URL %>assets/js/app.min.js"></script>
   </body>
 </html>

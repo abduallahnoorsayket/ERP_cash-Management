@@ -4,8 +4,7 @@
       <PageTitle title="Project Create" />
       <div class="card">
         <div class="card-body">
-         
-          <SuccessMsg :msg="msg" v-if="msg"/>
+          <SuccessMsg :msg="msg" v-if="msg" />
           <div class="row">
             <div class="col-md-6">
               <form @submit.prevent="submitUserForm" autocomplete="off">
@@ -19,7 +18,11 @@
                     v-model="name"
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.name">
+                  <ul
+                    class="parsley-errors-list filled"
+                    id="parsley-id-5"
+                    v-if="errors && errors.name"
+                  >
                     <li class="parsley-required">{{ errors.name[0] }}.</li>
                   </ul>
                 </div>
@@ -60,10 +63,16 @@
                     data-toggle="input-mask"
                     data-mask-format="00/00/0000"
                     v-model="assign_date"
-                   :class="{ 'parsley-error': errors && errors.assign_date }"
+                    :class="{ 'parsley-error': errors && errors.assign_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.assign_date">
-                    <li class="parsley-required">{{ errors.assign_date[0] }}.</li>
+                  <ul
+                    class="parsley-errors-list filled"
+                    id="parsley-id-5"
+                    v-if="errors && errors.assign_date"
+                  >
+                    <li class="parsley-required">
+                      {{ errors.assign_date[0] }}.
+                    </li>
                   </ul>
                 </div>
 
@@ -78,21 +87,27 @@
                   />
                 </div>
 
-                <div class="form-group" >
-                  <div class="form-group" >
+                <div class="form-group">
+                  <div class="form-group">
                     <label>Members</label>
-                    <div class=" checkbox-primary" v-for="m in members" :key="m.id">
+                    <div
+                      class="checkbox-primary"
+                      v-for="m in members"
+                      :key="m.id"
+                    >
                       <input
-                       :id="m.id"
+                        :id="m.id"
                         type="checkbox"
                         name="member[]"
                         unchecked=""
                         v-model="member"
-                       :value="m.id"
-                      
-                      
+                        :value="m.id"
                       />
-                      <label for="checkbox2"> {{ m.first_name }} {{m.last_name}} ({{m.username}})</label>
+                      <label for="checkbox2">
+                        {{ m.first_name }} {{ m.last_name }} ({{
+                          m.username
+                        }})</label
+                      >
                     </div>
                   </div>
                 </div>
@@ -114,9 +129,13 @@
                     data-toggle="input-mask"
                     data-mask-format="00:00:00"
                     v-model="projectId"
-                   :class="{ 'parsley-error': errors && errors.projectId }"
+                    :class="{ 'parsley-error': errors && errors.projectId }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.projectId">
+                  <ul
+                    class="parsley-errors-list filled"
+                    id="parsley-id-5"
+                    v-if="errors && errors.projectId"
+                  >
                     <li class="parsley-required">{{ errors.projectId[0] }}.</li>
                   </ul>
                 </div>
@@ -142,10 +161,18 @@
                     data-toggle="input-mask"
                     data-mask-format="0000-0000"
                     v-model="expected_start_date"
-                   :class="{ 'parsley-error': errors && errors.expected_start_date }"
+                    :class="{
+                      'parsley-error': errors && errors.expected_start_date,
+                    }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.expected_start_date">
-                    <li class="parsley-required">{{ errors.expected_start_date[0] }}.</li>
+                  <ul
+                    class="parsley-errors-list filled"
+                    id="parsley-id-5"
+                    v-if="errors && errors.expected_start_date"
+                  >
+                    <li class="parsley-required">
+                      {{ errors.expected_start_date[0] }}.
+                    </li>
                   </ul>
                 </div>
 
@@ -157,10 +184,18 @@
                     data-toggle="input-mask"
                     data-mask-format="(00) 00000-0000"
                     v-model="expected_complete_date"
-                   :class="{ 'parsley-error': errors && errors.expected_complete_date }"
+                    :class="{
+                      'parsley-error': errors && errors.expected_complete_date,
+                    }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.expected_complete_date">
-                    <li class="parsley-required">{{ errors.expected_complete_date[0] }}.</li>
+                  <ul
+                    class="parsley-errors-list filled"
+                    id="parsley-id-5"
+                    v-if="errors && errors.expected_complete_date"
+                  >
+                    <li class="parsley-required">
+                      {{ errors.expected_complete_date[0] }}.
+                    </li>
                   </ul>
                 </div>
                 <div class="form-group">
@@ -172,15 +207,21 @@
                     data-mask-format="000.000.000-00"
                     data-reverse="true"
                     v-model="complete_date"
-                   :class="{ 'parsley-error': errors && errors.complete_date }"
+                    :class="{ 'parsley-error': errors && errors.complete_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.complete_date">
-                    <li class="parsley-required">{{ errors.complete_date[0] }}.</li>
+                  <ul
+                    class="parsley-errors-list filled"
+                    id="parsley-id-5"
+                    v-if="errors && errors.complete_date"
+                  >
+                    <li class="parsley-required">
+                      {{ errors.complete_date[0] }}.
+                    </li>
                   </ul>
                 </div>
                 <div class="form-group">
                   <label>Status</label>
-                  <select
+                 <select
                     class="form-control"
                     data-toggle="select2"
                     v-model="status"
@@ -211,10 +252,16 @@
                     data-mask-format="000.000.000-00"
                     data-reverse="true"
                     v-model="description"
-                   :class="{ 'parsley-error': errors && errors.description }"
+                    :class="{ 'parsley-error': errors && errors.description }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.description">
-                    <li class="parsley-required">{{ errors.description[0] }}.</li>
+                  <ul
+                    class="parsley-errors-list filled"
+                    id="parsley-id-5"
+                    v-if="errors && errors.description"
+                  >
+                    <li class="parsley-required">
+                      {{ errors.description[0] }}.
+                    </li>
                   </ul>
                 </div>
 
@@ -242,14 +289,15 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import SuccessMsg from "@/components/layouts/partials/SuccessMsg";
+import longDateToStandard from "@/Helper";
 import Swal from "sweetalert2";
 
 export default {
-  name: "ProjectCreate",
+  name: "ProjectEdit",
   components: {
     Layout,
     PageTitle,
-    SuccessMsg
+    SuccessMsg,
   },
   data() {
     return {
@@ -270,15 +318,40 @@ export default {
       errors: null,
       members: null,
       msg: null,
-      statusData: null,
     };
   },
   methods: {
+    getProjectEditData: function () {
+      axios.get(`projects/${this.$route.params.id}/`).then(
+        (response) => {
+          console.log("277", response.data);
+          this.name = response.data.name;
+          this.projectId = response.data.projectId;
+          this.start_date = longDateToStandard(response.data.start_date);
+          this.expected_start_date = longDateToStandard(
+            response.data.expected_start_date
+          );
+          this.expected_complete_date = longDateToStandard(
+            response.data.expected_complete_date
+          );
+          this.complete_date = longDateToStandard(response.data.complete_date);
+          this.assign_date = longDateToStandard(response.data.assign_date);
+          this.start_date = longDateToStandard(response.data.start_date);
+          this.client = response.data.client.id;
+          this.department = response.data.department.id;
+          this.member = response.data.members.map((member) => member.id);
+          this.status = response.data.status;
+          this.description = response.data.description;
+        }
+      ).catch((err) => {
+        console.log("error", err)
+      })
+    },
     getDepartment: function () {
       axios
         .get("project_department")
         .then((response) => {
-          // console.log("203", response.data);
+          console.log("203", response.data);
           this.departments = response.data;
         })
         .catch(function (error) {
@@ -289,8 +362,51 @@ export default {
       axios
         .get("project_clients")
         .then((response) => {
-         
+          console.log("203", response.data);
           this.clients = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    submitUserForm: function () {
+      axios
+        .post("projects/", {
+          department: this.department,
+          client: this.client,
+          name: this.name,
+          projectId: this.projectId,
+          assign_date: this.assign_date,
+          start_date: this.start_date,
+          expected_start_date: this.expected_start_date,
+          expected_complete_date: this.expected_complete_date,
+          status: this.status,
+          complete_date: this.complete_date,
+          description: this.description,
+          members: this.member,
+        })
+        .then((response) => {
+          Swal.fire({
+            icon: "success",
+            text: "You have successfully Updated a project.",
+          }).then((result) => {
+            this.$router.push("/project-basic-list");
+            console.log(result);
+          });
+          
+        })
+
+        .catch((error) => {
+          console.log("239", error.response.data);
+          this.errors = error.response.data;
+        });
+    },
+    getMembers: function () {
+      axios
+        .get("project_member")
+        .then((response) => {
+          console.log("252", response.data);
+          this.members = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -307,56 +423,13 @@ export default {
           console.log(error);
         });
     },
-
-    submitUserForm: function () {
-      axios
-        .post("projects/", {
-          department: this.department,
-          client: this.client,
-          name: this.name,
-          projectId: this.projectId,
-          assign_date: this.assign_date,
-          expected_start_date: this.expected_start_date,
-          expected_complete_date: this.expected_complete_date,
-          start_date: this.start_date,
-          status: this.status,
-          complete_date: this.complete_date,
-          description: this.description,
-          members: this.member,
-        }).then((response) => {
-          Swal.fire({
-            icon: "success",
-            text: "You have successfully created a project.",
-          }).then((result) => {
-            this.$router.push("project-basic-list");
-            console.log(result);
-          });
-          
-        })
-
-        .catch((error) => {
-          // console.log("239", error.response.data);
-          this.errors = error.response.data;
-        });
-    },
-    getMembers: function () {
-      axios
-        .get("project_member")
-        .then((response) => {
-          // console.log("252", response.data);
-          this.members = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
   },
   created() {
     this.getDepartment();
     this.getClients();
     this.getMembers();
+    this.getProjectEditData();
     this.getStatus();
-    
   },
 };
 </script>
