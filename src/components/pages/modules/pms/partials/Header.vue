@@ -38,7 +38,7 @@
 
           <li class="has-submenu">
             <a href="#">
-              <i class="mdi mdi-package-variant-closed"></i>Project Management
+              <i class="mdi mdi-package-variant-closed"></i>Project
               <div class="arrow-down"></div
             ></a>
             <ul class="submenu">
@@ -48,103 +48,26 @@
             </ul>
           </li>
 
-          <!-- <li class="has-submenu">
-            <a href="#">
-              <i class="mdi mdi-layers-outline"></i>Components
-              <div class="arrow-down"></div
-            ></a>
-            <ul class="submenu">
-              <li class="has-submenu">
-                <a href="#"
-                  >Forms
-                  <div class="arrow-down"></div
-                ></a>
-                <ul class="submenu">
-                  <li><a href="form-elements.html">Form Elements</a></li>
-                  <li><a href="form-advanced.html">Advanced Form</a></li>
-                  <li>
-                    <a href="form-validation.html">Form Validation</a>
-                  </li>
-                  <li><a href="form-wizard.html">Form Wizard</a></li>
-                  <li><a href="form-summernote.html">Summernote</a></li>
-                  <li><a href="form-uploads.html">Form Uploads</a></li>
-                </ul>
-              </li>
-              <li class="has-submenu">
-                <a href="#"
-                  >Tables
-                  <div class="arrow-down"></div
-                ></a>
-                <ul class="submenu">
-                  <li><a href="tables-basic.html">Basic Tables</a></li>
-                  <li><a href="tables-datatable.html">Data Tables</a></li>
-                  <li>
-                    <a href="tables-editable.html">Editable Tables</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="has-submenu">
-                <a href="#"
-                  >Charts
-                  <div class="arrow-down"></div
-                ></a>
-                <ul class="submenu">
-                  <li><a href="charts-flot.html">Flot Charts</a></li>
-                  <li><a href="charts-morris.html">Morris Charts</a></li>
-                  <li>
-                    <a href="charts-chartist.html">Chartist Charts</a>
-                  </li>
-                  <li><a href="charts-other.html">Other Charts</a></li>
-                </ul>
-              </li>
-              <li class="has-submenu">
-                <a href="#"
-                  >Maps
-                  <div class="arrow-down"></div
-                ></a>
-                <ul class="submenu">
-                  <li><a href="maps-google.html">Google Maps</a></li>
-                  <li><a href="maps-vector.html">Vector Maps</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
 
-          <!-- <li class="has-submenu last-elements">
+            <li class="has-submenu">
             <a href="#">
-              <i class="mdi mdi-flip-horizontal"></i>Layouts
+              <i class="mdi mdi-package-variant-closed"></i>Version 
               <div class="arrow-down"></div
             ></a>
             <ul class="submenu">
-              <li><a href="layouts-vertical.html">Vertical Layout</a></li>
-              <li>
-                <a href="layouts-topbar-light.html">Topbar Light</a>
-              </li>
-              <li><a href="layouts-center-menu.html">Center Menu</a></li>
-              <li>
-                <a href="layouts-normal-header.html">Unsticky Header</a>
-              </li>
-              <li><a href="layouts-boxed.html">Boxed Layout</a></li>
+              <li><router-link to="/version-list">Version List</router-link></li>
+              <li><router-link to="/version-create">Version Create</router-link></li>
+              <li><router-link to="/sprint-list">Sprint List</router-link></li>
+              <li><router-link to="/sprint-create">Sprint Create</router-link></li>
             </ul>
-          </li> -->
-<!-- 
-          <li class="has-submenu last-elements">
-            <a href="#">
-              <i class="mdi mdi-cards-outline"></i>Pages
-              <div class="arrow-down"></div
-            ></a>
-            <ul class="submenu">
-              <li><a href="pages-starter.html">Starter Page</a></li>
-              <li><a href="pages-timeline.html">Timeline</a></li>
-              <li><a href="pages-login.html">Login</a></li>
-              <li><a href="pages-register.html">Register</a></li>
-              <li><a href="pages-recoverpw.html">Recover Password</a></li>
-              <li><a href="pages-lock-screen.html">Lock Screen</a></li>
-              <li><a href="pages-confirm-mail.html">Confirm Mail</a></li>
-              <li><a href="pages-404.html">Error 404</a></li>
-            </ul>
-          </li> -->
+          </li>
+
+          
+
+ 
         </ul>
+
+        
         <!-- End navigation menu -->
 
         <div class="clearfix"></div>

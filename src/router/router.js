@@ -6,6 +6,8 @@ import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 import permissions from '@/permisson'
 import projectRoutes from '../components/pages/modules/pms/project/routes'
+import versionRoutes from '../components/pages/modules/pms/version/routes'
+import sprintRoutes from '../components/pages/modules/pms/sprint/routes'
 
 const userData = JSON.parse(localStorage.getItem("userData"))
 
@@ -54,7 +56,7 @@ const baseRoutes = [
 
 ];
 
-const routes = [].concat(baseRoutes,projectRoutes)
+const routes = [].concat(baseRoutes,projectRoutes,versionRoutes,sprintRoutes);
 
 
 
