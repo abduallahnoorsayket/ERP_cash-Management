@@ -1,11 +1,11 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Version Create" />
+      <PageTitle title="Version Edit" />
       <div class="card">
         <div class="card-body">
          
-          <SuccessMsg :msg="msg" v-if="msg"/>
+  
           <div class="row">
             <div class="col-md-6">
               <form @submit.prevent="submitUserForm" autocomplete="off">
@@ -19,23 +19,9 @@
                     v-model="name"
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.name">
-                    <li class="parsley-required">{{ errors.name[0] }}.</li>
-                  </ul>
+                 <ValidationError :error="errors.name" v-if="errors" />
                 </div>
 
-              <div class="form-group">
-                  <div class="form-group">
-                    <label>Current</label>
-                    <div class="checkbox checkbox-primary">
-                      <input id="checkbox2" type="checkbox" unchecked="" v-model="current" value="true"/>
-                      <label for="checkbox2"> {{current}} </label>
-                    </div>
-                  
-                  </div>
-                </div>
-
-              
 
                 <div class="form-group">
                   <label> Start Date</label>
@@ -58,9 +44,18 @@
                     v-model="expected_start_date"
                     :class="{ 'parsley-error': errors && errors.expected_start_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.expected_start_date">
-                    <li class="parsley-required">{{ errors.expected_start_date[0] }}.</li>
-                  </ul>
+                  <ValidationError :error="errors.expected_start_date" v-if="errors" />
+                </div>
+
+                 <div class="form-group">
+                  <div class="form-group">
+                    <label>Current</label>
+                    <div class="checkbox checkbox-primary">
+                      <input id="checkbox2" type="checkbox" unchecked="" v-model="current" value="true"/>
+                      <label for="checkbox2">   {{ current == true ? "Yes" : "No" }}  </label>
+                    </div>
+                  
+                  </div>
                 </div>
 
               
@@ -80,7 +75,7 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="project"
-                    :class="{ 'parsley-error': errors && errors.status }"
+                    :class="{ 'parsley-error': errors && errors.project }"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -88,13 +83,7 @@
                       {{ s.name }}
                     </option>
                   </select>
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.project"
-                  >
-                    <li class="parsley-required">{{ errors.project[0] }}.</li>
-                  </ul>
+                 <ValidationError :error="errors.project" v-if="errors" />
                 </div>
               
           
@@ -109,9 +98,7 @@
                     v-model="expected_complete_date"
                    :class="{ 'parsley-error': errors && errors.expected_complete_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.expected_complete_date">
-                    <li class="parsley-required">{{ errors.expected_complete_date[0] }}.</li>
-                  </ul>
+                  <ValidationError :error="errors.expected_complete_date" v-if="errors" />
                 </div>
                 <div class="form-group">
                   <label>Complete Date</label>
@@ -124,9 +111,9 @@
                     v-model="complete_date"
                    :class="{ 'parsley-error': errors && errors.complete_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.complete_date">
-                    <li class="parsley-required">{{ errors.complete_date[0] }}.</li>
-                  </ul>
+
+                 <ValidationError :error="errors.complete_date" v-if="errors" />
+                 
                 </div>
                 <div class="form-group">
                   <label>Status</label>
@@ -142,9 +129,7 @@
                       {{ s.value }} 
                     </option>
                   </select>
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.status">
-                    <li class="parsley-required">{{ errors.status[0] }}.</li>
-                  </ul>
+                   <ValidationError :error="errors.status" v-if="errors" />
                 </div>
               </form>
             </div>
@@ -192,16 +177,16 @@
 import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
-import SuccessMsg from "@/components/layouts/partials/SuccessMsg";
 import longDateToStandard from "@/Helper";
 import Swal from "sweetalert2";
+import ValidationError from "@/components/layouts/partials/ValidationError.vue"
 
 export default {
   name: "VersionEdit",
   components: {
     Layout,
     PageTitle,
-    SuccessMsg,
+    ValidationError
   },
   data() {
     return {
@@ -215,7 +200,7 @@ export default {
       status: null,
       errors: null,
       msg: null,
-      current: null,
+      current: false,
       statusData: null,
       projectId: null,
     };
@@ -259,7 +244,7 @@ export default {
   
     submitUserForm: function () {
       axios
-        .post("versions/", {
+        .put("versions/" + this.$route.params.id + "/", {
           name: this.name,
           project: this.project,
           start_date: this.start_date,
@@ -270,7 +255,7 @@ export default {
           description: this.description,
           current: this.current,
         })
-        .then((response) => {
+        .then(() => {
           Swal.fire({
             icon: "success",
             text: "You have successfully Updated a version.",

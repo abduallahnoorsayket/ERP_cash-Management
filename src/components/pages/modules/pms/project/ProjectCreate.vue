@@ -4,8 +4,7 @@
       <PageTitle title="Project Create" />
       <div class="card">
         <div class="card-body">
-         
-          <SuccessMsg :msg="msg" v-if="msg"/>
+            
           <div class="row">
             <div class="col-md-6">
               <form @submit.prevent="submitUserForm" autocomplete="off">
@@ -19,9 +18,7 @@
                     v-model="name"
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.name">
-                    <li class="parsley-required">{{ errors.name[0] }}.</li>
-                  </ul>
+                <ValidationError :error="errors.name" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -39,19 +36,6 @@
                   </select>
                 </div>
 
-                <!-- <div class="form-group">
-                  <label>Status</label>
-                  <select
-                    class="form-control"
-                    data-toggle="select2"
-                    v-model="status"
-                  >
-                    <option value="false" disabled selected>Select</option>
-
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                  </select>
-                </div> -->
                 <div class="form-group">
                   <label>Assign Date</label>
                   <input
@@ -62,9 +46,7 @@
                     v-model="assign_date"
                    :class="{ 'parsley-error': errors && errors.assign_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.assign_date">
-                    <li class="parsley-required">{{ errors.assign_date[0] }}.</li>
-                  </ul>
+                  <ValidationError :error="errors.assign_date" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -116,9 +98,7 @@
                     v-model="projectId"
                    :class="{ 'parsley-error': errors && errors.projectId }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.projectId">
-                    <li class="parsley-required">{{ errors.projectId[0] }}.</li>
-                  </ul>
+                   <ValidationError :error="errors.projectId" v-if="errors" />
                 </div>
                 <div class="form-group">
                   <label>Client</label>
@@ -144,9 +124,7 @@
                     v-model="expected_start_date"
                    :class="{ 'parsley-error': errors && errors.expected_start_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.expected_start_date">
-                    <li class="parsley-required">{{ errors.expected_start_date[0] }}.</li>
-                  </ul>
+                 <ValidationError :error="errors.expected_start_date" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -159,9 +137,7 @@
                     v-model="expected_complete_date"
                    :class="{ 'parsley-error': errors && errors.expected_complete_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.expected_complete_date">
-                    <li class="parsley-required">{{ errors.expected_complete_date[0] }}.</li>
-                  </ul>
+                 <ValidationError :error="errors.expected_complete_date" v-if="errors" />
                 </div>
                 <div class="form-group">
                   <label>Complete Date</label>
@@ -174,9 +150,9 @@
                     v-model="complete_date"
                    :class="{ 'parsley-error': errors && errors.complete_date }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.complete_date">
-                    <li class="parsley-required">{{ errors.complete_date[0] }}.</li>
-                  </ul>
+
+                 <ValidationError :error="errors.complete_date" v-if="errors" />
+                 
                 </div>
                 <div class="form-group">
                   <label>Status</label>
@@ -213,9 +189,7 @@
                     v-model="description"
                    :class="{ 'parsley-error': errors && errors.description }"
                   />
-                  <ul class="parsley-errors-list filled" id="parsley-id-5" v-if="errors && errors.description">
-                    <li class="parsley-required">{{ errors.description[0] }}.</li>
-                  </ul>
+                 <ValidationError :error="errors.description" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -241,15 +215,15 @@
 import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
-import SuccessMsg from "@/components/layouts/partials/SuccessMsg";
 import Swal from "sweetalert2";
+import ValidationError from "@/components/layouts/partials/ValidationError.vue"
 
 export default {
   name: "ProjectCreate",
   components: {
     Layout,
     PageTitle,
-    SuccessMsg
+    ValidationError
   },
   data() {
     return {

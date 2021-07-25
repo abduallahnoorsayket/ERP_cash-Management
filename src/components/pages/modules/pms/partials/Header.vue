@@ -57,11 +57,21 @@
             <ul class="submenu">
               <li><router-link to="/version-list">Version List</router-link></li>
               <li><router-link to="/version-create">Version Create</router-link></li>
+  
+            </ul>
+          </li>
+
+
+        <li class="has-submenu">
+            <a href="#">
+              <i class="mdi mdi-package-variant-closed"></i>Sprint 
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
               <li><router-link to="/sprint-list">Sprint List</router-link></li>
               <li><router-link to="/sprint-create">Sprint Create</router-link></li>
             </ul>
           </li>
-
           
 
  

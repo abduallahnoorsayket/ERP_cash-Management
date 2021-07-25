@@ -18,7 +18,7 @@ const sprintRoutes = [
 
     },
      {
-        path: '/version-edit/:id',
+        path: '/sprint-edit/:id',
         component: SprintEdit,
         name: 'SprintEdit'
 

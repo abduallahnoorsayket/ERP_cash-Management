@@ -60,7 +60,7 @@
                               <router-link :to="{name: 'SprintEdit', params: { id: sprint.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
                             <li>
-                              <a href="#" @click="versionDelete(sprint.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                              <a href="#" @click="sprintDelete(sprint.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
                         </div>
@@ -96,15 +96,14 @@ export default {
   },
   methods: {
     getSprintList: function () {
-      // const token = "ef24d61024d188c96cbbf9d103f8ea70cbaa63ed"
       axios.get("sprints").then((response) => {
         this.all_sprint_list = response.data.results;
-        console.log('====================================');
-        console.log('101',response.data);
-        console.log('====================================');
-      });
+      })
+      .catch(function (error) {
+          console.log(error);
+        });
     },
-      versionDelete: function (id) {
+      sprintDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -115,9 +114,9 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
         if (response.isConfirmed) {
-          axios.delete("versions/" + id + "/").then((response) => {
+          axios.delete("sprints/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getVersionList();
+              this.getSprintList();
             }
           });
           Swal.fire("Deleted!", "Version has been deleted!!", "success");

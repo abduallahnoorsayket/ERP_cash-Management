@@ -18,13 +18,7 @@
                     v-model="name"
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.name"
-                  >
-                    <li class="parsley-required">{{ errors.name[0] }}.</li>
-                  </ul>
+                   <ValidationError :error="errors.name" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -50,15 +44,7 @@
                       'parsley-error': errors && errors.expected_start_date,
                     }"
                   />
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.expected_start_date"
-                  >
-                    <li class="parsley-required">
-                      {{ errors.expected_start_date[0] }}.
-                    </li>
-                  </ul>
+                   <ValidationError :error="errors.expected_start_date" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -73,15 +59,7 @@
                       'parsley-error': errors && errors.expected_complete_date,
                     }"
                   />
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.expected_complete_date"
-                  >
-                    <li class="parsley-required">
-                      {{ errors.expected_complete_date[0] }}.
-                    </li>
-                  </ul>
+                  <ValidationError :error="errors.expected_complete_date" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -120,13 +98,7 @@
                       {{ s.name }}
                     </option>
                   </select>
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.project"
-                  >
-                    <li class="parsley-required">{{ errors.project[0] }}.</li>
-                  </ul>
+                 <ValidationError :error="errors.status" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -143,13 +115,7 @@
                       {{ v.name }}
                     </option>
                   </select>
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.project"
-                  >
-                    <li class="parsley-required">{{ errors.project[0] }}.</li>
-                  </ul>
+                  <ValidationError :error="errors.status" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -163,15 +129,7 @@
                     v-model="complete_date"
                     :class="{ 'parsley-error': errors && errors.complete_date }"
                   />
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.complete_date"
-                  >
-                    <li class="parsley-required">
-                      {{ errors.complete_date[0] }}.
-                    </li>
-                  </ul>
+                   <ValidationError :error="errors.complete_date" v-if="errors" />
                 </div>
 
                
@@ -189,6 +147,7 @@
                       placeholder="days"
                       v-model="da"
                       @change="setDuration()"
+                       :class="{ 'parsley-error': errors && errors.estimated_duration }"
                     />
                   </div>
                   <div class="col-sm-3">
@@ -199,6 +158,7 @@
                       placeholder="hours"
                       v-model="hrs"
                       @change="setDuration()"
+                       :class="{ 'parsley-error': errors && errors.estimated_duration }"
                     />
                   </div>
                   <div class="col-sm-3">
@@ -209,18 +169,11 @@
                       placeholder="minutes"
                       v-model="mins"
                       @change="setDuration()"
+                       :class="{ 'parsley-error': errors && errors.estimated_duration }"
                     />
                   </div>
 
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.estimated_duration"
-                  >
-                    <li class="parsley-required">
-                      {{ errors.estimated_duration[0] }}.
-                    </li>
-                  </ul>
+                  <ValidationError :error="errors.estimated_duration" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -241,13 +194,7 @@
                       {{ s.value }}
                     </option>
                   </select>
-                  <ul
-                    class="parsley-errors-list filled"
-                    id="parsley-id-5"
-                    v-if="errors && errors.status"
-                  >
-                    <li class="parsley-required">{{ errors.status[0] }}.</li>
-                  </ul>
+                 <ValidationError :error="errors.status" v-if="errors" />
                 </div>
               </div>
               <!-- end col -->
@@ -288,15 +235,15 @@
 import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
-import SuccessMsg from "@/components/layouts/partials/SuccessMsg";
 import Swal from "sweetalert2";
+import ValidationError from "@/components/layouts/partials/ValidationError.vue"
 
 export default {
   name: "SprintCreate",
   components: {
     Layout,
     PageTitle,
-    SuccessMsg,
+    ValidationError,
   },
   data() {
     return {
@@ -311,7 +258,7 @@ export default {
       errors: null,
       msg: null,
       statusData: null,
-      current: null,
+      current: false,
       projectId: null,
       version: null,
       versions: null,
@@ -326,7 +273,6 @@ export default {
       axios
         .get("project_status")
         .then((response) => {
-          console.log("300", response.data);
           this.statusData = response.data.data;
         })
         .catch(function (error) {
@@ -380,12 +326,9 @@ export default {
             text: "You have successfully created a Sprint.",
           }).then((result) => {
             this.$router.push("sprint-list");
-            console.log(result);
           });
         })
-
         .catch((error) => {
-          // console.log("239", error.response.data);
           this.errors = error.response.data;
         });
     },
