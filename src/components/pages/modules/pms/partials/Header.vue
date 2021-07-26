@@ -74,6 +74,18 @@
           </li>
           
 
+
+        <li class="has-submenu">
+            <a href="#">
+              <i class="mdi mdi-package-variant-closed"></i>Task 
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li><router-link to="/task-list">Task List</router-link></li>
+              <li><router-link to="/task-create">Task Create</router-link></li>
+            </ul>
+          </li>
+
  
         </ul>
 

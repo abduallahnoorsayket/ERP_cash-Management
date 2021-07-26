@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Sprint List" />
+      <PageTitle title="Version List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -12,31 +12,31 @@
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
-                      <th scope="col">Sprint Id</th>
+                      <th scope="col">Task Id</th>
                       <th scope="col" title="Expected Start Date">ESD</th>
                       <th scope="col" title="Start Date">SD</th>
                       <th scope="col" title="Expected complete Date">ECD</th>
                       <th scope="col" title="complete_date">CD</th>
                       <th scope="col" title="estimated_duration">ED</th>
-                      <th scope="col" >Current</th>
+                      <th scope="col" >Progress</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="(sprint, index) in all_sprint_list"
+                      v-for="(task, index) in all_task_list"
                       :key="index"
                     >
-                      <th scope="row">{{ sprint.name }}</th>
-                      <td>{{ sprint.sprintId }}</td>
-                      <td>{{ sprint.expected_start_date }}</td>
-                      <td>{{ sprint.start_date }}</td>
-                      <td>{{ sprint.expected_complete_date }}</td>
-                      <td>{{ sprint.complete_date }}</td>
-                      <td>{{ sprint.estimated_duration }}</td>
-                      <td>{{ sprint.current }}</td>
-                      <td>{{ sprint.status }}</td>
+                      <th scope="row">{{ task.name }}</th>
+                      <td>{{ task.taskId }}</td>
+                      <td>{{ task.expected_start_date }}</td>
+                      <td>{{ task.start_date }}</td>
+                      <td>{{ task.expected_complete_date }}</td>
+                      <td>{{ task.complete_date }}</td>
+                      <td>{{ task.estimated_duration }}</td>
+                      <td>{{ task.progress }}</td>
+                      <td>{{ task.status }}</td>
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -57,10 +57,10 @@
                           <ul class="dropdown-menu">
                            
                             <li>
-                              <router-link :to="{name: 'SprintEdit', params: { id: sprint.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                              <router-link :to="{name: 'TaskEdit', params: { id: task.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
                             <li>
-                              <a href="#" @click="sprintDelete(sprint.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                              <a href="#" @click="taskDelete(task.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
                         </div>
@@ -84,26 +84,26 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 
 export default {
-  name: "SprintList",
+  name: "TaskList",
   components: {
     Layout,
     PageTitle,
   },
   data() {
     return {
-      all_sprint_list: null,
+      all_task_list: null,
     };
   },
   methods: {
-    getSprintList: function () {
-      axios.get("sprints").then((response) => {
-        this.all_sprint_list = response.data.results;
+    getTaskList: function () {
+      axios.get("tasks").then((response) => {
+        this.all_task_list = response.data.results;
       })
       .catch(function (error) {
           console.log(error);
         });
     },
-      sprintDelete: function (id) {
+      taskDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -116,18 +116,18 @@ export default {
         if (response.isConfirmed) {
           axios.delete("sprints/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getSprintList();
+              this.getTaskList();
             }
           });
-          Swal.fire("Deleted!", "Version has been deleted!!", "success");
+          Swal.fire("Deleted!", "Task has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Version has not been deleted !", "error");
+          Swal.fire("Cancelled", "Task has not been deleted !", "error");
         }
       });
     }
   },
   created() {
-    this.getSprintList();
+    this.getTaskList();
   },
 };
 </script>

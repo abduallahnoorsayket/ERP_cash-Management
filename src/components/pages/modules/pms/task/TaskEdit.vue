@@ -1,10 +1,10 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Sprint Create" />
+      <PageTitle title="Task Create" />
       <div class="card">
         <div class="card-body">
-
+    
           <form @submit.prevent="submitUserForm" autocomplete="off">
             <div class="row">
               <div class="col-md-6">
@@ -18,7 +18,7 @@
                     v-model="name"
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
-                  <ValidationError :error="errors.name" v-if="errors" />
+                   <ValidationError :error="errors.name" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -44,7 +44,7 @@
                       'parsley-error': errors && errors.expected_start_date,
                     }"
                   />
-                  <ValidationError :error="errors.expected_start_date" v-if="errors" />
+                   <ValidationError :error="errors.expected_start_date" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -62,23 +62,34 @@
                   <ValidationError :error="errors.expected_complete_date" v-if="errors" />
                 </div>
 
-                <div class="form-group">
-                  <div class="form-group">
-                    <label>Current</label>
-                    <div class="checkbox checkbox-primary">
+               
+                  <div class="form-group" >
+                    <label>Assignee</label>
+                    <div class=" checkbox-primary" v-for="m in assignees" :key="m.id">
                       <input
-                        id="checkbox2"
+                        :id="m.id"
                         type="checkbox"
+                        name="assignee[]"
                         unchecked=""
-                        v-model="current"
-                        value="true"
+                        v-model="assignee"
+                       :value="m.id"
+                       :class="{
+                      'parsley-error': errors && errors.assignee,
+                    }"
                       />
-                      <label for="checkbox2">
-                        {{ current == true ? "Yes" : "No" }}
-                      </label>
+                      <label for="checkbox2"> {{ m.first_name }} {{m.last_name}} ({{m.username}}) </label>
+                      
                     </div>
+                    <ValidationError :error="errors.assignee" v-if="errors" />
                   </div>
+
+                   <div class="form-group">
+                  <label>Progress {{progress}}</label>
+                  <input type="range" min="0" max="100" v-model="progress" />
+
                 </div>
+                
+
               </div>
               <!-- end col -->
 
@@ -89,8 +100,8 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="project"
-                    :class="{ 'parsley-error': errors && errors.status }"
-                    @change="getVersion()"
+                    :class="{ 'parsley-error': errors && errors.project }"
+                    @change="getAllData()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -107,7 +118,8 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="version"
-                    :class="{ 'parsley-error': errors && errors.version }"
+                    :class="{ 'parsley-error': errors && errors.status }"
+                    @change="getSprint()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -115,10 +127,26 @@
                       {{ v.name }}
                     </option>
                   </select>
-
-                 <ValidationError :error="errors.version" v-if="errors" />
-
+                  <ValidationError :error="errors.status" v-if="errors" />
                 </div>
+
+                 <div class="form-group">
+                  <label>Sprint</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="sprint"
+                    :class="{ 'parsley-error': errors && errors.sprint }"
+                  >
+                    <option value="false" disabled selected>Select</option>
+
+                    <option v-for="(v, i) in sprints" :key="i" :value="v.id">
+                      {{ v.name }}
+                    </option>
+                  </select>
+                  <ValidationError :error="errors.sprint" v-if="errors" />
+                </div>
+
 
                 <div class="form-group">
                   <label>Complete Date</label>
@@ -131,9 +159,7 @@
                     v-model="complete_date"
                     :class="{ 'parsley-error': errors && errors.complete_date }"
                   />
-
-                  <ValidationError :error="errors.complete_date" v-if="errors" />
-
+                   <ValidationError :error="errors.complete_date" v-if="errors" />
                 </div>
 
                
@@ -151,10 +177,8 @@
                       placeholder="days"
                       v-model="da"
                       @change="setDuration()"
-                     :class="{ 'parsley-error': errors && errors.estimated_duration }"
-                  />
-
-                  
+                       :class="{ 'parsley-error': errors && errors.estimated_duration }"
+                    />
                   </div>
                   <div class="col-sm-3">
                     <input
@@ -164,10 +188,8 @@
                       placeholder="hours"
                       v-model="hrs"
                       @change="setDuration()"
-                     :class="{ 'parsley-error': errors && errors.estimated_duration }"
-                  />
-
-                  
+                       :class="{ 'parsley-error': errors && errors.estimated_duration }"
+                    />
                   </div>
                   <div class="col-sm-3">
                     <input
@@ -177,14 +199,12 @@
                       placeholder="minutes"
                       v-model="mins"
                       @change="setDuration()"
-                     :class="{ 'parsley-error': errors && errors.estimated_duration }"
-                  />
-
-                  
+                       :class="{ 'parsley-error': errors && errors.estimated_duration }"
+                    />
                   </div>
 
-                <ValidationError :error="errors.estimated_duration" v-if="errors" />
                 </div>
+                <ValidationError :error="errors.estimated_duration" v-if="errors" />
 
                 <div class="form-group">
                   <label>Status</label>
@@ -204,7 +224,7 @@
                       {{ s.value }}
                     </option>
                   </select>
-                <ValidationError :error="errors.status" v-if="errors" />
+                 <ValidationError :error="errors.status" v-if="errors" />
                 </div>
               </div>
               <!-- end col -->
@@ -245,12 +265,12 @@
 import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
-import ValidationError from "@/components/layouts/partials/ValidationError.vue"
 import Swal from "sweetalert2";
+import ValidationError from "@/components/layouts/partials/ValidationError.vue"
 import longDateToStandard from "@/Helper";
 
 export default {
-  name: "SprintEdit",
+  name: "TaskEdit",
   components: {
     Layout,
     PageTitle,
@@ -267,9 +287,7 @@ export default {
       complete_date: null,
       status: null,
       errors: null,
-      msg: null,
       statusData: null,
-      current: false,
       projectId: null,
       version: null,
       versions: null,
@@ -277,12 +295,17 @@ export default {
       da: null,
       hrs: null,
       mins: null,
+      sprint: null,
+      sprints: null,
+      assignee: [],
+      assignees: null,
+      progress: 0,
     };
   },
   methods: {
 
-    getSprintEditData: function () {
-      axios.get(`sprints/${this.$route.params.id}/`).then(
+    getTaskeditData: function () {
+      axios.get(`tasks/${this.$route.params.id}/`).then(
         (response) => {
           console.log("329", response.data);
           this.name = response.data.name;
@@ -294,14 +317,21 @@ export default {
             response.data.expected_complete_date
           );
           this.complete_date = longDateToStandard(response.data.complete_date);
-          this.version = response.data.version;
-          this.current = response.data.current;
+          this.project = response.data.sprint.version.project.id;
+          this.version = response.data.sprint.version.id;
+          console.log('322',response.data.sprint.version.id);
+          this.sprint = response.data.sprint.id
           this.status = response.data.status;
           this.description = response.data.description;
+          this.progress = response.data.progress;
           this.estimated_duration = response.data.estimated_duration;
-          this.project = response.data.version.project.id;
-          this.getVersion()
+          // this.project = response.data.version.project.id;
+          this.assignee = response.data.assignee;
           this.estimate_duration_split()
+          this.getMember()
+          this.getVersion()
+          this.getSprint()
+         
         }
       ).catch((err) => {
         console.log("error", err)
@@ -312,9 +342,17 @@ export default {
       let duration = this.estimated_duration.split(' ')
       let hr = duration[1].split(':')
       this.da = duration[0]
-      this.hrs = hr[1]
-      this.mins = hr[2]
+      this.hrs = hr[0]
+      this.mins = hr[1]
+      console.log('342 pppppppppp');
     },
+
+    getAllData: function () {
+      this.getVersion()
+      this.getMember()
+      this.sprint = this.sprints = null;
+    },
+
 
     getStatus: function () {
       axios
@@ -341,12 +379,45 @@ export default {
         .get("version_short?project=" + this.project)
         .then((response) => {
           this.versions = response.data;
-          let currentVersion = this.versions.filter((version) => {
-            return version.current;
-          });
 
-          this.version =
-            currentVersion.length > 0 ? currentVersion[0].id : null;
+          //   let currentVersion = this.versions.filter((version) => {
+          //   return version.current;
+          // });
+
+          // this.version =
+          //   currentVersion.length > 0 ? currentVersion[0].id : this.version;
+          
+            
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+     getSprint: function () {
+      axios
+        .get("sprint_short?version=" + this.version)
+        .then((response) => {
+          this.sprints = response.data;
+          // let currentSprint = this.sprints.filter((sprint) => {
+          //   return sprint.current;
+          // });
+
+          // this.sprint =
+          //   currentSprint.length > 0 ? currentSprint[0].id : null;
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+      getMember: function () {
+      axios
+        .get("project_member?project=" + this.project)
+        .then((response) => {
+          this.assignees = response.data;
+          
         })
         .catch(function (error) {
           console.log(error);
@@ -355,7 +426,7 @@ export default {
 
     submitUserForm: function () {
       axios
-        .put("sprints/" + this.$route.params.id + "/", {
+        .put(`tasks/${this.$route.params.id}/`, {
           name: this.name,
           expected_start_date: this.expected_start_date,
           expected_complete_date: this.expected_complete_date,
@@ -363,16 +434,17 @@ export default {
           status: this.status,
           complete_date: this.complete_date,
           description: this.description,
-          current: this.current,
-          version: this.version,
           estimated_duration: this.estimated_duration,
+          assignee: this.assignee,
+          sprint: this.sprint,
+          progress: this.progress,
         })
         .then(() => {
           Swal.fire({
             icon: "success",
-            text: "You have successfully Update a Sprint.",
-          }).then((result) => {
-            this.$router.push({name:'SprintList'});
+            text: "You have successfully updated a task.",
+          }).then(() => {
+           this.$router.push({name:'TaskList'});
           });
         })
         .catch((error) => {
@@ -380,13 +452,13 @@ export default {
         });
     },
     setDuration : function () {
-      this.estimated_duration =  this.da +' '+ this.hrs +':'+ this.mins
+      this.estimated_duration =  this.da +' '+ this.hrs +':'+ this.mins + ':00'
     }
   },
   created() {
     this.getStatus();
-    this.getSprintEditData();
     this.getProjectList();
+    this.getTaskeditData();
   },
 };
 </script>
