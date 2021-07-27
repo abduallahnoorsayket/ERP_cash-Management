@@ -101,7 +101,7 @@
                     data-toggle="select2"
                     v-model="project"
                     :class="{ 'parsley-error': errors && errors.project }"
-                    @change="getAllData()"
+                    @change="getAllData($event)"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -119,7 +119,7 @@
                     data-toggle="select2"
                     v-model="version"
                     :class="{ 'parsley-error': errors && errors.status }"
-                    @change="getSprint()"
+                    @change="getSprint($event)"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -347,8 +347,8 @@ export default {
       console.log('342 pppppppppp');
     },
 
-    getAllData: function () {
-      this.getVersion()
+    getAllData: function (e) {
+      this.getVersion(e)
       this.getMember()
       this.sprint = this.sprints = null;
     },
@@ -374,19 +374,20 @@ export default {
           console.log(error);
         });
     },
-    getVersion: function () {
+    getVersion: function (e) {
       axios
         .get("version_short?project=" + this.project)
         .then((response) => {
           this.versions = response.data;
 
-          //   let currentVersion = this.versions.filter((version) => {
-          //   return version.current;
-          // });
-
-          // this.version =
-          //   currentVersion.length > 0 ? currentVersion[0].id : this.version;
-          
+          if(e.type === "change") {
+              let currentVersion = this.versions.filter((version) => {
+               return version.current;
+          });
+            this.version =  currentVersion.length > 0 ? currentVersion[0].id : null;
+            this.getSprint(e)
+           
+          }
             
           
         })
@@ -394,17 +395,23 @@ export default {
           console.log(error);
         });
     },
-     getSprint: function () {
+     getSprint: function (e) {
       axios
         .get("sprint_short?version=" + this.version)
         .then((response) => {
           this.sprints = response.data;
-          // let currentSprint = this.sprints.filter((sprint) => {
-          //   return sprint.current;
-          // });
+          
 
-          // this.sprint =
-          //   currentSprint.length > 0 ? currentSprint[0].id : null;
+          if(e.type === "change") {
+
+            let currentSprint = this.sprints.filter((sprint) => {
+            return sprint.current;
+          });
+
+          this.sprint =
+            currentSprint.length > 0 ? currentSprint[0].id : null;
+           
+          }
           
         })
         .catch(function (error) {
