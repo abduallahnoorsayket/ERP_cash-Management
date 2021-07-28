@@ -19,6 +19,7 @@
                       <th scope="col" title="complete_date">CD</th>
                       <th scope="col" title="estimated_duration">ED</th>
                       <th scope="col" >Current</th>
+                      <th scope="col" title="Number Of Quantity">QTY</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -36,6 +37,12 @@
                       <td>{{ sprint.complete_date }}</td>
                       <td>{{ sprint.estimated_duration }}</td>
                       <td>{{ sprint.current }}</td>
+                      <td>
+                         <router-link :to="{name: 'VersionList', query: {sprint:sprint.id} }">
+                          <span class="badge badge-pill badge-primary">{{sprint.version}}</span>
+                        </router-link>
+
+                      </td>
                       <td>{{ sprint.status }}</td>
 
                       <td>

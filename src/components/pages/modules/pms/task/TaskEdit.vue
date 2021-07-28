@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Task Create" />
+      <PageTitle title="Task Edit" />
       <div class="card">
         <div class="card-body">
     
@@ -137,6 +137,7 @@
                     data-toggle="select2"
                     v-model="sprint"
                     :class="{ 'parsley-error': errors && errors.sprint }"
+                     @change="getParents()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -145,6 +146,23 @@
                     </option>
                   </select>
                   <ValidationError :error="errors.sprint" v-if="errors" />
+                </div>
+
+                <div class="form-group">
+                  <label>Parent Task</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="parent"
+                    :class="{ 'parsley-error': errors && errors.sprint }"
+                  >
+                    <option value="false" disabled selected>No Parent</option>
+
+                    <option v-for="(p, i) in parents" :key="i" :value="p.id">
+                      {{ p.name }} - ({{ p.taskId}})
+                    </option>
+                  </select>
+                  <ValidationError :error="errors.parent" v-if="errors" />
                 </div>
 
 
@@ -300,6 +318,10 @@ export default {
       assignee: [],
       assignees: null,
       progress: 0,
+      parent: null,
+      parents: null,
+      id : null,
+
     };
   },
   methods: {
@@ -327,10 +349,12 @@ export default {
           this.estimated_duration = response.data.estimated_duration;
           // this.project = response.data.version.project.id;
           this.assignee = response.data.assignee;
+          this.parent = response.data.parent
           this.estimate_duration_split()
           this.getMember()
           this.getVersion()
           this.getSprint()
+          this.getParents()
          
         }
       ).catch((err) => {
@@ -412,6 +436,24 @@ export default {
             currentSprint.length > 0 ? currentSprint[0].id : null;
            
           }
+
+          this.getParents()
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    getParents: function () {
+      axios
+        .get("task_short?sprint=" + this.sprint)
+        .then((response) => {
+          this.parents = response.data.filter(p => {
+            
+           return   p.id !== parseInt(this.id);
+          });
+          
           
         })
         .catch(function (error) {
@@ -445,6 +487,7 @@ export default {
           assignee: this.assignee,
           sprint: this.sprint,
           progress: this.progress,
+          parent : this.parent
         })
         .then(() => {
           Swal.fire({
@@ -463,9 +506,11 @@ export default {
     }
   },
   created() {
+    this.id = this.$route.params.id
     this.getStatus();
     this.getProjectList();
     this.getTaskeditData();
+   
   },
 };
 </script>

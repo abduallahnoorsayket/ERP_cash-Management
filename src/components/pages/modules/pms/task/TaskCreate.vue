@@ -137,6 +137,7 @@
                     data-toggle="select2"
                     v-model="sprint"
                     :class="{ 'parsley-error': errors && errors.sprint }"
+                    @change="getParents()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -145,6 +146,23 @@
                     </option>
                   </select>
                   <ValidationError :error="errors.sprint" v-if="errors" />
+                </div>
+
+                <div class="form-group">
+                  <label>Parent Task</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="parent"
+                    :class="{ 'parsley-error': errors && errors.sprint }"
+                  >
+                    <option value="false" disabled selected>No Parent</option>
+
+                    <option v-for="(p, i) in parents" :key="i" :value="p.id">
+                      {{ p.name }} - ({{ p.taskId}})
+                    </option>
+                  </select>
+                  <ValidationError :error="errors.parent" v-if="errors" />
                 </div>
 
 
@@ -299,6 +317,9 @@ export default {
       assignee: [],
       assignees: null,
       progress: 0,
+      parent: null,
+      parents: null,
+      id:null
     };
   },
   methods: {
@@ -359,6 +380,23 @@ export default {
 
           this.sprint =
             currentSprint.length > 0 ? currentSprint[0].id : null;
+
+          this.getParents()
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+      getParents: function () {
+      axios
+        .get("task_short?sprint=" + this.sprint)
+        .then((response) => {
+          this.parents = response.data.filter(p => {
+            
+           return   p.id !== parseInt(this.id);
+          });
           
         })
         .catch(function (error) {
@@ -393,6 +431,7 @@ export default {
           assignee: this.assignee,
           sprint: this.sprint,
           progress: this.progress,
+          parent: this.parent,
         })
         .then(() => {
           Swal.fire({
@@ -411,6 +450,7 @@ export default {
     }
   },
   created() {
+    this.id = this.$route.params.id
     this.getStatus();
     this.getProjectList();
   },

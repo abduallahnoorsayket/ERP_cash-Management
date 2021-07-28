@@ -5,10 +5,36 @@
 
       <div class="row">
         <div class="col-lg-12">
+        
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="dropdown float-right">
+                                            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#" class="dropdown-item">Action</a></li>
+                                                <li><a href="#" class="dropdown-item">Another action</a></li>
+                                                <li><a href="#" class="dropdown-item">Something else here</a></li>
+                                                <li class="dropdown-divider"></li>
+                                                <li><a href="#" class="dropdown-item">Separated link</a></li>
+                                            </ul>
+                                        </div>
+            
+                                        <h4 class="header-title mb-4">Simple Card Title</h4>
+            
+                                        <p class=" mb-0">
+                                            If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages new common language will be more simple and regular
+                                        </p>
+                                    </div>
+                                </div>
+                           
+        </div>
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover mb-0 table-bordered">
+              <div class="table-responsive ">
+                <table class="table table-hover mb-0 table-bordered table-sm">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
@@ -19,6 +45,7 @@
                       <th scope="col" title="Start Date">SD</th>
                       <th scope="col" title="Expected complete Date">ECD</th>
                       <th scope="col" title="complete_date">CD</th>
+                      <th scope="col" title="Number Of Quantity">QTY</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -36,6 +63,21 @@
                       <td>{{ project.start_date }}</td>
                       <td>{{ project.expected_complete_date }}</td>
                       <td>{{ project.complete_date }}</td>
+                      <td>
+                        <router-link :to="{name: 'VersionList', query: {project_id:project.id} }">
+
+                          <span class="badge badge-pill badge-primary">
+                         
+                            {{project.no_of_version}}
+
+                            </span>
+
+                        </router-link>
+                        <router-link :to="{name: 'SprintList', query: {project_id:project.id} }">
+                          <span class="badge badge-pill badge-primary">{{project.no_of_sprint}}</span>
+                        </router-link>
+              
+                      </td>
                       <td>{{ project.status_list[project.status] }}</td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">

@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Version List" />
+      <PageTitle title="Task List" />
 
       <div class="row">
         <div class="col-lg-12">
