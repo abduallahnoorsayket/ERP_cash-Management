@@ -15,8 +15,6 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="project"
-                    :class="{ 'parsley-error': errors && errors.project }"
-                    @change="getAllData()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -24,7 +22,7 @@
                       {{ s.name }}
                     </option>
                   </select>
-                 <ValidationError :error="errors.status" v-if="errors" />
+                
                 </div>
                 </div>
                   <div class="col-lg-2">
@@ -34,7 +32,6 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="status"
-                    :class="{ 'parsley-error': errors && errors.status }"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -48,7 +45,7 @@
                   </select>
                 </div>
                 </div>
-                  <div class="col-lg-3">
+                  <div class="col-lg-2">
                     <div class="form-group">
                   <label>Name</label>
                   <input
@@ -56,11 +53,12 @@
                     class="form-control"
                     data-toggle="input-mask"
                     data-mask-format="00/00/0000"
+                    v-model="name"
                   />
               
                 </div>
                 </div>
-                  <div class="col-lg-3">
+                  <div class="col-lg-2">
                       <div class="form-group">
                   <label>Version Id</label>
                   <input
@@ -68,39 +66,52 @@
                     class="form-control"
                     data-toggle="input-mask"
                     data-mask-format="00/00/0000"
+                    v-model="version_id"
                   />
               
                 </div>
                 </div>
 
                   <div class="col-lg-2">
-                  <div class="form-group">
-                    <label>Current</label>
-                    <div class="checkbox checkbox-primary">
-                      <input id="checkbox2" type="checkbox" unchecked="" v-model="current" value="true"/>
-                      <label for="checkbox2">   {{ current == true ? "Yes" : "No" }} </label>
-                    </div>
-                  
-                  </div>
+                   <div class="form-group">
+                  <label>Current</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="current"
+                  >
+                   <option  selected>Select</option>
+
+                    <option
+                      value="true"
+                    >
+                     True
+                    </option>
+                    <option
+                      value="false"
+                    >
+                     False
+                    </option>
+                  </select>
+                </div>
 
                  
 
                 </div>
 
-                  <div class="col-lg-12">
+                  <div class="col-lg-1">
                   <div class="form-group ">
+                    <br>
                      <button
                             type="button"
                             class="
                               btn btn-primary btn-sm
-                              dropdown-toggle
+                              
                               waves-effect waves-light
                               pull-right
                             "
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            @click="getVersionList($event)"
+                    
+                            @click="searchVersion()"
                           >
                             Search
                           </button>
@@ -202,7 +213,17 @@
                     </tr>
                   </tbody>
                 </table>
+                
               </div>
+              <div class="row">
+            <div class="col-md-4">
+
+           <Pagination :pagination="pagination" />
+
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-2"></div>
+          </div>
             </div>
           </div>
         </div>
@@ -215,6 +236,7 @@
 import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
+import Pagination from "@/components/layouts/partials/Pagination";
 import Swal from "sweetalert2";
 
 export default {
@@ -222,20 +244,48 @@ export default {
   components: {
     Layout,
     PageTitle,
+    Pagination
   },
   data() {
     return {
       all_version_list: null,
       projectId: null,
       statusData: null,
+      version_id: null,
+      project: null,
+      current: null,
+      status: null,
+      name: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+  }
     };
   },
   methods: {
     getVersionList: function (e) {
       let endPoint = "versions"
+      var queryParam = {
+        name: this.$route.query.name,
+        current: this.$route.query.current,
+        project: this.$route.query.project,
+        version_id: this.$route.query.version_id,
+        status: this.$route.query.status,
+        page: this.$route.query.page,
+      }
       
-      axios.get(endPoint).then((response) => {
+      console.log('263', queryParam);
+      axios.get(endPoint,{
+        params: queryParam
+      }).then((response) => {
         this.all_version_list = response.data.results;
+        this.pagination.count = response.data.count;
+        this.pagination.next = response.data.next;
+        this.pagination.previous = response.data.previous;
+        this.pagination.showing = response.data.results.length;
       });
     },
     versionDelete: function (id) {
@@ -279,6 +329,20 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    searchVersion() {
+
+      this.$router.push({
+        path: "version-list",
+        query: {
+          name: this.name,
+          project: this.project,
+          current: this.current,
+          status: this.status,
+          version_id: this.version_id,
+        },
+      });
+
     }
   },
   created() {
@@ -286,6 +350,9 @@ export default {
     this.getProjectList();
     this.getStatus()
   },
+  updated() {
+    this.getVersionList()
+  }
 };
 </script>
 
