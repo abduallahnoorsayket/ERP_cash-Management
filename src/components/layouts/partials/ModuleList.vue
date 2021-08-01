@@ -78,23 +78,35 @@
 
    
 
-    <div class="col-xl-3 col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <div class="media">
-            <img
-              src="assets/images/users/avatar-2.jpg"
+    <div class="col-xl-3 col-md-6" v-if="hasModulePermission('project_management')">
+      <router-link to="/requisition">
+        <div class="card">
+          <div class="card-body">
+            <div class="media">
+              <!-- <img
+              src="assets/images/users/avatar-3.jpg"
               class="avatar-md rounded-circle mr-3 align-self-center"
               alt="user"
-            />
-            <div class="media-body overflow-hidden">
-              <h5 class="font-14 mt-0 mb-1">Finance</h5>
-              <p class="mb-1 font-13">Introduction about finance</p>
-              <!-- <small class="text-primary"><b>Admin</b></small> -->
+            /> -->
+
+              
+              <i class="fab fa-sith avatar-md rounded-circle
+                  align-self-center fa-2x"></i>
+
+              <div class="media-body overflow-hidden">
+                <h5 class="font-14 mt-0 mb-1">Reposition</h5>
+                <p
+                  class="mb-1 font-13 text-truncate"
+                  title="Reposition Management System"
+                >
+                  Reposition Management System
+                </p>
+                <!-- <small class="text-primary"><b>Admin</b></small> -->
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
 
     <div class="col-xl-3 col-md-6">

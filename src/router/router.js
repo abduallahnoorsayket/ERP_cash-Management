@@ -5,6 +5,7 @@ import Login from '../components/pages/Login'
 import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 import BaseHome from '../components/pages/modules/base/Home'
+import RequisitionHome from '../components/pages/modules/requisition/Home'
 import permissions from '@/permisson'
 import projectRoutes from '../components/pages/modules/pms/project/routes'
 import versionRoutes from '../components/pages/modules/pms/version/routes'
@@ -13,6 +14,7 @@ import taskRoutes from '../components/pages/modules/pms/task/routes'
 import departmentRoutes from '../components/pages/modules/base/department/routes'
 import clientsRoutes from '../components/pages/modules/base/clients/routes'
 import itemRoutes from '../components/pages/modules/base/items/routes'
+import project_requisitionRoutes from '../components/pages/modules/requisition/project_requisition/routes'
 
 const userData = JSON.parse(localStorage.getItem("userData"))
 
@@ -64,6 +66,12 @@ const baseRoutes = [
         name: 'BaseHome'
 
     },  
+    {
+      path: '/requisition',
+      component: RequisitionHome,
+      name: 'RequisitionHome'
+
+  }, 
 
 ];
 
@@ -75,7 +83,8 @@ const routes = [].concat(
   taskRoutes,
   departmentRoutes,
   clientsRoutes,
-  itemRoutes
+  itemRoutes,
+  project_requisitionRoutes
   );
 
 

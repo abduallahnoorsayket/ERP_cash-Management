@@ -5,7 +5,7 @@
         <!-- Navigation Menu-->
         <ul class="navigation-menu in">
           <li class="has-submenu active">
-            <a href="index.html" class="active">
+            <a href="#" class="active">
               <i class="mdi mdi-speedometer"></i>Dashboard
             </a>
           </li>
