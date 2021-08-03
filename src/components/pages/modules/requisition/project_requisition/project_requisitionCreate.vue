@@ -48,16 +48,16 @@
                   <select
                     class="form-control"
                     data-toggle="select2"
-                    v-model="assignee"
-                    :class="{ 'parsley-error': errors && errors.assignee }"
+                    v-model="submitted_for"
+                    :class="{ 'parsley-error': errors && errors.submitted_for }"
                   >
                     <option value="false" disabled selected>Select</option>
 
-                    <option v-for="(m, i) in assignees" :key="i" :value="m.key">
+                    <option v-for="(m, i) in assignees" :key="i" :value="m.id">
                       {{ m.first_name }} {{ m.last_name }} ({{ m.username }})
                     </option>
                   </select>
-                  <ValidationError :error="errors.assignee" v-if="errors" />
+                  <ValidationError :error="errors.submitted_for" v-if="errors" />
                 </div>
               </div>
               <!-- end col -->
@@ -110,7 +110,9 @@
                     data-mask-format="000.000.000-00"
                     data-reverse="true"
                     v-model="description"
+                    :class="{ 'parsley-error': errors && errors.description }"
                   />
+                  <ValidationError :error="errors.description" v-if="errors" />
                 </div>
 
                 <div class="col-md-12 mb-2">
@@ -149,8 +151,9 @@
                               class="form-control text-right"
                               v-model="dom_repeat.item"
                             >
-                              <option value="one">Select one one</option>
-                              <option value="two">Select two one</option>
+                              <option v-for="(it, i) in items" :key="i" :value="it.id">
+                      {{ it.name }}
+                    </option>
                             </select>
                           </td>
                           <td>
@@ -158,8 +161,9 @@
                               class="form-control text-right"
                               v-model="dom_repeat.unit"
                             >
-                              <option>Select one one</option>
-                              <option>Select two one</option>
+                               <option v-for="(u, i) in units" :key="i" :value="u.id">
+                      {{ u.name }}
+                    </option>
                             </select>
                           </td>
                           <td>
@@ -169,6 +173,7 @@
                               step=".01"
                               class="form-control text-right"
                               v-model="dom_repeat.quantity"
+                              @change="calculateTotal(dom_repeat)"
                             />
                           </td>
                           <td>
@@ -178,6 +183,7 @@
                               step=".01"
                               class="form-control text-right"
                               v-model="dom_repeat.amount"
+                              @change="calculateTotal(dom_repeat)"
                             />
                           </td>
                           <td>
@@ -204,8 +210,8 @@
                       </tbody>
                       <tfoot>
                         <tr>
-                          <td colspan="6" class="text-right">Total</td>
-                          <td class="text-right">105.00</td>
+                          <td colspan="5" class="text-right">Total</td>
+                          <td class="text-right">{{all_total}}</td>
                         </tr>
                       </tfoot>
                     </table>
@@ -250,19 +256,20 @@ export default {
       name: null,
       project: null,
       description: null,
-      status: null,
       errors: null,
-      statusData: null,
       projectId: null,
       version: null,
       versions: null,
       sprint: null,
       sprints: null,
-      assignee: [],
+      submitted_for: null,
       assignees: null,
       parent: null,
       parents: null,
       id: null,
+      items: null,
+      units: null,
+      all_total: 0.0,
       dom_repeats: [
         {
           item: "",
@@ -281,16 +288,16 @@ export default {
       this.getMember();
     },
 
-    getStatus: function () {
-      axios
-        .get("project_status")
-        .then((response) => {
-          this.statusData = response.data.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
+    // getStatus: function () {
+    //   axios
+    //     .get("project_status")
+    //     .then((response) => {
+    //       this.statusData = response.data.data;
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // },
     getProjectList: function () {
       axios
         .get("project_short/")
@@ -362,29 +369,68 @@ export default {
         });
     },
 
+    getItem: function () {
+      axios
+        .get("item_short_list")
+        .then((response) => {
+          this.items = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    getUnit: function () {
+      axios
+        .get("unit_short_list")
+        .then((response) => {
+          this.units = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+     calculateTotal: function (dom_repeat) {
+             var total = parseFloat(dom_repeat.quantity) * parseFloat(dom_repeat.amount);
+            if (!isNaN(total)) {
+                dom_repeat.total = total.toFixed(2);
+            }
+            this.getAllTotal();
+    },
+
+     getAllTotal: function () {
+            var subtotal, total;
+            subtotal = this.dom_repeats.reduce(function (sum, product) {
+                var lineTotal = parseFloat(product.total);
+                if (!isNaN(lineTotal)) {
+                    return sum + lineTotal;
+                }
+            }, 0);
+
+            total = parseFloat(subtotal);
+            if (!isNaN(total)) {
+                this.all_total = total.toFixed(2);
+            } else {
+                this.all_total = '0.00'
+            }
+        },
+
     submitUserForm: function () {
       axios
-        .post("tasks/", {
-          name: this.name,
-          expected_start_date: this.expected_start_date,
-          expected_complete_date: this.expected_complete_date,
-          start_date: this.start_date,
-          status: this.status,
-          complete_date: this.complete_date,
+        .post("project_requisition/", {
+  
           description: this.description,
-          version: this.version,
-          estimated_duration: this.estimated_duration,
-          assignee: this.assignee,
-          sprint: this.sprint,
-          progress: this.progress,
-          parent: this.parent,
+          submitted_for: this.submitted_for,
+          task: this.parent,
+          detail:this.dom_repeats,
         })
         .then(() => {
           Swal.fire({
             icon: "success",
-            text: "You have successfully created a task.",
+            text: "You have successfully created a Requisition.",
           }).then(() => {
-            this.$router.push("task-list");
+            this.$router.push("project_requisition-list");
           });
         })
         .catch((error) => {
@@ -409,13 +455,17 @@ export default {
             if (idx > 0) {
                this.dom_repeats.splice(idx, 1);
             }
+
+            this.getAllTotal();
             
         }
   },
   created() {
     this.id = this.$route.params.id;
-    this.getStatus();
+    // this.getStatus();
     this.getProjectList();
+    this.getItem();
+    this.getUnit();
   },
 };
 </script>
