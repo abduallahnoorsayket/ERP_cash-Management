@@ -20,7 +20,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="(req, index) in requisition_list" :key="index">
-                      <th scope="row">{{req.task}}</th>
+                      <th scope="row">{{req.task.name}}</th>
                       <td>
                         <div class="table-responsive">
                           <table class="table table-sm mb-0">
@@ -110,6 +110,8 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
+// import permissions from '../../../permisson'
+import permissions from '@/permisson'
 
 export default {
   name: "project_requisitionList",
@@ -120,6 +122,9 @@ export default {
   data() {
     return {
       requisition_list: null,
+      is_superuser: null,
+      can_verify_requisition: null,
+      can_approve_requisition: null,
     };
   },
   methods: {
@@ -133,6 +138,17 @@ export default {
           console.log(error);
         });
     },
+    getLocalStorageData: function () {
+      const userData = JSON.parse(localStorage.getItem("userData"))
+      this.is_superuser = userData.superuser_status
+
+    },
+    getPermissions: function () {
+    this.can_verify_requisition =  permissions.hasPermission('verify_project_requisition')
+    this.can_approve_requisition =  permissions.hasPermission('approve_project_requisition')
+    this.is_superuser =  permissions.is_superuser()
+    },
+    
     clientDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
@@ -158,6 +174,9 @@ export default {
   },
   created() {
     this.getRequisitionList();
+    // this.getLocalStorageData()
+    this.getPermissions()
+
   },
 };
 </script>

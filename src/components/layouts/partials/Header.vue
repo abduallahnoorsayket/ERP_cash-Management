@@ -444,7 +444,11 @@
               <div class="dropdown-divider"></div>
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item notify-item"
+                @click="logout"
+              >
                 <i class="mdi mdi-logout-variant"></i>
                 <span>Logout</span>
               </a>
@@ -463,7 +467,7 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-          <a href="index.html" class="logo text-center logo-light">
+          <a href="#" class="logo text-center logo-light">
             <span class="logo-lg">
               <img src="assets/images/logo-light.png" alt="" height="16" />
               <!-- <span class="logo-lg-text-light">Flacto</span> -->
@@ -474,7 +478,7 @@
             </span>
           </a>
 
-          <a href="index.html" class="logo text-center logo-dark">
+          <a href="#" class="logo text-center logo-dark">
             <span class="logo-lg">
               <img src="assets/images/logo.png" alt="" height="16" />
               <!-- <span class="logo-lg-text-dark">Flacto</span> -->
@@ -693,15 +697,37 @@
     </div>
     <!-- end Topbar -->
 
-   <slot name="menu_slot">
-     
-   </slot>
+    <slot name="menu_slot"> </slot>
     <!-- end navbar-custom -->
   </header>
 </template>
 
 <script>
-export default {};
+import axios from "@/axios";
+
+export default {
+  name: "Header",
+  components: {},
+
+  data() {
+    return {};
+  },
+  methods: {
+    logout: function () {
+      axios
+        .get("logout")
+        .then((res) => {
+          console.log(res.data);
+          localStorage.clear();
+
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
