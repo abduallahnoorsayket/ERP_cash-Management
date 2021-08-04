@@ -19,8 +19,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(client, index) in all_client_list" :key="index">
-                      <th scope="row">{{ client.name }}</th>
+                    <tr v-for="(req, index) in requisition_list" :key="index">
+                      <th scope="row">{{req.task}}</th>
                       <td>
                         <div class="table-responsive">
                           <table class="table table-sm mb-0">
@@ -34,12 +34,12 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
+                              <tr v-for="(r, index) in req.detail" :key="index">
+                                <td>{{r.item}}</td>
+                                <td>{{r.unit}}</td>
+                                <td>{{r.quantity}}</td>
+                                <td>{{r.amount}}</td>
+                                <td>{{r.total}}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -74,7 +74,7 @@
                               <router-link
                                 :to="{
                                   name: 'ClientEdit',
-                                  params: { id: client.id },
+                                  params: { id: req.id },
                                 }"
                                 class="dropdown-item"
                               >
@@ -84,7 +84,7 @@
                             <li>
                               <a
                                 href="#"
-                                @click="clientDelete(client.id)"
+                                @click="clientDelete(req.id)"
                                 class="dropdown-item"
                               >
                                 <i class="fas fa-trash"></i> Delete</a
@@ -119,15 +119,15 @@ export default {
   },
   data() {
     return {
-      all_client_list: null,
+      requisition_list: null,
     };
   },
   methods: {
-    getClientList: function () {
+    getRequisitionList: function () {
       axios
-        .get("clients/")
+        .get("project_requisition/")
         .then((response) => {
-          this.all_client_list = response.data;
+          this.requisition_list = response.data.results;
         })
         .catch(function (error) {
           console.log(error);
@@ -157,7 +157,7 @@ export default {
     },
   },
   created() {
-    this.getClientList();
+    this.getRequisitionList();
   },
 };
 </script>
