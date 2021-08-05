@@ -20,7 +20,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="(req, index) in requisition_list" :key="index">
-                      <th scope="row">{{req.task.name}}</th>
+                      <th scope="row">{{ req.task.name }}</th>
                       <td>
                         <div class="table-responsive">
                           <table class="table table-sm mb-0">
@@ -35,11 +35,11 @@
                             </thead>
                             <tbody>
                               <tr v-for="(r, index) in req.detail" :key="index">
-                                <td>{{r.item}}</td>
-                                <td>{{r.unit}}</td>
-                                <td>{{r.quantity}}</td>
-                                <td>{{r.amount}}</td>
-                                <td>{{r.total}}</td>
+                                <td>{{ r.item }}</td>
+                                <td>{{ r.unit }}</td>
+                                <td>{{ r.quantity }}</td>
+                                <td>{{ r.amount }}</td>
+                                <td>{{ r.total }}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -47,11 +47,35 @@
                       </td>
 
                       <td>
-                        <select class="form-control">
-                          <option>Approved</option>
-                          <option>Disapproved</option>
-                         
+                        <select
+                          class="form-control"
+                          v-model="status"
+                          v-if="is_superuser || can_approve_requisition"
+                          @change="updateStatus(req.id)"
+                        >
+                          <option
+                            v-for="(u, i) in requisition_status"
+                            :key="i"
+                            :value="u.key"
+                          >
+                            {{ u.value }}
+                          </option>
                         </select>
+
+                        <select
+                          class="form-control"
+                          v-model="status"
+                          v-else-if="
+                            can_verify_requisition && req.status === 'PN'
+                          "
+                        >
+                          <option value="RJ">Rejected</option>
+                          <option value="VE">Verified</option>
+                        </select>
+
+                        <span class="badge badge-info" v-else>{{
+                          requisition_obj[req.status]
+                        }}</span>
                       </td>
 
                       <td>
@@ -111,7 +135,7 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 // import permissions from '../../../permisson'
-import permissions from '@/permisson'
+import permissions from "@/permisson";
 
 export default {
   name: "project_requisitionList",
@@ -125,6 +149,9 @@ export default {
       is_superuser: null,
       can_verify_requisition: null,
       can_approve_requisition: null,
+      requisition_status: null,
+      requisition_obj: {},
+      status: null,
     };
   },
   methods: {
@@ -139,16 +166,53 @@ export default {
         });
     },
     getLocalStorageData: function () {
-      const userData = JSON.parse(localStorage.getItem("userData"))
-      this.is_superuser = userData.superuser_status
-
+      const userData = JSON.parse(localStorage.getItem("userData"));
+      this.is_superuser = userData.superuser_status;
     },
     getPermissions: function () {
-    this.can_verify_requisition =  permissions.hasPermission('verify_project_requisition')
-    this.can_approve_requisition =  permissions.hasPermission('approve_project_requisition')
-    this.is_superuser =  permissions.is_superuser()
+      this.can_verify_requisition = permissions.hasPermission(
+        "verify_project_requisition"
+      );
+      this.can_approve_requisition = permissions.hasPermission(
+        "approve_project_requisition"
+      );
+      this.is_superuser = permissions.is_superuser();
     },
-    
+
+    getRequisitionStatus: function () {
+      axios
+        .get("project_requisition_status")
+        .then((response) => {
+          this.requisition_status = response.data.data;
+          this.requisition_status.map((req) => {
+            console.log("140", req);
+            this.requisition_obj[req.key] = req.value;
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    updateStatus: function (id) {
+      console.log("186", id);
+      axios
+        .put("project_requisition_approval/" + id + "/", {
+          status: this.status,
+        })
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            text: "You have successfully Updated a Status.",
+          }).then(() => {
+            this.getRequisitionList();
+          });
+        })
+        .catch((error) => {
+          this.errors = error.response.data;
+        });
+    },
+
     clientDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
@@ -175,8 +239,8 @@ export default {
   created() {
     this.getRequisitionList();
     // this.getLocalStorageData()
-    this.getPermissions()
-
+    this.getPermissions();
+    this.getRequisitionStatus();
   },
 };
 </script>
