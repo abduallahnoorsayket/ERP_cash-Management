@@ -1,6 +1,6 @@
 import project_requisitionCreate from './project_requisitionCreate'
 import project_requisitionList from './project_requisitionList'
-// import project_requisitionEdit from './project_requisitionEdit'
+import Project_requisitionEdit from './Project_requisitionEdit'
 
 
 const project_requisitionRoutes = [
@@ -17,12 +17,12 @@ const project_requisitionRoutes = [
         name: 'project_requisitionCreate'
 
     },
-    //  {
-    //     path: '/project-requisition-edit/:id',
-    //     component: project_requisitionEdit,
-    //     name: 'project_requisitionEdit'
+     {
+        path: '/project-requisition-edit/:id',
+        component: Project_requisitionEdit,
+        name: 'Project_requisitionEdit'
 
-    // },
+    },
   
    
    

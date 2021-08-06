@@ -97,7 +97,7 @@
                             <li>
                               <router-link
                                 :to="{
-                                  name: 'ClientEdit',
+                                  name: 'Project_requisitionEdit',
                                   params: { id: req.id },
                                 }"
                                 class="dropdown-item"
