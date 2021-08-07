@@ -8,13 +8,13 @@
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-hover mb-0 table-bordered">
+                <table class="table table-sm mb-0 table-bordered">
                   <thead>
                     <tr>
                       <th scope="col">Task</th>
                       <th scope="col">Requisition Details</th>
                       <th scope="col">Status</th>
-
+                      <th scope="col">Information</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -35,8 +35,8 @@
                             </thead>
                             <tbody>
                               <tr v-for="(r, index) in req.detail" :key="index">
-                                <td>{{ r.item }}</td>
-                                <td>{{ r.unit }}</td>
+                                <td>{{ r.item.name }}</td>
+                                <td>{{ r.unit.name }}</td>
                                 <td>{{ r.quantity }}</td>
                                 <td>{{ r.amount }}</td>
                                 <td>{{ r.total }}</td>
@@ -48,7 +48,6 @@
 
                       <td>
                         <select
-                          class="form-control"
                           v-model="status"
                           v-if="is_superuser || can_approve_requisition"
                           @change="updateStatus(req.id)"
@@ -63,7 +62,6 @@
                         </select>
 
                         <select
-                          class="form-control"
                           v-model="status"
                           v-else-if="
                             can_verify_requisition && req.status === 'PN'
@@ -76,8 +74,21 @@
                         <span class="badge badge-info" v-else>{{
                           requisition_obj[req.status]
                         }}</span>
+                        <table class="table table-sm">
+                          <tr>
+                            <td>Submitted At</td><td>{{req.submitted_date}}</td>                            
+                          </tr>
+                          <tr>
+                            <td>Created At</td><td>{{req.created_at}}</td>
+                          </tr>
+                          <tr>
+                            <td>Updated At</td><td>{{req.updated_at}}</td>
+                          </tr>
+                        </table>
                       </td>
-
+                      <td>
+                        Info
+                      </td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
                           <button
