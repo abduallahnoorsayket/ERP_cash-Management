@@ -5,9 +5,9 @@
         <!-- Navigation Menu-->
         <ul class="navigation-menu in">
           <li class="has-submenu active">
-            <a href="#" class="active">
+            <router-link to="/requisition" href="#" class="active">
               <i class="mdi mdi-speedometer"></i>Dashboard
-            </a>
+            </router-link>
           </li>
 
           <li class="has-submenu">

@@ -21,7 +21,7 @@
                       v-for="(client, index) in all_client_list"
                       :key="index"
                     >
-                      <th scope="row">{{ client.name }}</th>
+                      <td scope="row">{{ client.name }}</td>
 
 
                       <td>

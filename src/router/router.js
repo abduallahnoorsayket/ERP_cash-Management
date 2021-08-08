@@ -14,6 +14,8 @@ import taskRoutes from '../components/pages/modules/pms/task/routes'
 import departmentRoutes from '../components/pages/modules/base/department/routes'
 import clientsRoutes from '../components/pages/modules/base/clients/routes'
 import itemRoutes from '../components/pages/modules/base/items/routes'
+import unitsRoutes from '../components/pages/modules/base/units/routes'
+import userRoutes from '../components/pages/modules/base/user/routes'
 import project_requisitionRoutes from '../components/pages/modules/requisition/project_requisition/routes'
 
 const userData = JSON.parse(localStorage.getItem("userData"))
@@ -84,6 +86,8 @@ const routes = [].concat(
   departmentRoutes,
   clientsRoutes,
   itemRoutes,
+  unitsRoutes,
+  userRoutes,
   project_requisitionRoutes
   );
 

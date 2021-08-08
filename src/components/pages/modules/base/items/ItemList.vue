@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="ClientList List" />
+      <PageTitle title="Item List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -22,8 +22,10 @@
                       v-for="(item, index) in item_list"
                       :key="index"
                     >
-                      <th scope="row">{{ item.name }}</th>
-                      <th scope="row">{{ item.status == true ? "Yes" : "No" }}</th>
+                      <td scope="row">{{ item.name }}</td>
+                      <td scope="row">
+                          <i :class="[item.status ? 'fas fa-check-circle  ' : 'fas fa-times-circle']"></i>
+                      </td>
 
 
                       <td>

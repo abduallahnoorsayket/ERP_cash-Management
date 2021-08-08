@@ -105,7 +105,7 @@
                             <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
-                            <li>
+                            <li v-if="can_edit_requisition">
                               <router-link
                                 :to="{
                                   name: 'Project_requisitionEdit',
@@ -116,10 +116,10 @@
                                 <i class="fas fa-edit"></i> Edit
                               </router-link>
                             </li>
-                            <li>
+                            <li v-if="can_delete_requisition">
                               <a
                                 href="#"
-                                @click="clientDelete(req.id)"
+                                @click="requisitionDelete(req.id)"
                                 class="dropdown-item"
                               >
                                 <i class="fas fa-trash"></i> Delete</a
@@ -163,6 +163,8 @@ export default {
       requisition_status: null,
       requisition_obj: {},
       status: null,
+      can_delete_requisition: null,
+      can_edit_requisition: null,
     };
   },
   methods: {
@@ -187,6 +189,13 @@ export default {
       this.can_approve_requisition = permissions.hasPermission(
         "approve_project_requisition"
       );
+      
+      this.can_delete_requisition = permissions.hasPermission(
+        "delete_projectrequisition"
+      );
+      this.can_edit_requisition = permissions.hasPermission(
+        "change_projectrequisition"
+      );
       this.is_superuser = permissions.is_superuser();
     },
 
@@ -196,7 +205,7 @@ export default {
         .then((response) => {
           this.requisition_status = response.data.data;
           this.requisition_status.map((req) => {
-            console.log("140", req);
+            // console.log("140", req);
             this.requisition_obj[req.key] = req.value;
           });
         })
@@ -206,7 +215,7 @@ export default {
     },
 
     updateStatus: function (id) {
-      console.log("186", id);
+      // console.log("186", id);
       axios
         .put("project_requisition_approval/" + id + "/", {
           status: this.status,
@@ -224,7 +233,7 @@ export default {
         });
     },
 
-    clientDelete: function (id) {
+    requisitionDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -234,16 +243,22 @@ export default {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
+         console.log('246')
         if (response.isConfirmed) {
-          axios.delete("clients/" + id + "/").then((response) => {
+          console.log('248')
+          axios.delete("project_requisition/" + id + "/").then((response) => {
+             console.log('248')
             if (response.status === 204) {
-              this.getClientList();
+              console.log('249')
+              this.getRequisitionList();
             }
           });
-          Swal.fire("Deleted!", "Client has been deleted!!", "success");
+          Swal.fire("Deleted!", "Requisition has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Client has not been deleted !", "error");
+          Swal.fire("Cancelled", "Requisition has not been deleted !", "error");
         }
+      }).catch((error) => {
+        console.log('257',error)
       });
     },
   },

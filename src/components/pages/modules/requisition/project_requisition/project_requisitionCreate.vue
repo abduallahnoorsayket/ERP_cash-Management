@@ -57,7 +57,10 @@
                       {{ m.first_name }} {{ m.last_name }} ({{ m.username }})
                     </option>
                   </select>
-                  <ValidationError :error="errors.submitted_for" v-if="errors" />
+                  <ValidationError
+                    :error="errors.submitted_for"
+                    v-if="errors"
+                  />
                 </div>
               </div>
               <!-- end col -->
@@ -87,7 +90,7 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="parent"
-                    :class="{ 'parsley-error': errors && errors.sprint }"
+                    :class="{ 'parsley-error': errors && errors.task }"
                   >
                     <option value="false" disabled selected>No Parent</option>
 
@@ -95,7 +98,7 @@
                       {{ p.name }} - ({{ p.taskId }})
                     </option>
                   </select>
-                  <ValidationError :error="errors.parent" v-if="errors" />
+                  <ValidationError :error="errors.task" v-if="errors" />
                 </div>
               </div>
               <!-- end col -->
@@ -116,9 +119,20 @@
                 </div>
 
                 <div class="col-md-12 mb-2">
-                  <button type="button" class="btn btn-info mr-3" @click="addNewRow">
+                  <button
+                    type="button"
+                    class="btn btn-info mr-3"
+                    @click="addNewRow"
+                  >
                     <i class="fas fa-plus-circle"></i>
                   </button>
+                </div>
+               
+                <div class="col-md-12 mb-3" v-if="errors && errors.detail">
+                  <div class="alert alert-warning">
+                    <strong>Warning!</strong> Better check yourself, Please
+                    insert all data.
+                  </div>
                 </div>
 
                 <div class="col-md-12">
@@ -141,19 +155,27 @@
                             <!-- <button type="button">
                         <i v-if="dom_repeats.length > 1" class="far fa-trash-alt" @click="deleteRow(k, dom_repeat)"></i>
                   </button> -->
-                  <button v-if="dom_repeats.length > 1" type="button" class="btn btn-sm btn-primary mr-3" @click="deleteRow(k, dom_repeat)">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                           
+                            <button
+                              v-if="dom_repeats.length > 1"
+                              type="button"
+                              class="btn btn-sm btn-primary mr-3"
+                              @click="deleteRow(k, dom_repeat)"
+                            >
+                              <i class="far fa-trash-alt"></i>
+                            </button>
                           </td>
                           <td>
                             <select
                               class="form-control text-right"
                               v-model="dom_repeat.item"
                             >
-                              <option v-for="(it, i) in items" :key="i" :value="it.id">
-                      {{ it.name }}
-                    </option>
+                              <option
+                                v-for="(it, i) in items"
+                                :key="i"
+                                :value="it.id"
+                              >
+                                {{ it.name }}
+                              </option>
                             </select>
                           </td>
                           <td>
@@ -161,9 +183,13 @@
                               class="form-control text-right"
                               v-model="dom_repeat.unit"
                             >
-                               <option v-for="(u, i) in units" :key="i" :value="u.id">
-                      {{ u.name }}
-                    </option>
+                              <option
+                                v-for="(u, i) in units"
+                                :key="i"
+                                :value="u.id"
+                              >
+                                {{ u.name }}
+                              </option>
                             </select>
                           </td>
                           <td>
@@ -206,12 +232,11 @@
                             />
                           </td>
                         </tr>
-
                       </tbody>
                       <tfoot>
                         <tr>
                           <td colspan="5" class="text-right">Total</td>
-                          <td class="text-right">{{all_total}}</td>
+                          <td class="text-right">{{ all_total }}</td>
                         </tr>
                       </tfoot>
                     </table>
@@ -391,39 +416,39 @@ export default {
         });
     },
 
-     calculateTotal: function (dom_repeat) {
-             var total = parseFloat(dom_repeat.quantity) * parseFloat(dom_repeat.amount);
-            if (!isNaN(total)) {
-                dom_repeat.total = total.toFixed(2);
-            }
-            this.getAllTotal();
+    calculateTotal: function (dom_repeat) {
+      var total =
+        parseFloat(dom_repeat.quantity) * parseFloat(dom_repeat.amount);
+      if (!isNaN(total)) {
+        dom_repeat.total = total.toFixed(2);
+      }
+      this.getAllTotal();
     },
 
-     getAllTotal: function () {
-            var subtotal, total;
-            subtotal = this.dom_repeats.reduce(function (sum, product) {
-                var lineTotal = parseFloat(product.total);
-                if (!isNaN(lineTotal)) {
-                    return sum + lineTotal;
-                }
-            }, 0);
+    getAllTotal: function () {
+      var subtotal, total;
+      subtotal = this.dom_repeats.reduce(function (sum, product) {
+        var lineTotal = parseFloat(product.total);
+        if (!isNaN(lineTotal)) {
+          return sum + lineTotal;
+        }
+      }, 0);
 
-            total = parseFloat(subtotal);
-            if (!isNaN(total)) {
-                this.all_total = total.toFixed(2);
-            } else {
-                this.all_total = '0.00'
-            }
-        },
+      total = parseFloat(subtotal);
+      if (!isNaN(total)) {
+        this.all_total = total.toFixed(2);
+      } else {
+        this.all_total = "0.00";
+      }
+    },
 
     submitUserForm: function () {
       axios
         .post("project_requisition/", {
-  
           description: this.description,
           submitted_for: this.submitted_for,
           task: this.parent,
-          detail:this.dom_repeats,
+          detail: this.dom_repeats,
         })
         .then(() => {
           Swal.fire({
@@ -438,7 +463,7 @@ export default {
         });
     },
 
-    addNewRow: function() {
+    addNewRow: function () {
       this.dom_repeats.push({
         item: "",
         amount: "",
@@ -449,16 +474,15 @@ export default {
       });
     },
 
-    deleteRow: function(index, dom_repeat) {
-            var idx = this.dom_repeats.indexOf(dom_repeat);
-            console.log(idx, index);
-            if (idx > 0) {
-               this.dom_repeats.splice(idx, 1);
-            }
+    deleteRow: function (index, dom_repeat) {
+      var idx = this.dom_repeats.indexOf(dom_repeat);
+      console.log(idx, index);
+      if (idx > 0) {
+        this.dom_repeats.splice(idx, 1);
+      }
 
-            this.getAllTotal();
-            
-        }
+      this.getAllTotal();
+    },
   },
   created() {
     this.id = this.$route.params.id;
@@ -474,6 +498,4 @@ export default {
 .cus_right {
   float: right;
 }
-
-
 </style>

@@ -93,7 +93,7 @@ import Swal from "sweetalert2";
 import ValidationError from "@/components/layouts/partials/ValidationError.vue"
 
 export default {
-  name: "ClientCreate",
+  name: "ItemCreate",
   components: {
     Layout,
     PageTitle,

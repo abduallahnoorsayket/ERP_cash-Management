@@ -21,7 +21,7 @@
                       v-for="(dept, index) in all_dep_list"
                       :key="index"
                     >
-                      <th scope="row">{{ dept.name }}</th>
+                      <td scope="row">{{ dept.name }}</td>
 
 
                       <td>

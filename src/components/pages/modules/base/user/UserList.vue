@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="ClientList List" />
+      <PageTitle title="Department List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -12,18 +12,16 @@
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
-                      <th scope="col">Status</th>
                
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="(item, index) in item_list"
+                      v-for="(dept, index) in all_dep_list"
                       :key="index"
                     >
-                      <th scope="row">{{ item.name }}</th>
-                      <th scope="row">{{ item.status == true ? "Yes" : "No" }}</th>
+                      <td scope="row">{{ dept.name }}</td>
 
 
                       <td>
@@ -45,10 +43,10 @@
                           <ul class="dropdown-menu">
                            
                             <li>
-                              <router-link :to="{name: 'ItemEdit', params: { id: item.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                              <router-link :to="{name: 'DepartmentEdit', params: { id: dept.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
                             <li>
-                              <a href="#" @click="itemDelete(item.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                              <a href="#" @click="deptDelete(dept.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
                         </div>
@@ -72,26 +70,26 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 
 export default {
-  name: "ItemList",
+  name: "DepartmentList",
   components: {
     Layout,
     PageTitle,
   },
   data() {
     return {
-      item_list: null,
+      all_dep_list: null,
     };
   },
   methods: {
-    getItemList: function () {
-      axios.get("items/").then((response) => {
-        this.item_list = response.data;
+    getDeptList: function () {
+      axios.get("departments/").then((response) => {
+        this.all_dep_list = response.data;
       })
       .catch(function (error) {
           console.log(error);
         });
     },
-      itemDelete: function (id) {
+      deptDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -102,20 +100,20 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
         if (response.isConfirmed) {
-          axios.delete("items/" + id + "/").then((response) => {
+          axios.delete("departments/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getItemList();
+              this.getDeptList();
             }
           });
-          Swal.fire("Deleted!", "Item has been deleted!!", "success");
+          Swal.fire("Deleted!", "Department has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Item has not been deleted !", "error");
+          Swal.fire("Cancelled", "Department has not been deleted !", "error");
         }
       });
     }
   },
   created() {
-    this.getItemList();
+    this.getDeptList();
   },
 };
 </script>

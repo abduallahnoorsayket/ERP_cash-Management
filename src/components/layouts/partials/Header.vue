@@ -466,10 +466,11 @@
         </ul>
 
         <!-- LOGO -->
+        <router-link to="/dashboard" >
         <div class="logo-box">
           <a href="#" class="logo text-center logo-light">
             <span class="logo-lg">
-              <img src="assets/images/logo-light.png" alt="" height="16" />
+              <img src="assets/images/logo1.png" alt="" height="16" />
               <!-- <span class="logo-lg-text-light">Flacto</span> -->
             </span>
             <span class="logo-sm">
@@ -489,6 +490,7 @@
             </span>
           </a>
         </div>
+        </router-link>
 
         <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
           <li class="d-none d-sm-block">

@@ -5,36 +5,12 @@
         <!-- Navigation Menu-->
         <ul class="navigation-menu in">
           <li class="has-submenu active">
-            <a href="#" class="active">
+            <router-link to="/pms" class="active">
               <i class="mdi mdi-speedometer"></i>Dashboard
-            </a>
+            </router-link>
           </li>
 
-          <!-- <li class="has-submenu">
-            <a href="#">
-              <i class="mdi mdi-purse-outline"></i>User Interface
-              <div class="arrow-down"></div>
-            </a>
-            <ul class="submenu megamenu">
-              <li>
-                <ul>
-                  <li><a href="ui-buttons.html">Buttons</a></li>
-                  <li><a href="ui-cards.html">Cards</a></li>
-                  <li><a href="ui-typography.html">Typography </a></li>
-                  <li>
-                    <a href="ui-checkbox-radio.html">Checkboxs-Radios</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <ul>
-                  <li><a href="ui-modals.html">Modals</a></li>
-                  <li><a href="ui-images.html">Images</a></li>
-                  <li><a href="ui-components.html">Components</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
+         
 
           <li class="has-submenu">
             <a href="#">

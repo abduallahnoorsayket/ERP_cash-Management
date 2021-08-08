@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Item Edit" />
+      <PageTitle title="Unit Create" />
       <div class="card">
         <div class="card-body">
       
@@ -93,7 +93,7 @@ import Swal from "sweetalert2";
 import ValidationError from "@/components/layouts/partials/ValidationError.vue"
 
 export default {
-  name: "ItemEdit",
+  name: "UnitsCreate",
   components: {
     Layout,
     PageTitle,
@@ -110,36 +110,21 @@ export default {
   },
   methods: {
   
-     getEditItem: function () {
-      axios.get(`items/${this.$route.params.id}/`).then(
-        (response) => {
-          // console.log("329", response.data);
-          this.name = response.data.name;
-          this.description = response.data.description;
-          this.status = response.data.status;
-         
-        }
-      ).catch((err) => {
-        console.log("error", err)
-      })
-    },
 
-   
-
-     submitUserForm: function () {
+    submitUserForm: function () {
       axios
-        .put("items/" + this.$route.params.id + "/", {
+        .post("units/", {
           name: this.name,
           description: this.description,
           status: this.status,
-      
+
         })
-        .then(() => {
+        .then((response) => {
           Swal.fire({
             icon: "success",
-            text: "You have successfully Update a Item.",
+            text: "You have successfully created a Units.",
           }).then((result) => {
-            this.$router.push({name:'ItemList'});
+            this.$router.push("unit-list");
           });
         })
         .catch((error) => {
@@ -149,7 +134,7 @@ export default {
    
   },
   created() {
-    this.getEditItem()
+
   },
 };
 </script>

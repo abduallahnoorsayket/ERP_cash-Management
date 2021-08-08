@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Department List" />
+      <PageTitle title="Unit List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -12,16 +12,21 @@
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
+                      <th scope="col">Status</th>
                
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="(dept, index) in all_dep_list"
+                      v-for="(unit, index) in unit_list"
                       :key="index"
                     >
-                      <th scope="row">{{ dept.name }}</th>
+                      <td scope="row">{{ unit.name }}</td>
+                      <td scope="row">
+                        <i :class="[unit.status ? 'fas fa-check-circle  ' : 'fas fa-times-circle']"></i>
+                      </td>
+               
 
 
                       <td>
@@ -43,10 +48,10 @@
                           <ul class="dropdown-menu">
                            
                             <li>
-                              <router-link :to="{name: 'DepartmentEdit', params: { id: dept.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                              <router-link :to="{name: 'UnitsEdit', params: { id: unit.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
                             <li>
-                              <a href="#" @click="deptDelete(dept.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                              <a href="#" @click="unitDelete(unit.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
                         </div>
@@ -70,26 +75,26 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 
 export default {
-  name: "DepartmentList",
+  name: "UnitList",
   components: {
     Layout,
     PageTitle,
   },
   data() {
     return {
-      all_dep_list: null,
+      unit_list: null,
     };
   },
   methods: {
-    getDeptList: function () {
-      axios.get("departments/").then((response) => {
-        this.all_dep_list = response.data;
+    getItemList: function () {
+      axios.get("units/").then((response) => {
+        this.unit_list = response.data;
       })
       .catch(function (error) {
           console.log(error);
         });
     },
-      deptDelete: function (id) {
+      unitDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -100,20 +105,20 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
         if (response.isConfirmed) {
-          axios.delete("departments/" + id + "/").then((response) => {
+          axios.delete("units/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getDeptList();
+              this.getItemList();
             }
           });
-          Swal.fire("Deleted!", "Department has been deleted!!", "success");
+          Swal.fire("Deleted!", "Unit has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Department has not been deleted !", "error");
+          Swal.fire("Cancelled", "Unit has not been deleted !", "error");
         }
       });
     }
   },
   created() {
-    this.getDeptList();
+    this.getItemList();
   },
 };
 </script>

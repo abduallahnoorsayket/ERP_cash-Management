@@ -6,21 +6,10 @@
         <div class="card">
           <div class="card-body">
             <div class="media">
-              <!-- <img
-              src="assets/images/users/avatar-3.jpg"
-              class="avatar-md rounded-circle mr-3 align-self-center"
-              alt="user"
-            /> -->
 
-              <i
-                class="
-                  fas
-                  fa-project-diagram fa-2x
-                  avatar-md
+              <i class="fab fa-accusoft fa-2x avatar-md
                   rounded-circle
-                  align-self-center
-                "
-              ></i>
+                  align-self-center"></i>
 
               <div class="media-body overflow-hidden">
                 <h5 class="font-14 mt-0 mb-1">Base</h5>
@@ -94,12 +83,12 @@
                   align-self-center fa-2x"></i>
 
               <div class="media-body overflow-hidden">
-                <h5 class="font-14 mt-0 mb-1">Reposition</h5>
+                <h5 class="font-14 mt-0 mb-1">Requisition</h5>
                 <p
                   class="mb-1 font-13 text-truncate"
-                  title="Reposition Management System"
+                  title="Requisition Management System"
                 >
-                  Reposition Management System
+                  Requisition Management System
                 </p>
                 <!-- <small class="text-primary"><b>Admin</b></small> -->
               </div>
@@ -109,43 +98,7 @@
       </router-link>
     </div>
 
-    <div class="col-xl-3 col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <div class="media">
-            <img
-              src="assets/images/users/avatar-1.jpg"
-              class="avatar-md rounded-circle mr-3 align-self-center"
-              alt="user"
-            />
-            <div class="media-body overflow-hidden">
-              <h5 class="font-14 mt-0 mb-1">POS</h5>
-              <p class="mb-1 font-13">Point of sale</p>
-              <!-- <small class="text-primary"><b>Admin</b></small> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <div class="media">
-            <img
-              src="assets/images/users/avatar-10.jpg"
-              class="avatar-md rounded-circle mr-3 align-self-center"
-              alt="user"
-            />
-            <div class="media-body overflow-hidden">
-              <h5 class="font-14 mt-0 mb-1">Task Management</h5>
-              <p class="mb-1 font-13">Task Management up to date</p>
-              <!-- <small class="text-primary"><b>Admin</b></small> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   </div>
 </template>
 

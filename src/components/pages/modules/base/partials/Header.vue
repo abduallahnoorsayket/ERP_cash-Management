@@ -5,36 +5,12 @@
         <!-- Navigation Menu-->
         <ul class="navigation-menu in">
           <li class="has-submenu active">
-            <a href="index.html" class="active">
+            <router-link to="/base" class="active">
               <i class="mdi mdi-speedometer"></i>Dashboard
-            </a>
+            </router-link>
           </li>
 
-          <!-- <li class="has-submenu">
-            <a href="#">
-              <i class="mdi mdi-purse-outline"></i>User Interface
-              <div class="arrow-down"></div>
-            </a>
-            <ul class="submenu megamenu">
-              <li>
-                <ul>
-                  <li><a href="ui-buttons.html">Buttons</a></li>
-                  <li><a href="ui-cards.html">Cards</a></li>
-                  <li><a href="ui-typography.html">Typography </a></li>
-                  <li>
-                    <a href="ui-checkbox-radio.html">Checkboxs-Radios</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <ul>
-                  <li><a href="ui-modals.html">Modals</a></li>
-                  <li><a href="ui-images.html">Images</a></li>
-                  <li><a href="ui-components.html">Components</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
+         
 
           <li class="has-submenu">
             <a href="#">
@@ -66,6 +42,29 @@
             <ul class="submenu">
               <li><router-link to="/item-list">Item List</router-link></li>
               <li><router-link to="/item-create">Item Create</router-link></li>
+            </ul>
+          </li>
+
+
+          <li class="has-submenu">
+            <a href="#">
+              <i class="mdi mdi-package-variant-closed"></i>Units
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li><router-link to="/unit-list">Unit List</router-link></li>
+              <li><router-link to="/unit-create">Unit Create</router-link></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#">
+              <i class="mdi mdi-package-variant-closed"></i>User
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li><router-link to="/user-list">User List</router-link></li>
+              <li><router-link to="/user-create">User Create</router-link></li>
             </ul>
           </li>
 
