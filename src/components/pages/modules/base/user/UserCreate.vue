@@ -17,10 +17,10 @@
                     class="form-control"
                     data-toggle="input-mask"
                     data-mask-format="00/00/0000"
-                    v-model="name"
-                    :class="{ 'parsley-error': errors && errors.name }"
+                    v-model="form_data.first_name"
+                    :class="{ 'parsley-error': errors && errors.first_name }"
                   />
-                   <ValidationError :error="errors.name" v-if="errors" />
+                   <ValidationError :error="errors.first_name" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -28,10 +28,10 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="name"
-                    :class="{ 'parsley-error': errors && errors.name }"
+                    v-model="form_data.username"
+                    :class="{ 'parsley-error': errors && errors.username }"
                   />
-                   <ValidationError :error="errors.name" v-if="errors" />
+                   <ValidationError :error="errors.username" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -39,43 +39,46 @@
                   <input
                     type="password"
                     class="form-control"
-                    v-model="name"
-                    :class="{ 'parsley-error': errors && errors.name }"
+                    v-model="form_data.password"
+                    :class="{ 'parsley-error': errors && errors.password }"
                   />
-                   <ValidationError :error="errors.name" v-if="errors" />
+                   <ValidationError :error="errors.password" v-if="errors" />
                 </div>
 
                 
                   <div class="form-group" >
                     <label>User Permissions</label>
-                    <div class="checkbox checkbox-primary">
+                    <input type="text" class="form-control search-input" autocomplete="off" placeholder="search...">
+                    <div class="scr_view">
+                    <div class=" cus_check_padding checkbox-primary"  v-for="p in user_permissions" :key="p.id">
                       <input
-                        id="checkbox"
+                        :id="p.id"
+                        type="checkbox"
+                        name="form_data.user_permissions[]"
+                        unchecked=""
+                        v-model="form_data.user_permissions"
+                       :value="p.id"
+                      />
+                      <label for="checkbox">  {{p.name}} </label>
+                    </div>
+                     <ValidationError :error="errors.user_permissions" v-if="errors" />
+                  </div>
+                  </div>
+
+
+                  <div class="form-group" >
+                    <label>Superuser </label>
+                    <div class="cus_check_padding checkbox-primary">
+                      <input
+                        id="checkbox1"
                         type="checkbox"
                         unchecked=""
-                        v-model="member"
+                        v-model="form_data.is_superuser"
                       />
-                      <label for="checkbox">Permission one </label>
+                      <label for="checkbox">{{ form_data.is_superuser == true ? "Yes" : "No" }} </label>
                     </div>
                   </div>
             
-
-               
-                  <div class="form-group">
-                    <label>Current</label>
-                    <div class="checkbox checkbox-primary">
-                      <input
-                        id="checkbox2"
-                        type="checkbox"
-                        unchecked=""
-                        v-model="current"
-                        value="true"
-                      />
-                      <label for="checkbox2">
-                        {{ current == true ? "Yes" : "No" }}
-                      </label>
-                    </div>
-                  </div>
                 
               </div>
               <!-- end col -->
@@ -90,10 +93,10 @@
                     class="form-control"
                     data-toggle="input-mask"
                     data-mask-format="00/00/0000"
-                    v-model="name"
-                    :class="{ 'parsley-error': errors && errors.name }"
+                    v-model="form_data.last_name"
+                    :class="{ 'parsley-error': errors && errors.last_name }"
                   />
-                   <ValidationError :error="errors.name" v-if="errors" />
+                   <ValidationError :error="errors.last_name" v-if="errors" />
                 </div>
 
                  <div class="form-group">
@@ -103,38 +106,47 @@
                     class="form-control"
                     data-toggle="input-mask"
                     data-mask-format="00/00/0000"
-                    v-model="name"
-                    :class="{ 'parsley-error': errors && errors.name }"
+                    v-model="form_data.email"
+                    :class="{ 'parsley-error': errors && errors.email }"
                   />
-                   <ValidationError :error="errors.name" v-if="errors" />
+                   <ValidationError :error="errors.email" v-if="errors" />
                 </div>
 
 
-                <div class="form-group" >
-                    <label>User Groups</label>
-                    <div class="checkbox checkbox-primary">
-                      <input
-                        id="checkbox"
-                        type="checkbox"
-                        unchecked=""
-                       
-                      />
-                      <label for="checkbox3">User Group </label>
-                    </div>
-                  </div>
 
               <div class="form-group" >
                     <label>Active </label>
-                    <div class="checkbox checkbox-primary">
+                    <div class="cus_check_padding checkbox-primary">
                       <input
                         id="checkbox1"
                         type="checkbox"
                         unchecked=""
-                       
+                        v-model="form_data.is_active"
                       />
-                      <label for="checkbox">{{ current == true ? "Yes" : "No" }} </label>
+                      <label for="checkbox">{{ form_data.is_active == true ? "Yes" : "No" }} </label>
                     </div>
                   </div>
+                  
+
+                <div class="form-group" >
+                    <label>User Groups</label>
+                    <input type="text" class="form-control search-input" autocomplete="off" placeholder="search...">
+                    <div class="scr_view">
+                    <div class=" cus_check_padding checkbox-primary"  v-for="g in groups" :key="g.id">
+                      <input
+                        :id="g.id"
+                        type="checkbox"
+                        name="form_data.groups[]"
+                        unchecked=""
+                        v-model="form_data.groups"
+                       :value="g.id"
+                      />
+                      <label for="checkbox">  {{g.name}} </label>
+                    </div>
+                    <ValidationError :error="errors.groups" v-if="errors" />
+                  </div>
+                  </div>
+
                 
               </div>
               <!-- end col -->
@@ -167,6 +179,7 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import ValidationError from "@/components/layouts/partials/ValidationError.vue"
+// import permissions from "@/permisson";
 
 export default {
   name: "UserCreate",
@@ -177,98 +190,85 @@ export default {
   },
   data() {
     return {
-      name: null,
-      project: null,
-      description: null,
-      expected_start_date: null,
-      start_date: null,
-      expected_complete_date: null,
-      complete_date: null,
-      status: null,
       errors: null,
-      msg: null,
-      statusData: null,
-      current: false,
-      projectId: null,
-      version: null,
-      versions: null,
-      estimated_duration: null,
-      da: null,
-      hrs: null,
-      mins: null,
+     
+      user_permissions: null,
+      groups: null,
+      form_data: {
+        is_active: false,
+        is_superuser: false,
+        first_name: null,
+        last_name: null,
+        password: null,
+        username: null,
+        email: null,
+        user_permissions: [],
+        groups: [],
+      }
+
     };
   },
   methods: {
-    getStatus: function () {
+   
+     getPermission: function () {
       axios
-        .get("project_status")
+        .get("permissions")
         .then((response) => {
-          this.statusData = response.data.data;
+          this.user_permissions = response.data;
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    getProjectList: function () {
-      axios
-        .get("project_short/")
-        .then((response) => {
-          this.projectId = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    getVersion: function () {
-      axios
-        .get("version_short?project=" + this.project)
-        .then((response) => {
-          this.versions = response.data;
-          let currentVersion = this.versions.filter((version) => {
-            return version.current;
-          });
 
-          this.version =
-            currentVersion.length > 0 ? currentVersion[0].id : null;
+ getGroups : function () {
+      axios
+        .get("group_short_list")
+        .then((response) => {
+          this.groups = response.data;
         })
         .catch(function (error) {
           console.log(error);
         });
     },
+   
+    // getPermissions: function () {
+    //   this.can_verify_requisition = permissions.hasPermission(
+    //     "verify_project_requisition"
+    //   );
+    //   this.can_approve_requisition = permissions.hasPermission(
+    //     "approve_project_requisition"
+    //   );
+      
+    //   this.can_delete_requisition = permissions.hasPermission(
+    //     "delete_projectrequisition"
+    //   );
+    //   this.can_edit_requisition = permissions.hasPermission(
+    //     "change_projectrequisition"
+    //   );
+    //   this.is_superuser = permissions.is_superuser();
+    // },
 
     submitUserForm: function () {
       axios
-        .post("sprints/", {
-          name: this.name,
-          expected_start_date: this.expected_start_date,
-          expected_complete_date: this.expected_complete_date,
-          start_date: this.start_date,
-          status: this.status,
-          complete_date: this.complete_date,
-          description: this.description,
-          current: this.current,
-          version: this.version,
-          estimated_duration: this.estimated_duration,
-        })
-        .then((response) => {
+        .post("users/",this.form_data)
+        .then(() => {
           Swal.fire({
             icon: "success",
-            text: "You have successfully created a Sprint.",
+            text: "You have successfully created a User.",
           }).then((result) => {
-            this.$router.push("sprint-list");
+            this.$router.push("user-list");
           });
         })
         .catch((error) => {
           this.errors = error.response.data;
         });
     },
-    setDuration : function () {
-      this.estimated_duration =  this.da +' '+ this.hrs +':'+ this.mins
-    }
+    
   },
   created() {
-    this.getStatus();
-    this.getProjectList();
+    this.getGroups();
+    this.getPermission();
   },
 };
 </script>
@@ -276,5 +276,12 @@ export default {
 <style scoped>
 .cus_right {
   float: right;
+}
+.scr_view {
+  overflow-y: scroll;
+  height: 150px;
+}
+.cus_check_padding label{
+  padding-left: 8px;
 }
 </style>

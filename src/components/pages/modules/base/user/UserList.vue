@@ -8,20 +8,44 @@
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-hover mb-0 table-bordered">
+                <table class="table table-sm mb-0 table-bordered">
                   <thead>
                     <tr>
-                      <th scope="col">Name</th>
+
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Groups</th>
+                      <th scope="col">Last Login</th>
+                      
+                      <th scope="col">Active</th>
                
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="(dept, index) in all_dep_list"
+                      v-for="(user, index) in user_list"
                       :key="index"
                     >
-                      <td scope="row">{{ dept.name }}</td>
+                      <td scope="row">{{ user.first_name }}</td>
+                      <td scope="row">{{ user.last_name }}</td>
+                      <td scope="row">{{ user.username }}</td>
+                      <td scope="row">{{ user.email }}</td>
+                      <td scope="row">
+                        <span class="badge badge-info" v-for="u in user.groups" :key="u.id">
+                             {{ u.name }}
+                        </span>
+                       
+                        </td>
+                        <td>
+                          {{user.last_login}}
+                        </td>
+                      <td scope="row">
+                        <i :class="[user.is_active ? 'fas fa-check-circle  ' : 'fas fa-times-circle']"></i>
+                      </td>
+                  
 
 
                       <td>
@@ -43,10 +67,10 @@
                           <ul class="dropdown-menu">
                            
                             <li>
-                              <router-link :to="{name: 'DepartmentEdit', params: { id: dept.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                              <router-link :to="{name: 'UserEdit', params: { id: user.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
                             <li>
-                              <a href="#" @click="deptDelete(dept.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                              <a href="#" @click="userDelete(user.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
                         </div>
@@ -77,19 +101,19 @@ export default {
   },
   data() {
     return {
-      all_dep_list: null,
+      user_list: null,
     };
   },
   methods: {
-    getDeptList: function () {
-      axios.get("departments/").then((response) => {
-        this.all_dep_list = response.data;
+    getUserList: function () {
+      axios.get("users/").then((response) => {
+        this.user_list = response.data.results;
       })
       .catch(function (error) {
           console.log(error);
         });
     },
-      deptDelete: function (id) {
+      userDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -100,20 +124,20 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
         if (response.isConfirmed) {
-          axios.delete("departments/" + id + "/").then((response) => {
+          axios.delete("users/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getDeptList();
+              this.getUserList();
             }
           });
-          Swal.fire("Deleted!", "Department has been deleted!!", "success");
+          Swal.fire("Deleted!", "User has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Department has not been deleted !", "error");
+          Swal.fire("Cancelled", "User has not been deleted !", "error");
         }
       });
     }
   },
   created() {
-    this.getDeptList();
+    this.getUserList();
   },
 };
 </script>
