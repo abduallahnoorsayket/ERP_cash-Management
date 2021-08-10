@@ -48,9 +48,9 @@
                 
                   <div class="form-group" >
                     <label>User Permissions</label>
-                    <input type="text" class="form-control search-input" autocomplete="off" placeholder="search...">
+                    <input type="text"  v-model="searchQuery" class="form-control search-input" autocomplete="off" placeholder="search...">
                     <div class="scr_view">
-                    <div class=" cus_check_padding checkbox-primary"  v-for="p in user_permissions" :key="p.id">
+                    <div class=" cus_check_padding checkbox-primary"  v-for="p in resultQuery" :key="p.id">
                       <input
                         :id="p.id"
                         type="checkbox"
@@ -130,9 +130,9 @@
 
                 <div class="form-group" >
                     <label>User Groups</label>
-                    <input type="text" class="form-control search-input" autocomplete="off" placeholder="search...">
+                    <input type="text" v-model="group_search" class="form-control search-input" autocomplete="off" placeholder="search...">
                     <div class="scr_view">
-                    <div class=" cus_check_padding checkbox-primary"  v-for="g in groups" :key="g.id">
+                    <div class=" cus_check_padding checkbox-primary"  v-for="g in filterGroups" :key="g.id">
                       <input
                         :id="g.id"
                         type="checkbox"
@@ -191,9 +191,10 @@ export default {
   data() {
     return {
       errors: null,
-     
+      group_search: null,
       user_permissions: null,
       groups: null,
+      searchQuery: null,
       form_data: {
         is_active: false,
         is_superuser: false,
@@ -276,6 +277,32 @@ export default {
     this.getGroups();
     this.getPermission();
     this.getUserEditData();
+  },
+   computed: {
+    resultQuery() {
+      if (this.searchQuery) {
+        return this.user_permissions.filter((item) => {
+          return this.searchQuery
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.name.toLowerCase().includes(v));
+        });
+      } else {
+        return this.user_permissions;
+      }
+    },
+
+    filterGroups() {
+      if (this.group_search) {
+        return this.groups.filter((item) => {
+          return this.group_search.toLowerCase()
+            .split(" ")
+            .every((v) => item.name.toLowerCase().includes(v));
+        });
+      } else {
+        return this.groups;
+      }
+    },
   },
 };
 </script>

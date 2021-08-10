@@ -69,6 +69,17 @@
           </li>
 
 
+         <li class="has-submenu">
+            <a href="#">
+              <i class="mdi mdi-package-variant-closed"></i>Group
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li><router-link to="/group-list">Group List</router-link></li>
+              <li><router-link to="/group-create">Group Create</router-link></li>
+            </ul>
+          </li>
+
           
 
 

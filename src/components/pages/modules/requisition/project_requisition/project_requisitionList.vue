@@ -47,7 +47,12 @@
                       </td>
 
                       <td>
-                        <select
+                        
+                        <table class="table table-sm">
+
+                          <tr>
+                            <td>
+                              <select
                           v-model="status"
                           v-if="is_superuser || can_approve_requisition"
                           @change="updateStatus(req.id)"
@@ -74,7 +79,21 @@
                         <span class="badge badge-info" v-else>{{
                           requisition_obj[req.status]
                         }}</span>
-                        <table class="table table-sm">
+
+                        
+                   
+                        <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-purple btn-xs edit_btn" @click="modal_requisition">
+                          <i class="far fa-edit"></i>
+                         </button>
+
+                        
+
+                              </td><td>
+                                {{req.status_update_by.first_name}}
+                                {{req.status_update_by.last_name}}
+                                ({{req.status_update_by.username}})
+                                </td>                            
+                          </tr>
                           <tr>
                             <td>Submitted At</td><td>{{req.submitted_date}}</td>                            
                           </tr>
@@ -136,6 +155,24 @@
           </div>
         </div>
       </div>
+
+
+      <!-- modal start --> 
+
+      <div class="modal fade bs-example-modal-lg show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; padding-right: 15px;" aria-modal="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="myLargeModalLabel">Large modal</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div>
+      <!-- modal end -->
     </template>
   </Layout>
 </template>
@@ -233,6 +270,10 @@ export default {
         });
     },
 
+    modal_requisition : function() {
+      alert('hi')
+    },
+
     requisitionDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
@@ -271,5 +312,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
+.edit_btn {
+  margin-left: 10px;
+  cursor:pointer;
+}
+
 </style>

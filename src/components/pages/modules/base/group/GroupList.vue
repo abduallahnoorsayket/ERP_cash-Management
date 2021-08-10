@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="User List" />
+      <PageTitle title="Department List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -13,39 +13,19 @@
                     <tr>
 
                       <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Username</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Groups</th>
-                      <th scope="col">Last Login</th>
-                      
-                      <th scope="col">Active</th>
+               
                
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="(user, index) in user_list"
+                      v-for="(group, index) in group_list"
                       :key="index"
                     >
-                      <td scope="row">{{ user.first_name }}</td>
-                      <td scope="row">{{ user.last_name }}</td>
-                      <td scope="row">{{ user.username }}</td>
-                      <td scope="row">{{ user.email }}</td>
-                      <td scope="row">
-                        <span class="badge badge-info" v-for="u in user.groups" :key="u.id">
-                             {{ u.name }}
-                        </span>
-                       
-                        </td>
-                        <td>
-                          {{user.last_login}}
-                        </td>
-                      <td scope="row">
-                        <i :class="[user.is_active ? 'fas fa-check-circle  ' : 'fas fa-times-circle']"></i>
-                      </td>
-                  
+                      <td scope="row">{{ group.name }}</td>
+                 
+                     
 
 
                       <td>
@@ -67,10 +47,10 @@
                           <ul class="dropdown-menu">
                            
                             <li>
-                              <router-link :to="{name: 'UserEdit', params: { id: user.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                              <router-link :to="{name: 'GroupEdit', params: { id: group.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
                             <li>
-                              <a href="#" @click="userDelete(user.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                              <a href="#" @click="groupDelete(group.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
                         </div>
@@ -101,19 +81,19 @@ export default {
   },
   data() {
     return {
-      user_list: null,
+      group_list: null,
     };
   },
   methods: {
-    getUserList: function () {
-      axios.get("users/").then((response) => {
-        this.user_list = response.data.results;
+    getGroupList: function () {
+      axios.get("groups/").then((response) => {
+        this.group_list = response.data.results;
       })
       .catch(function (error) {
           console.log(error);
         });
     },
-      userDelete: function (id) {
+      groupDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -124,20 +104,20 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
         if (response.isConfirmed) {
-          axios.delete("users/" + id + "/").then((response) => {
+          axios.delete("groups/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getUserList();
+              this.getGroupList();
             }
           });
-          Swal.fire("Deleted!", "User has been deleted!!", "success");
+          Swal.fire("Deleted!", "Groups has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "User has not been deleted !", "error");
+          Swal.fire("Cancelled", "Groups has not been deleted !", "error");
         }
       });
     }
   },
   created() {
-    this.getUserList();
+    this.getGroupList();
   },
 };
 </script>
