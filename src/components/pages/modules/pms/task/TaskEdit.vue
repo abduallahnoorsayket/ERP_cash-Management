@@ -88,6 +88,46 @@
                   <input type="range" min="0" max="100" v-model="progress" />
 
                 </div>
+
+               
+
+                  <div class="form-group">
+                  <label>Status</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="status"
+                    :class="{ 'parsley-error': errors && errors.status }"
+                  >
+                    <option value="false" disabled selected>Select</option>
+
+                    <option
+                      v-for="(s, i) in statusData"
+                      :key="i"
+                      :value="s.key"
+                    >
+                      {{ s.value }}
+                    </option>
+                  </select>
+                 <ValidationError :error="errors.status" v-if="errors" />
+                </div>
+
+                 <div class="form-group">
+                    <label>Has Target</label>
+                    <div class="checkbox checkbox-primary">
+                      <input
+                        id="checkbox2"
+                        type="checkbox"
+                        unchecked=""
+                        v-model="has_target"
+                        value="true"
+                        @change="getEmptyTarget"
+                      />
+                      <label for="checkbox2">
+                        {{ has_target == true ? "Yes" : "No" }}
+                      </label>
+                    </div>
+                  </div>
                 
 
               </div>
@@ -101,7 +141,7 @@
                     data-toggle="select2"
                     v-model="project"
                     :class="{ 'parsley-error': errors && errors.project }"
-                    @change="getAllData($event)"
+                    @change="getAllData()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -119,7 +159,7 @@
                     data-toggle="select2"
                     v-model="version"
                     :class="{ 'parsley-error': errors && errors.status }"
-                    @change="getSprint($event)"
+                    @change="getSprint()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -137,7 +177,7 @@
                     data-toggle="select2"
                     v-model="sprint"
                     :class="{ 'parsley-error': errors && errors.sprint }"
-                     @change="getParents()"
+                    @change="getParents()"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -224,26 +264,7 @@
                 </div>
                 <ValidationError :error="errors.estimated_duration" v-if="errors" />
 
-                <div class="form-group">
-                  <label>Status</label>
-                  <select
-                    class="form-control"
-                    data-toggle="select2"
-                    v-model="status"
-                    :class="{ 'parsley-error': errors && errors.status }"
-                  >
-                    <option value="false" disabled selected>Select</option>
 
-                    <option
-                      v-for="(s, i) in statusData"
-                      :key="i"
-                      :value="s.key"
-                    >
-                      {{ s.value }}
-                    </option>
-                  </select>
-                 <ValidationError :error="errors.status" v-if="errors" />
-                </div>
               </div>
               <!-- end col -->
 
@@ -259,7 +280,94 @@
                     v-model="description"
                   />
                 </div>
+                <div v-if="has_target">
+                 <div class="col-md-12 mb-2">
+                  <button
+                    type="button"
+                    class="btn btn-info mr-3"
+                    @click="addNewRow"
+                    
+                  >
+                    <i class="fas fa-plus-circle"></i>
+                  </button>
+                </div>
+               
+                
 
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Item</th>
+                          <th scope="col">Unit</th>
+                          <th scope="col text-right">Quantity</th>
+                      
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(dom_repeat, k) in target" :key="k">
+                          <td scope="row" class="trashIconContainer">
+                           
+                            <button
+                              v-if="target.length > 1"
+                              type="button"
+                              class="btn btn-sm btn-primary mr-3"
+                              @click="deleteRow(k, dom_repeat)"
+                            >
+                              <i class="far fa-trash-alt"></i>
+                            </button>
+                          </td>
+                          <td>
+                            <select
+                              class="form-control text-right"
+                              v-model="dom_repeat.item"
+                            >
+                              <option
+                                v-for="(it, i) in items"
+                                :key="i"
+                                :value="it.id"
+                              >
+                                {{ it.name }}
+                              </option>
+                            </select>
+                             <ValidationError :error="errors.target[k].item" v-if="errors && errors.target[k].item" />
+                          </td>
+                          <td>
+                            <select
+                              class="form-control text-right"
+                              v-model="dom_repeat.unit"
+                            >
+                              <option
+                                v-for="(u, i) in units"
+                                :key="i"
+                                :value="u.id"
+                              >
+                                {{ u.name }}
+                              </option>
+                            </select>
+                            <ValidationError :error="errors.target[k].item" v-if="errors && errors.target[k].item" />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              min="0"
+                              step=".01"
+                              class="form-control text-right"
+                              v-model="dom_repeat.quantity"
+                              @change="calculateTotal(dom_repeat)"
+                            />
+                            <ValidationError :error="errors.target[k].item" v-if="errors && errors.target[k].item" />
+                          </td>
+                         
+                        </tr>
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                </div>
+            </div>
                 <div class="form-group">
                   <button
                     @submit.prevent="submitUserForm"
@@ -321,6 +429,16 @@ export default {
       parent: null,
       parents: null,
       id : null,
+      target: [
+        {
+        item: "",
+        amount: "",
+        quantity: ""
+        }
+      ],
+      has_target : false,
+      items: null,
+      units: null,
 
     };
   },
@@ -329,7 +447,7 @@ export default {
     getTaskeditData: function () {
       axios.get(`tasks/${this.$route.params.id}/`).then(
         (response) => {
-          console.log("329", response.data);
+          // console.log("329", response.data);
           this.name = response.data.name;
           this.start_date = longDateToStandard(response.data.start_date);
           this.expected_start_date = longDateToStandard(
@@ -341,7 +459,7 @@ export default {
           this.complete_date = longDateToStandard(response.data.complete_date);
           this.project = response.data.sprint.version.project.id;
           this.version = response.data.sprint.version.id;
-          console.log('322',response.data.sprint.version.id);
+          // console.log('322',response.data.sprint.version.id);
           this.sprint = response.data.sprint.id
           this.status = response.data.status;
           this.description = response.data.description;
@@ -350,11 +468,15 @@ export default {
           // this.project = response.data.version.project.id;
           this.assignee = response.data.assignee;
           this.parent = response.data.parent
+          this.has_target = response.data.has_target
+          this.target = response.data.target
           this.estimate_duration_split()
           this.getMember()
           this.getVersion()
           this.getSprint()
           this.getParents()
+          this.getItem();
+          this.getUnit();
          
         }
       ).catch((err) => {
@@ -368,7 +490,7 @@ export default {
       this.da = duration[0]
       this.hrs = hr[0]
       this.mins = hr[1]
-      console.log('342 pppppppppp');
+      // console.log('342 pppppppppp');
     },
 
     getAllData: function (e) {
@@ -472,6 +594,50 @@ export default {
           console.log(error);
         });
     },
+     getItem: function () {
+      axios
+        .get("item_short_list")
+        .then((response) => {
+          this.items = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    getUnit: function () {
+      axios
+        .get("unit_short_list")
+        .then((response) => {
+          this.units = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    getEmptyTarget: function () {
+      this.target = []
+      this.addNewRow()
+    },     
+     addNewRow: function () {
+      this.target.push({
+        item: null,
+        amount: null,
+        quantity: null
+      });
+
+      this.errors = null
+      
+    },
+     deleteRow: function (index, dom_repeat) {
+      var idx = this.target.indexOf(dom_repeat);
+      console.log(idx, index);
+      if (idx > 0) {
+        this.target.splice(idx, 1);
+        // this.has_target = false;
+      }
+    },
 
     submitUserForm: function () {
       axios
@@ -510,7 +676,8 @@ export default {
     this.getStatus();
     this.getProjectList();
     this.getTaskeditData();
-   
+    this.getItem();
+    this.getUnit();
   },
 };
 </script>

@@ -3,7 +3,7 @@ var model = []
 const app_label = []
 var all_permissions = []
 const userData = JSON.parse(localStorage.getItem("userData"))
-console.log('6', userData)
+// console.log('6', userData)
 var superuser_status = null
 if (userData) {
     superuser_status = userData.superuser_status ? userData.superuser_status : false
@@ -16,9 +16,9 @@ if (userData) {
 
     let groups_obj = userData.groups ? userData.groups : [];
     let user_permissions_obj = userData.user_permissions ? userData.user_permissions : [];
-console.log('====================================');
-console.log('19', groups_obj,user_permissions_obj);
-console.log('====================================');
+// console.log('====================================');
+// console.log('19', groups_obj,user_permissions_obj);
+// console.log('====================================');
 
     if (groups_obj) {
         groups_obj.map(item => {

@@ -84,6 +84,7 @@
                                 data-target=".bs-example-modal-xl"
                                 class="btn btn-purple btn-xs edit_btn"
                                 @click="modal_requisition(req.id)"
+                                 v-if="is_superuser || can_approve_requisition"
                               >
                                 <i class="far fa-edit"></i>
                               </button>
@@ -296,7 +297,8 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- modal end -->
-      <div class="modal-backdrop fade show" v-if="modal_show"></div>
+      
+      <!-- <div id="back_drop" class="modal-backdrop fade show" v-if="modal_show"></div> -->
     </template>
   </Layout>
 </template>
@@ -308,7 +310,7 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 // import permissions from '../../../permisson'
 import permissions from "@/permisson";
-
+// const back_drop = document.querySelector("#back_drop");
 export default {
   name: "project_requisitionList",
   components: {
@@ -477,6 +479,7 @@ export default {
           }).then(() => {
 
             this.modal_show = false;
+           document.getElementsByClassName("modal-backdrop")[0].remove();
             this.getRequisitionList()
           });
         })
