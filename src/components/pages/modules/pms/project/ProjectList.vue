@@ -21,10 +21,10 @@
                                             </ul>
                                         </div>
             
-                                        <h4 class="header-title mb-4">Simple Card Title</h4>
+                                        <h4 class="header-title mb-4">Search Section</h4>
             
                                         <p class=" mb-0">
-                                            If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages new common language will be more simple and regular
+                                            
                                         </p>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                       <td>
                         <router-link :to="{name: 'VersionList', query: {project_id:project.id} }">
 
-                          <span class="badge badge-pill badge-primary">
+                          <span class="badge badge-pill badge-info">
                          
                             {{project.no_of_version}}
 
@@ -74,7 +74,7 @@
 
                         </router-link>
                         <router-link :to="{name: 'SprintList', query: {project_id:project.id} }">
-                          <span class="badge badge-pill badge-primary">{{project.no_of_sprint}}</span>
+                          <span class="badge badge-pill badge-danger">{{project.no_of_sprint}}</span>
                         </router-link>
               
                       </td>
@@ -97,10 +97,10 @@
                           </button>
                           <ul class="dropdown-menu">
                            
-                            <li>
+                            <li v-if="hasPermission('change_project')">
                               <router-link :to="{name: 'ProjectEdit', params: { id: project.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
-                            <li>
+                            <li v-if="hasPermission('delete_project')">
                               <a href="#" @click="deleteClient(project.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
@@ -123,6 +123,7 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
+import permissions from "@/permisson";
 
 export default {
   name: "ProjectList",
@@ -142,6 +143,19 @@ export default {
         this.all_project_list = response.data.results;
       });
     },
+
+      hasModulePermission(...module_name) {
+      return permissions.hasModulePermission(...module_name);
+    },
+
+    hasModelPermission(model_name) {
+      return permissions.hasModelPermission(model_name);
+    },
+
+    hasPermission(permission_name) {
+      return permissions.hasPermission(permission_name);
+    },
+
       deleteClient: function (id) {
       Swal.fire({
         title: "Are you sure?",

@@ -169,7 +169,7 @@
                           }}</span>
                         </router-link>
                       </td>
-                      <td>{{ version.status }}</td>
+                      <td>{{ version.status_list[version.status] }}</td>
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -187,7 +187,7 @@
                             <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
-                            <li>
+                            <li v-if="hasPermission('change_version')">
                               <router-link
                                 :to="{
                                   name: 'VersionEdit',
@@ -198,7 +198,7 @@
                                 <i class="fas fa-edit"></i> Edit
                               </router-link>
                             </li>
-                            <li>
+                            <li v-if="hasPermission('delete_version')">
                               <a
                                 href="#"
                                 @click="versionDelete(version.id)"
@@ -238,6 +238,7 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Pagination from "@/components/layouts/partials/Pagination";
 import Swal from "sweetalert2";
+import permissions from "@/permisson";
 
 export default {
   name: "VersionList",
@@ -288,6 +289,18 @@ export default {
         this.pagination.showing = response.data.results.length;
       });
     },
+      hasModulePermission(...module_name) {
+      return permissions.hasModulePermission(...module_name);
+    },
+
+    hasModelPermission(model_name) {
+      return permissions.hasModelPermission(model_name);
+    },
+
+    hasPermission(permission_name) {
+      return permissions.hasPermission(permission_name);
+    },
+
     versionDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",

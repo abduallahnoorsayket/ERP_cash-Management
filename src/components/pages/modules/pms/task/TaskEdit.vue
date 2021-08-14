@@ -469,7 +469,14 @@ export default {
           this.assignee = response.data.assignee;
           this.parent = response.data.parent
           this.has_target = response.data.has_target
-          this.target = response.data.target
+          this.target =response.data.target.map((detail) => {
+            return {
+              id: detail.id,
+              quantity: detail.quantity,
+              item: detail.item.id,
+              unit: detail.unit.id,
+            };
+          });
           this.estimate_duration_split()
           this.getMember()
           this.getVersion()
@@ -653,7 +660,9 @@ export default {
           assignee: this.assignee,
           sprint: this.sprint,
           progress: this.progress,
-          parent : this.parent
+          parent : this.parent,
+          has_target : this.has_target,
+          target : this.target,
         })
         .then(() => {
           Swal.fire({

@@ -13,44 +13,58 @@
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col">Status</th>
-               
+
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="(item, index) in item_list"
-                      :key="index"
-                    >
+                    <tr v-for="(item, index) in item_list" :key="index">
                       <td scope="row">{{ item.name }}</td>
                       <td scope="row">
-                          <i :class="[item.status ? 'fas fa-check-circle  ' : 'fas fa-times-circle']"></i>
+                        <i
+                          :class="[
+                            item.status
+                              ? 'fas fa-check-circle  '
+                              : 'fas fa-times-circle',
+                          ]"
+                        ></i>
                       </td>
-
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
-                        
                           <button
                             type="button"
                             class="
                               btn btn-primary btn-sm
-                              dropdown-toggle 
+                              dropdown-toggle
                               waves-effect waves-light
                             "
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
-                             <i class="fa fa-cog ml-1"></i>
+                            <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
-                           
-                            <li>
-                              <router-link :to="{name: 'ItemEdit', params: { id: item.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                            <li v-if="hasPermission('change_item')">
+                              <router-link
+                                :to="{
+                                  name: 'ItemEdit',
+                                  params: { id: item.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-edit"></i> Edit
+                              </router-link>
                             </li>
-                            <li>
-                              <a href="#" @click="itemDelete(item.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                            <li v-if="hasPermission('delete_item')">
+                              <a
+                                href="#"
+                                @click="itemDelete(item.id)"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-trash"></i> Delete</a
+                              >
                             </li>
                           </ul>
                         </div>
@@ -72,6 +86,7 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
+import permissions from "@/permisson";
 
 export default {
   name: "ItemList",
@@ -86,14 +101,29 @@ export default {
   },
   methods: {
     getItemList: function () {
-      axios.get("items/").then((response) => {
-        this.item_list = response.data;
-      })
-      .catch(function (error) {
+      axios
+        .get("items/")
+        .then((response) => {
+          this.item_list = response.data;
+        })
+        .catch(function (error) {
           console.log(error);
         });
     },
-      itemDelete: function (id) {
+
+    hasModulePermission(...module_name) {
+      return permissions.hasModulePermission(...module_name);
+    },
+
+    hasModelPermission(model_name) {
+      return permissions.hasModelPermission(model_name);
+    },
+
+    hasPermission(permission_name) {
+      return permissions.hasPermission(permission_name);
+    },
+
+    itemDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -114,7 +144,7 @@ export default {
           Swal.fire("Cancelled", "Item has not been deleted !", "error");
         }
       });
-    }
+    },
   },
   created() {
     this.getItemList();

@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Department List" />
+      <PageTitle title="Group List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -11,46 +11,50 @@
                 <table class="table table-sm mb-0 table-bordered">
                   <thead>
                     <tr>
-
                       <th scope="col">First Name</th>
-               
-               
+
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="(group, index) in group_list"
-                      :key="index"
-                    >
+                    <tr v-for="(group, index) in group_list" :key="index">
                       <td scope="row">{{ group.name }}</td>
-                 
-                     
-
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
-                        
                           <button
                             type="button"
                             class="
                               btn btn-primary btn-sm
-                              dropdown-toggle 
+                              dropdown-toggle
                               waves-effect waves-light
                             "
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
-                             <i class="fa fa-cog ml-1"></i>
+                            <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
-                           
-                            <li>
-                              <router-link :to="{name: 'GroupEdit', params: { id: group.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                            <li v-if="hasPermission('change_group')">
+                              <router-link
+                                :to="{
+                                  name: 'GroupEdit',
+                                  params: { id: group.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-edit"></i> Edit
+                              </router-link>
                             </li>
-                            <li>
-                              <a href="#" @click="groupDelete(group.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                            <li v-if="hasPermission('delete_group')">
+                              <a
+                                href="#"
+                                @click="groupDelete(group.id)"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-trash"></i> Delete</a
+                              >
                             </li>
                           </ul>
                         </div>
@@ -72,6 +76,7 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
+import permissions from "@/permisson";
 
 export default {
   name: "DepartmentList",
@@ -86,14 +91,29 @@ export default {
   },
   methods: {
     getGroupList: function () {
-      axios.get("groups/").then((response) => {
-        this.group_list = response.data.results;
-      })
-      .catch(function (error) {
+      axios
+        .get("groups/")
+        .then((response) => {
+          this.group_list = response.data.results;
+        })
+        .catch(function (error) {
           console.log(error);
         });
     },
-      groupDelete: function (id) {
+
+    hasModulePermission(...module_name) {
+      return permissions.hasModulePermission(...module_name);
+    },
+
+    hasModelPermission(model_name) {
+      return permissions.hasModelPermission(model_name);
+    },
+
+    hasPermission(permission_name) {
+      return permissions.hasPermission(permission_name);
+    },
+
+    groupDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -114,7 +134,7 @@ export default {
           Swal.fire("Cancelled", "Groups has not been deleted !", "error");
         }
       });
-    }
+    },
   },
   created() {
     this.getGroupList();

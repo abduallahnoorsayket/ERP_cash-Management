@@ -12,41 +12,49 @@
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
-               
+
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="(dept, index) in all_dep_list"
-                      :key="index"
-                    >
+                    <tr v-for="(dept, index) in all_dep_list" :key="index">
                       <td scope="row">{{ dept.name }}</td>
-
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
-                        
                           <button
                             type="button"
                             class="
                               btn btn-primary btn-sm
-                              dropdown-toggle 
+                              dropdown-toggle
                               waves-effect waves-light
                             "
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
-                             <i class="fa fa-cog ml-1"></i>
+                            <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
-                           
-                            <li>
-                              <router-link :to="{name: 'DepartmentEdit', params: { id: dept.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                            <li v-if="hasPermission('change_department')">
+                              <router-link
+                                :to="{
+                                  name: 'DepartmentEdit',
+                                  params: { id: dept.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-edit"></i> Edit
+                              </router-link>
                             </li>
-                            <li>
-                              <a href="#" @click="deptDelete(dept.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                            <li v-if="hasPermission('delete_department')">
+                              <a
+                                href="#"
+                                @click="deptDelete(dept.id)"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-trash"></i> Delete</a
+                              >
                             </li>
                           </ul>
                         </div>
@@ -68,6 +76,7 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
+import permissions from "@/permisson";
 
 export default {
   name: "DepartmentList",
@@ -82,14 +91,29 @@ export default {
   },
   methods: {
     getDeptList: function () {
-      axios.get("departments/").then((response) => {
-        this.all_dep_list = response.data;
-      })
-      .catch(function (error) {
+      axios
+        .get("departments/")
+        .then((response) => {
+          this.all_dep_list = response.data;
+        })
+        .catch(function (error) {
           console.log(error);
         });
     },
-      deptDelete: function (id) {
+
+    hasModulePermission(...module_name) {
+      return permissions.hasModulePermission(...module_name);
+    },
+
+    hasModelPermission(model_name) {
+      return permissions.hasModelPermission(model_name);
+    },
+
+    hasPermission(permission_name) {
+      return permissions.hasPermission(permission_name);
+    },
+
+    deptDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -110,7 +134,7 @@ export default {
           Swal.fire("Cancelled", "Department has not been deleted !", "error");
         }
       });
-    }
+    },
   },
   created() {
     this.getDeptList();

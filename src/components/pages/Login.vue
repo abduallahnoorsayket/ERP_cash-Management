@@ -4,10 +4,13 @@
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 col-xl-5">
           <div class="text-center pb-1">
-            <a href="index.html">
+            <a href="#">
               <span
-                ><img src="assets/images/logo.png" alt="" height="18"
-              /></span>
+                >
+                <!-- <img src="assets/images/logo1.png" alt="" height="18"
+              /> -->
+              <h3 style="color:#fe6271">ERP.CASH</h3>
+              </span>
             </a>
             <h5 class="font-14 text-muted mt-3">
               Please Login with Username and Password
@@ -67,9 +70,9 @@
                   </button>
                 </div>
 
-                <a href="pages-recoverpw.html" class="text-muted"
+                <!-- <a href="pages-recoverpw.html" class="text-muted"
                   ><i class="mdi mdi-lock mr-1"></i> Forgot your password?</a
-                >
+                > -->
               </form>
             </div>
             <!-- end card-body -->

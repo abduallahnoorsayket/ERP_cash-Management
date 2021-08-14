@@ -16,7 +16,7 @@
             <!-- End mobile menu toggle-->
           </li>
 
-          <li class="dropdown d-none d-lg-block">
+          <!-- <li class="dropdown d-none d-lg-block">
             <a
               class="nav-link dropdown-toggle mr-0"
               data-toggle="dropdown"
@@ -35,9 +35,9 @@
                 >English <i class="mdi mdi-chevron-down"></i>
               </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right"> -->
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/germany.jpg"
                   alt="user-image"
@@ -45,10 +45,10 @@
                   height="12"
                 />
                 <span class="align-middle">German</span>
-              </a>
+              </a> -->
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/italy.jpg"
                   alt="user-image"
@@ -56,10 +56,10 @@
                   height="12"
                 />
                 <span class="align-middle">Italian</span>
-              </a>
+              </a> -->
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/spain.jpg"
                   alt="user-image"
@@ -67,10 +67,10 @@
                   height="12"
                 />
                 <span class="align-middle">Spanish</span>
-              </a>
+              </a> -->
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/russia.jpg"
                   alt="user-image"
@@ -79,8 +79,8 @@
                 />
                 <span class="align-middle">Russian</span>
               </a>
-            </div>
-          </li>
+            </div> -->
+          <!-- </li> -->
 
           <li class="dropdown notification-list">
             <a
@@ -411,16 +411,17 @@
               aria-haspopup="false"
               aria-expanded="false"
             >
-              <img
+              <!-- <img
                 src="assets/images/users/avatar-1.jpg"
                 alt="user-image"
                 class="rounded-circle"
-              />
+              /> -->
+              {{fullName}}
             </a>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown">
               <!-- item-->
               <div class="dropdown-header noti-title">
-                <h6 class="text-overflow m-0">Welcome !</h6>
+                <h6 class="text-overflow m-0">Welcome ! {{fullName}} </h6>
               </div>
 
               <!-- item-->
@@ -712,7 +713,11 @@ export default {
   components: {},
 
   data() {
-    return {};
+    return {
+      first_name: null,
+      last_name: null,
+      username: null,
+    };
   },
   methods: {
     logout: function () {
@@ -729,6 +734,16 @@ export default {
         });
     },
   },
+  created() {
+    
+ },
+ computed: {
+   fullName: function () {
+     const userData = JSON.parse(localStorage.getItem("userData")) 
+     return `${userData.first_name} ${userData.last_name} (${userData.username})`;
+      
+    }
+ }
 };
 </script>
 

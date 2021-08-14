@@ -109,7 +109,14 @@
                           </tr>
                         </table>
                       </td>
-                      <td>Info</td>
+                      <td>
+                        <span class="badge badge-success">Total Count - {{req.requisition_count}}</span><br>
+                        <span class="badge badge-info">Sum - {{req.requisition_sum}}</span><br>
+                        <span class="badge badge-warning">Pending - {{req.requisition_count_pending}}</span><br>
+                        <span class="badge badge-danger">Rejected - {{req.requisition_count_rejected}}</span><br>
+                        <span class="badge badge-dark">Approved - {{req.requisition_count_approved}}</span><br>
+                        <span class="badge badge-purple">Verified - {{req.requisition_count_verified}}</span>
+                      </td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
                           <button
@@ -333,7 +340,8 @@ export default {
       detail: [],
       items: null,
       units: null,
-      all_total: null
+      all_total: null,
+      
     };
   },
   methods: {

@@ -43,7 +43,7 @@
                         </router-link>
 
                       </td>
-                      <td>{{ sprint.status }}</td>
+                      <td>{{ sprint.status_list[sprint.status] }}</td>
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -63,10 +63,10 @@
                           </button>
                           <ul class="dropdown-menu">
                            
-                            <li>
+                            <li v-if="hasPermission('change_sprint')">
                               <router-link :to="{name: 'SprintEdit', params: { id: sprint.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
-                            <li>
+                            <li v-if="hasPermission('delete_sprint')">
                               <a href="#" @click="sprintDelete(sprint.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
                           </ul>
@@ -89,6 +89,7 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
+import permissions from "@/permisson";
 
 export default {
   name: "SprintList",
@@ -110,6 +111,19 @@ export default {
           console.log(error);
         });
     },
+
+      hasModulePermission(...module_name) {
+      return permissions.hasModulePermission(...module_name);
+    },
+
+    hasModelPermission(model_name) {
+      return permissions.hasModelPermission(model_name);
+    },
+
+    hasPermission(permission_name) {
+      return permissions.hasPermission(permission_name);
+    },
+
       sprintDelete: function (id) {
       Swal.fire({
         title: "Are you sure?",
