@@ -731,6 +731,9 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+           localStorage.clear();
+
+           this.$router.push("/");
         });
     },
   },

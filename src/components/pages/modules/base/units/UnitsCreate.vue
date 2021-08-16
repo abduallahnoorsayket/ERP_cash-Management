@@ -47,7 +47,7 @@
                  <div class="col-md-12">
                <div class="form-group">
                   <div class="form-group">
-                    <label>Current</label>
+                    <label>Status</label>
                     <div class="checkbox checkbox-primary">
                       <input
                         id="checkbox2"

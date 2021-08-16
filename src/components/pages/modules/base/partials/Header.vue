@@ -10,6 +10,30 @@
             </router-link>
           </li>
 
+          <li class="has-submenu" v-if="hasModelPermission('user')">
+            <a href="#">
+              <i class="far fa-user"></i>User
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li v-if="hasPermission('view_user')"><router-link to="/user-list">User List</router-link></li>
+              <li v-if="hasPermission('add_user')"><router-link to="/user-create">User Create</router-link></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu" v-if="hasModelPermission('group')">
+            <a href="#">
+              <i class="fas fa-users"></i>Group
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li v-if="hasPermission('view_group')"><router-link to="/group-list">Group List</router-link></li>
+              <li v-if="hasPermission('add_group')">
+                <router-link to="/group-create">Group Create</router-link>
+              </li>
+            </ul>
+          </li>
+
           <li class="has-submenu"  v-if="hasModelPermission('department')">
             <a href="#">
               <i class="mdi mdi-package-variant-closed"></i>Department
@@ -62,29 +86,7 @@
             </ul>
           </li>
 
-          <li class="has-submenu" v-if="hasModelPermission('user')">
-            <a href="#">
-              <i class="far fa-user"></i>User
-              <div class="arrow-down"></div
-            ></a>
-            <ul class="submenu">
-              <li v-if="hasPermission('view_user')"><router-link to="/user-list">User List</router-link></li>
-              <li v-if="hasPermission('add_user')"><router-link to="/user-create">User Create</router-link></li>
-            </ul>
-          </li>
-
-          <li class="has-submenu" v-if="hasModelPermission('group')">
-            <a href="#">
-              <i class="fas fa-users"></i>Group
-              <div class="arrow-down"></div
-            ></a>
-            <ul class="submenu">
-              <li v-if="hasPermission('view_group')"><router-link to="/group-list">Group List</router-link></li>
-              <li v-if="hasPermission('add_group')">
-                <router-link to="/group-create">Group Create</router-link>
-              </li>
-            </ul>
-          </li>
+          
         </ul>
 
         <!-- End navigation menu -->

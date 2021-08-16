@@ -101,7 +101,7 @@
 
                   <div class="col-lg-1">
                   <div class="form-group ">
-                    <br>
+                     <label style="visibility: hidden">fgggggggf</label>
                      <button
                             type="button"
                             class="
@@ -156,7 +156,15 @@
                       <td>{{ version.start_date }}</td>
                       <td>{{ version.expected_complete_date }}</td>
                       <td>{{ version.complete_date }}</td>
-                      <td>{{ version.current }}</td>
+                      <td>
+                        <i
+                          :class="[
+                            version.current 
+                              ? 'fas fa-check-circle  '
+                              : 'fas fa-times-circle',
+                          ]"
+                        ></i>
+                      </td>
                       <td>
                         <router-link
                           :to="{
@@ -215,17 +223,20 @@
                 </table>
                 
               </div>
-              <div class="row">
-            <div class="col-md-4">
+              
+          
 
-           <Pagination :pagination="pagination" />
+           <!-- <Pagination :pagination="pagination" /> -->
 
+          
+            <!-- <div class="col-md-6"></div>
+            <div class="col-md-2"></div> -->
+       
             </div>
-            <div class="col-md-6"></div>
-            <div class="col-md-2"></div>
           </div>
-            </div>
-          </div>
+        </div>
+        <div class="col-md-12"> 
+    <Pagination :pagination="pagination" /> 
         </div>
       </div>
     </template>
@@ -362,6 +373,7 @@ export default {
     this.getVersionList();
     this.getProjectList();
     this.getStatus()
+    console.log('376',process.env.Token)
   },
   updated() {
     this.getVersionList()
