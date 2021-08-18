@@ -298,6 +298,8 @@ export default {
         this.pagination.next = response.data.next;
         this.pagination.previous = response.data.previous;
         this.pagination.showing = response.data.results.length;
+      }).catch((error) => {
+        console.log('302 version',error);
       });
     },
       hasModulePermission(...module_name) {
@@ -373,7 +375,7 @@ export default {
     this.getVersionList();
     this.getProjectList();
     this.getStatus()
-    console.log('376',process.env.Token)
+   
   },
   updated() {
     this.getVersionList()

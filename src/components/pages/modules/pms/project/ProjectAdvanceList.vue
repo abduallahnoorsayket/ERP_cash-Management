@@ -1,45 +1,129 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Project Advance List" />
+      <PageTitle title="Project List Advance" />
 
       <div class="row">
         <div class="col-lg-12">
-        
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="dropdown float-right">
-                                            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li><a href="#" class="dropdown-item">Action</a></li>
-                                                <li><a href="#" class="dropdown-item">Another action</a></li>
-                                                <li><a href="#" class="dropdown-item">Something else here</a></li>
-                                                <li class="dropdown-divider"></li>
-                                                <li><a href="#" class="dropdown-item">Separated link</a></li>
-                                            </ul>
-                                        </div>
-            
-                                        <h4 class="header-title mb-4">Search Section</h4>
-            
-                                        <p class=" mb-0">
-                                           
-                                        </p>
-                                    </div>
-                                </div>
-                           
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Client</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="project"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                        v-for="(s, i) in projectId"
+                        :key="i"
+                        :value="s.id"
+                      >
+                        {{ s.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Department</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="department"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                        v-for="(v, i) in departmentId"
+                        :key="i"
+                        :value="v.id"
+                      >
+                        {{ v.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="status"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                        v-for="(s, i) in statusData"
+                        :key="i"
+                        :value="s.key"
+                      >
+                        {{ s.value }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      data-toggle="input-mask"
+                      data-mask-format="00/00/0000"
+                      v-model="name"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Project Id</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="project_id"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-lg-1">
+                  <div class="form-group">
+                    <label style="visibility: hidden">fgggggggf</label>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-primary btn-sm
+                        waves-effect waves-light
+                        pull-right
+                      "
+                      @click="searchVersion()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <div class="table-responsive ">
+              <div class="table-responsive">
                 <table class="table table-hover mb-0 table-bordered table-sm">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col">Department</th>
                       <th scope="col">Client</th>
+                      <th scope="col">Project Id</th>
                       <th scope="col" title="Assign Date">AD</th>
                       <th scope="col" title="Expected Start Date">ESD</th>
                       <th scope="col" title="Start Date">SD</th>
@@ -58,50 +142,70 @@
                       <th scope="row">{{ project.name }}</th>
                       <td>{{ project.department.name }}</td>
                       <td>{{ project.client.name }}</td>
+                      <td>{{ project.projectId }}</td>
                       <td>{{ project.assign_date }}</td>
                       <td>{{ project.expected_start_date }}</td>
                       <td>{{ project.start_date }}</td>
                       <td>{{ project.expected_complete_date }}</td>
                       <td>{{ project.complete_date }}</td>
                       <td>
-                        <router-link :to="{name: 'VersionList', query: {project_id:project.id} }">
-
+                        <router-link
+                          :to="{
+                            name: 'VersionList',
+                            query: { project_id: project.id },
+                          }"
+                        >
                           <span class="badge badge-pill badge-info">
-                         
-                            {{project.no_of_version}}
-
-                            </span>
-
+                            {{ project.no_of_version }}
+                          </span>
                         </router-link>
-                        <router-link :to="{name: 'SprintList', query: {project_id:project.id} }">
-                          <span class="badge badge-pill badge-danger">{{project.no_of_sprint}}</span>
+                        <router-link
+                          :to="{
+                            name: 'SprintList',
+                            query: { project_id: project.id },
+                          }"
+                        >
+                          <span class="badge badge-pill badge-danger">{{
+                            project.no_of_sprint
+                          }}</span>
                         </router-link>
-              
                       </td>
                       <td>{{ project.status_list[project.status] }}</td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
-                        
                           <button
                             type="button"
                             class="
                               btn btn-primary btn-sm
-                              dropdown-toggle 
+                              dropdown-toggle
                               waves-effect waves-light
                             "
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
-                             <i class="fa fa-cog ml-1"></i>
+                            <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
-                           
-                            <li>
-                              <router-link :to="{name: 'ProjectEdit', params: { id: project.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
+                            <li v-if="hasPermission('change_project')">
+                              <router-link
+                                :to="{
+                                  name: 'ProjectEdit',
+                                  params: { id: project.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-edit"></i> Edit
+                              </router-link>
                             </li>
-                            <li>
-                              <a href="#" @click="deleteClient(project.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
+                            <li v-if="hasPermission('delete_project')">
+                              <a
+                                href="#"
+                                @click="deleteClient(project.id)"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-trash"></i> Delete</a
+                              >
                             </li>
                           </ul>
                         </div>
@@ -113,6 +217,9 @@
             </div>
           </div>
         </div>
+        <div class="col-md-12">
+          <Pagination :pagination="pagination" />
+        </div>
       </div>
     </template>
   </Layout>
@@ -123,26 +230,74 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
+import permissions from "@/permisson";
+import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
   name: "ProjectAdvanceList",
   components: {
     Layout,
     PageTitle,
+    Pagination,
   },
   data() {
     return {
       all_project_list: null,
+      department: null,
+      departmentId: null,
+      projectId: null,
+      project: null,
+      statusData: null,
+      status: null,
+      name: null,
+      project_id: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+      },
     };
   },
   methods: {
     getProjectList: function () {
-      // const token = "ef24d61024d188c96cbbf9d103f8ea70cbaa63ed"
-      axios.get("projects/").then((response) => {
-        this.all_project_list = response.data.results;
-      });
+      let endPoint = "projects";
+      var queryParam = {
+        name: this.$route.query.name,
+        client: this.$route.query.project,
+        projectId: this.$route.query.project_id,
+        department: this.$route.query.department,
+        status: this.$route.query.status,
+        page: this.$route.query.page,
+      };
+      console.log("265", queryParam);
+      axios
+        .get(endPoint, {
+          params: queryParam,
+        })
+        .then((response) => {
+          this.all_project_list = response.data.results;
+          this.pagination.count = response.data.count;
+          this.pagination.next = response.data.next;
+          this.pagination.previous = response.data.previous;
+          this.pagination.showing = response.data.results.length;
+        });
     },
-      deleteClient: function (id) {
+
+    hasModulePermission(...module_name) {
+      return permissions.hasModulePermission(...module_name);
+    },
+
+    hasModelPermission(model_name) {
+      return permissions.hasModelPermission(model_name);
+    },
+
+    hasPermission(permission_name) {
+      return permissions.hasPermission(permission_name);
+    },
+
+    deleteClient: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -163,9 +318,59 @@ export default {
           Swal.fire("Cancelled", "Project has not been deleted !", "error");
         }
       });
-    }
+    },
+    getProjectClients: function () {
+      axios
+        .get("project_clients")
+        .then((response) => {
+          this.projectId = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getStatus: function () {
+      axios
+        .get("project_status")
+        .then((response) => {
+          this.statusData = response.data.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getDepartment: function () {
+      axios
+        .get("project_department")
+        .then((response) => {
+          this.departmentId = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    // search section start
+    searchVersion() {
+      this.$router.push({
+        path: "project-advance-list",
+        query: {
+          name: this.name,
+          project: this.project,
+          project_id: this.project_id,
+          status: this.status,
+          department: this.department,
+        },
+      });
+    },
   },
   created() {
+    this.getProjectClients();
+    this.getProjectList();
+    this.getStatus();
+    this.getDepartment();
+  },
+  updated() {
     this.getProjectList();
   },
 };

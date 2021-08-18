@@ -7,6 +7,129 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
+              <div class="row">
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Project</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="project"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                        v-for="(s, i) in projectId"
+                        :key="i"
+                        :value="s.id"
+                      >
+                        {{ s.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Version</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="version"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                        v-for="(v, i) in versionId"
+                        :key="i"
+                        :value="v.id"
+                      >
+                        {{ v.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Sprint</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="sprint"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option v-for="(s, i) in sprints" :key="i" :value="s.id">
+                        {{ s.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Submitted For</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="status"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                        v-for="(s, i) in statusData"
+                        :key="i"
+                        :value="s.key"
+                      >
+                        {{ s.value }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+               <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Task</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="task"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                        v-for="(t, i) in tasks"
+                        :key="i"
+                        :value="t.id"
+                      >
+                        {{ t.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-1">
+                  <div class="form-group">
+                    <label style="visibility: hidden">fgggggggf</label>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-primary btn-sm
+                        waves-effect waves-light
+                        pull-right
+                      "
+                      @click="searchVersion()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-sm mb-0 table-bordered">
                   <thead>
@@ -84,7 +207,7 @@
                                 data-target=".bs-example-modal-xl"
                                 class="btn btn-purple btn-xs edit_btn"
                                 @click="modal_requisition(req.id)"
-                                 v-if="is_superuser || can_approve_requisition"
+                                v-if="is_superuser || can_approve_requisition"
                               >
                                 <i class="far fa-edit"></i>
                               </button>
@@ -110,12 +233,24 @@
                         </table>
                       </td>
                       <td>
-                        <span class="badge badge-success">Total Count - {{req.requisition_count}}</span><br>
-                        <span class="badge badge-info">Sum - {{req.requisition_sum}}</span><br>
-                        <span class="badge badge-warning">Pending - {{req.requisition_count_pending}}</span><br>
-                        <span class="badge badge-danger">Rejected - {{req.requisition_count_rejected}}</span><br>
-                        <span class="badge badge-dark">Approved - {{req.requisition_count_approved}}</span><br>
-                        <span class="badge badge-purple">Verified - {{req.requisition_count_verified}}</span>
+                        <span class="badge badge-success"
+                          >Total Count - {{ req.requisition_count }}</span
+                        ><br />
+                        <span class="badge badge-info"
+                          >Sum - {{ req.requisition_sum }}</span
+                        ><br />
+                        <span class="badge badge-warning"
+                          >Pending - {{ req.requisition_count_pending }}</span
+                        ><br />
+                        <span class="badge badge-danger"
+                          >Rejected - {{ req.requisition_count_rejected }}</span
+                        ><br />
+                        <span class="badge badge-dark"
+                          >Approved - {{ req.requisition_count_approved }}</span
+                        ><br />
+                        <span class="badge badge-purple"
+                          >Verified - {{ req.requisition_count_verified }}</span
+                        >
                       </td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -162,6 +297,10 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="col-md-12">
+          <Pagination :pagination="pagination" />
         </div>
       </div>
 
@@ -284,14 +423,18 @@
                     <tfoot>
                       <tr>
                         <td colspan="6" class="text-right">
-                           <button
-                    @click="submitCorrectionDetails"
-                    type="button"
-                    class="btn btn-primary waves-effect waves-light cus_right"
-                  >
-                    Submit
-                  </button></td>
-                        
+                          <button
+                            @click="submitCorrectionDetails"
+                            type="button"
+                            class="
+                              btn btn-primary
+                              waves-effect waves-light
+                              cus_right
+                            "
+                          >
+                            Submit
+                          </button>
+                        </td>
                       </tr>
                     </tfoot>
                   </table>
@@ -304,7 +447,7 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- modal end -->
-      
+
       <!-- <div id="back_drop" class="modal-backdrop fade show" v-if="modal_show"></div> -->
     </template>
   </Layout>
@@ -315,14 +458,15 @@ import axios from "@/axios";
 import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
-// import permissions from '../../../permisson'
 import permissions from "@/permisson";
-// const back_drop = document.querySelector("#back_drop");
+import Pagination from "@/components/layouts/partials/Pagination";
+
 export default {
   name: "project_requisitionList",
   components: {
     Layout,
     PageTitle,
+    Pagination,
   },
   data() {
     return {
@@ -341,15 +485,40 @@ export default {
       items: null,
       units: null,
       all_total: null,
-      
+      projectId: null,
+      statusData: null,
+      versionId: null,
+      version: null,
+      sprints: null,
+      sprint: null,
+      project: null,
+      tasks: null,
+      task: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+      },
     };
   },
   methods: {
     getRequisitionList: function () {
+      let endPoint = "project_requisition/";
+      var queryParam = {
+        page: this.$route.query.page,
+      };
       axios
-        .get("project_requisition/")
+        .get(endPoint, {
+          params: queryParam,
+        })
         .then((response) => {
           this.requisition_list = response.data.results;
+          this.pagination.count = response.data.count;
+          this.pagination.next = response.data.next;
+          this.pagination.previous = response.data.previous;
+          this.pagination.showing = response.data.results.length;
         })
         .catch(function (error) {
           console.log(error);
@@ -420,25 +589,26 @@ export default {
     },
 
     getDetailsRequisition: function (id) {
-      
       axios
         .get("project_requisition/" + id + "/")
         .then((response) => {
-          this.requisition_modal_details = response.data.detail.map((detail) => {
-            return {
-              id: detail.id,
-              quantity: detail.quantity,
-              amount: detail.amount,
-              total: detail.total,
-              remarks: detail.remarks,
-              item: detail.item.id,
-              unit: detail.unit.id,
-              requisition: id,
-            };
-          });
+          this.requisition_modal_details = response.data.detail.map(
+            (detail) => {
+              return {
+                id: detail.id,
+                quantity: detail.quantity,
+                amount: detail.amount,
+                total: detail.total,
+                remarks: detail.remarks,
+                item: detail.item.id,
+                unit: detail.unit.id,
+                requisition: id,
+              };
+            }
+          );
 
-          this.getItem()
-          this.getUnit()
+          this.getItem();
+          this.getUnit();
         })
         .catch(function (error) {
           console.log(error);
@@ -470,25 +640,21 @@ export default {
       if (!isNaN(total)) {
         dom_repeat.total = total.toFixed(2);
       }
-     
     },
 
     submitCorrectionDetails: function () {
-       axios
-        .put("project_requisition_correction/" ,{
-          detail: this.requisition_modal_details
-
+      axios
+        .put("project_requisition_correction/", {
+          detail: this.requisition_modal_details,
         })
         .then(() => {
-          
           Swal.fire({
             icon: "success",
             text: "You have successfully Update a Requisition Details.",
           }).then(() => {
-
             this.modal_show = false;
-           document.getElementsByClassName("modal-backdrop")[0].remove();
-            this.getRequisitionList()
+            document.getElementsByClassName("modal-backdrop")[0].remove();
+            this.getRequisitionList();
           });
         })
         .catch((error) => {
@@ -530,14 +696,56 @@ export default {
           console.log("257", error);
         });
     },
+    getProjectList: function () {
+      axios
+        .get("project_short")
+        .then((response) => {
+          this.projectId = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getVersionList: function () {
+      axios
+        .get("version_short")
+        .then((response) => {
+          this.versionId = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getSprintList: function () {
+      axios
+        .get("sprint_short")
+        .then((response) => {
+          this.sprints = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getTaskList: function () {
+      axios
+        .get("task_short")
+        .then((response) => {
+          this.tasks = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   created() {
     this.getRequisitionList();
     this.getPermissions();
     this.getRequisitionStatus();
+    this.getProjectList();
+    this.getVersionList();
+    this.getSprintList();
+    this.getTaskList();
   },
-
- 
 };
 </script>
 

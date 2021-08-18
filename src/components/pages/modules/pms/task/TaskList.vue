@@ -74,6 +74,9 @@
             </div>
           </div>
         </div>
+        <div class="col-md-12"> 
+    <Pagination :pagination="pagination" /> 
+        </div>
       </div>
     </template>
   </Layout>
@@ -85,22 +88,41 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
+import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
   name: "TaskList",
   components: {
     Layout,
     PageTitle,
+    Pagination
   },
   data() {
     return {
       all_task_list: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+  }
     };
   },
   methods: {
     getTaskList: function () {
-      axios.get("tasks").then((response) => {
+       let endPoint = "tasks"
+      var queryParam = {
+        page: this.$route.query.page,
+      }
+      axios.get(endPoint, {
+        params: queryParam
+      }).then((response) => {
         this.all_task_list = response.data.results;
+        this.pagination.count = response.data.count;
+        this.pagination.next = response.data.next;
+        this.pagination.previous = response.data.previous;
+        this.pagination.showing = response.data.results.length;
       })
       .catch(function (error) {
           console.log(error);
