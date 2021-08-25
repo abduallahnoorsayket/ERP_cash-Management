@@ -72,17 +72,13 @@
                     <select
                       class="form-control"
                       data-toggle="select2"
-                      v-model="status"
+                      v-model="submitted_for"
                     >
                       <option value="false" disabled selected>Select</option>
 
-                      <option
-                        v-for="(s, i) in statusData"
-                        :key="i"
-                        :value="s.key"
-                      >
-                        {{ s.value }}
-                      </option>
+                     <option v-for="(m, i) in assignees" :key="i" :value="m.id">
+                      {{ m.first_name }} {{ m.last_name }} ({{ m.username }})
+                    </option>
                     </select>
                   </div>
                 </div>
@@ -117,7 +113,7 @@
                         waves-effect waves-light
                         pull-right
                       "
-                      @click="searchVersion()"
+                      @click="searchRequisition()"
                     >
                       Search
                     </button>
@@ -494,6 +490,8 @@ export default {
       project: null,
       tasks: null,
       task: null,
+      submitted_for: null,
+      assignees: null,
       pagination: {
         count: null,
         next: null,
@@ -507,6 +505,12 @@ export default {
     getRequisitionList: function () {
       let endPoint = "project_requisition/";
       var queryParam = {
+        name: this.$route.query.name,
+        current: this.$route.query.current,
+        project: this.$route.query.project,
+        sprintId: this.$route.query.sprint_id,
+        version: this.$route.query.version,
+        status: this.$route.query.status,
         page: this.$route.query.page,
       };
       axios
@@ -736,6 +740,32 @@ export default {
           console.log(error);
         });
     },
+    getMember: function () {
+      axios
+        .get("project_member")
+        .then((response) => {
+          this.assignees = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+     // search section start 
+      searchRequisition() {
+
+      this.$router.push({
+        path: "project-requisition-list",
+        query: {
+          name: this.name,
+          project: this.project,
+          current: this.current,
+          status: this.status,
+          sprint_id: this.sprint_id,
+          version: this.version,
+        },
+      });
+
+    }
   },
   created() {
     this.getRequisitionList();
@@ -745,6 +775,7 @@ export default {
     this.getVersionList();
     this.getSprintList();
     this.getTaskList();
+    this.getMember();
   },
 };
 </script>

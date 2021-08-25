@@ -7,6 +7,104 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
+              <div class="row">
+                <div class="col-lg-2">
+                 <div class="form-group">
+                  <label>First Name</label>
+                   <input
+                    type="text"
+                    class="form-control"
+                    v-model="first_name"
+                  />
+                
+                </div>
+                
+                </div>
+                   <div class="col-lg-2">
+                 <div class="form-group">
+                  <label>Last Name</label>
+                   <input
+                    type="text"
+                    class="form-control"
+                    v-model="last_name"
+                  />
+                
+                </div>
+                
+                </div>
+                
+                  <div class="col-lg-2">
+                   <div class="form-group">
+                  <label>Username</label>
+                   <input
+                    type="text"
+                    class="form-control"
+                    v-model="username"
+                  />
+                </div>
+                </div>
+
+                 <div class="col-lg-2">
+                   <div class="form-group">
+                  <label>Groups</label>
+                      <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="groups"
+                  >
+                    <option value="false" disabled selected>Select</option>
+
+                    <option v-for="(g, i) in group_list" :key="i" :value="g.id">
+                      {{ g.name }}
+                    </option>
+                  </select>
+                </div>
+                </div>
+
+                  <div class="col-lg-2">
+                    <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    v-model="email"
+                  />
+              
+                </div>
+                </div>
+                 
+
+                 
+
+                  <div class="col-lg-1">
+                  <div class="form-group ">
+                     <label style="visibility: hidden">fgggggggf</label>
+                     <button
+                            type="button"
+                            class="
+                              btn btn-primary btn-sm
+                              
+                              waves-effect waves-light
+                              pull-right
+                            "
+                    
+                            @click="searchUser()"
+                          >
+                            Search
+                          </button>
+                  
+                  </div>
+
+                 
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-sm mb-0 table-bordered">
                   <thead>
@@ -97,6 +195,9 @@
             </div>
           </div>
         </div>
+       <div class="col-md-12"> 
+    <Pagination :pagination="pagination" /> 
+        </div>
       </div>
     </template>
   </Layout>
@@ -108,24 +209,56 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
+import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
   name: "DepartmentList",
   components: {
     Layout,
     PageTitle,
+    Pagination
   },
   data() {
     return {
       user_list: null,
+      first_name: null,
+      last_name: null,
+      email: null,
+      username: null,
+      groups: null,
+      group_list: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+  }
     };
   },
   methods: {
-    getUserList: function () {
+    getUserList: function (e) {
+
+      let endPoint = "users"
+      var queryParam = {
+        first_name: this.$route.query.first_name,
+        last_name: this.$route.query.last_name,
+        email: this.$route.query.email,
+        groups: this.$route.query.groups,
+        username: this.$route.query.username,
+        page: this.$route.query.page,
+      }
+
       axios
-        .get("users/")
+        .get(endPoint,{
+        params: queryParam
+      })
         .then((response) => {
           this.user_list = response.data.results;
+          this.pagination.count = response.data.count;
+          this.pagination.next = response.data.next;
+          this.pagination.previous = response.data.previous;
+          this.pagination.showing = response.data.results.length;
         })
         .catch(function (error) {
           console.log(error);
@@ -164,10 +297,41 @@ export default {
         }
       });
     },
+
+    
+// search start here
+    searchUser() {
+
+      this.$router.push({
+        path: "user-list",
+        query: {
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email,
+          groups: this.groups,
+          username: this.username,
+        },
+      });
+
+    },
+      getGroups: function () {
+      axios
+        .get("group_short_list")
+        .then((response) => {
+          this.group_list = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   created() {
     this.getUserList();
+    this.getGroups();
   },
+   updated() {
+    this.getUserList()
+  }
 };
 </script>
 

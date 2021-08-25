@@ -7,6 +7,37 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
+              <div class="row">
+                <div class="col-lg-11">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" v-model="name" />
+                  </div>
+                </div>
+
+                <div class="col-lg-1">
+                  <div class="form-group">
+                    <label style="visibility: hidden">fgggggggf</label>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-primary btn-sm
+                        waves-effect waves-light
+                        pull-right
+                      "
+                      @click="searchUnits()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-hover mb-0 table-bordered">
                   <thead>
@@ -100,9 +131,16 @@ export default {
     };
   },
   methods: {
-    getItemList: function () {
+    getunitList: function () {
+       let endPoint = "units/"
+      var queryParam = {
+        name: this.$route.query.name,
+        page: this.$route.query.page,
+      }
       axios
-        .get("units/")
+        .get(endPoint, {
+          params: queryParam
+        })
         .then((response) => {
           this.unit_list = response.data;
         })
@@ -135,7 +173,7 @@ export default {
         if (response.isConfirmed) {
           axios.delete("units/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getItemList();
+              this.getunitList();
             }
           });
           Swal.fire("Deleted!", "Unit has been deleted!!", "success");
@@ -144,10 +182,24 @@ export default {
         }
       });
     },
+     // search section start 
+      searchUnits() {
+
+      this.$router.push({
+        path: "unit-list",
+        query: {
+          name: this.name,
+        },
+      });
+
+    }
   },
   created() {
-    this.getItemList();
+    this.getunitList();
   },
+  updated() {
+    this.getunitList()
+  }
 };
 </script>
 

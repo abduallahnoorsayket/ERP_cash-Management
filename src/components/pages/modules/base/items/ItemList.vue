@@ -4,6 +4,38 @@
       <PageTitle title="Item List" />
 
       <div class="row">
+         <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-11">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" v-model="name" />
+                  </div>
+                </div>
+
+                <div class="col-lg-1">
+                  <div class="form-group">
+                    <label style="visibility: hidden">fgggggggf</label>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-primary btn-sm
+                        waves-effect waves-light
+                        pull-right
+                      "
+                      @click="searchItem()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
@@ -97,12 +129,20 @@ export default {
   data() {
     return {
       item_list: null,
+      name: null,
     };
   },
   methods: {
     getItemList: function () {
+      let endPoint = "items/"
+      var queryParam = {
+        name: this.$route.query.name,
+        page: this.$route.query.page,
+      }
       axios
-        .get("items/")
+        .get(endPoint, {
+          params: queryParam
+        })
         .then((response) => {
           this.item_list = response.data;
         })
@@ -145,10 +185,25 @@ export default {
         }
       });
     },
+     // search section start 
+      searchItem() {
+
+      this.$router.push({
+        path: "item-list",
+        query: {
+          name: this.name,
+        },
+      });
+
+    }
   },
   created() {
     this.getItemList();
   },
+
+  updated() {
+    this.getItemList()
+  }
 };
 </script>
 

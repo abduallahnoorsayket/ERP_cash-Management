@@ -7,6 +7,37 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
+              <div class="row">
+                <div class="col-lg-11">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" v-model="name" />
+                  </div>
+                </div>
+
+                <div class="col-lg-1">
+                  <div class="form-group">
+                    <label style="visibility: hidden">fgggggggf</label>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-primary btn-sm
+                        waves-effect waves-light
+                        pull-right
+                      "
+                      @click="searchDepartment()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-hover mb-0 table-bordered">
                   <thead>
@@ -66,6 +97,10 @@
             </div>
           </div>
         </div>
+
+          <div class="col-md-12"> 
+    <Pagination :pagination="pagination" /> 
+        </div>
       </div>
     </template>
   </Layout>
@@ -77,24 +112,45 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
+import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
   name: "DepartmentList",
   components: {
     Layout,
     PageTitle,
+    Pagination
   },
   data() {
     return {
       all_dep_list: null,
+      name: null,
+       pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+  }
     };
   },
   methods: {
-    getDeptList: function () {
+    getDeptList: function (e) {
+      let endPoint = "departments/"
+      var queryParam = {
+        name: this.$route.query.name,
+        page: this.$route.query.page,
+      }
       axios
-        .get("departments/")
+        .get(endPoint, {
+          params: queryParam
+        })
         .then((response) => {
           this.all_dep_list = response.data;
+          this.pagination.count = response.data.count;
+          this.pagination.next = response.data.next;
+          this.pagination.previous = response.data.previous;
+          this.pagination.showing = response.data.results.length;
         })
         .catch(function (error) {
           console.log(error);
@@ -135,10 +191,25 @@ export default {
         }
       });
     },
+
+     // search section start 
+      searchDepartment() {
+
+      this.$router.push({
+        path: "department-list",
+        query: {
+          name: this.name,
+        },
+      });
+
+    }
   },
   created() {
     this.getDeptList();
   },
+  updated() {
+    this.getDeptList()
+  }
 };
 </script>
 
