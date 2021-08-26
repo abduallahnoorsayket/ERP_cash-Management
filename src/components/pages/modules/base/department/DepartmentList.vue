@@ -125,7 +125,7 @@ export default {
     return {
       all_dep_list: null,
       name: null,
-       pagination: {
+      pagination: {
         count: null,
         next: null,
         previous: null,
@@ -146,7 +146,7 @@ export default {
           params: queryParam
         })
         .then((response) => {
-          this.all_dep_list = response.data;
+          this.all_dep_list = response.data.results;
           this.pagination.count = response.data.count;
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;

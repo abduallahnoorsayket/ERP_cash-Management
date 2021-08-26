@@ -97,6 +97,10 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-12">
+          <Pagination :pagination="pagination" />
+        </div>
       </div>
     </template>
   </Layout>
@@ -108,32 +112,45 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
+import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
   name: "ClientList",
   components: {
     Layout,
     PageTitle,
+    Pagination,
   },
   data() {
     return {
       all_client_list: null,
       name: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+      },
     };
   },
   methods: {
     getClientList: function (e) {
-       let endPoint = "clients/"
+      let endPoint = "clients/";
       var queryParam = {
         name: this.$route.query.name,
         page: this.$route.query.page,
-      }
+      };
       axios
         .get(endPoint, {
-          params: queryParam
+          params: queryParam,
         })
         .then((response) => {
-          this.all_client_list = response.data;
+          this.all_client_list = response.data.results;
+          this.pagination.count = response.data.count;
+          this.pagination.next = response.data.next;
+          this.pagination.previous = response.data.previous;
+          this.pagination.showing = response.data.results.length;
         })
         .catch(function (error) {
           console.log(error);
@@ -173,24 +190,22 @@ export default {
       });
     },
 
-    // search section start 
-      searchClient() {
-
+    // search section start
+    searchClient() {
       this.$router.push({
         path: "client-list",
         query: {
           name: this.name,
         },
       });
-
-    }
+    },
   },
   created() {
     this.getClientList();
   },
   updated() {
-    this.getClientList()
-  }
+    this.getClientList();
+  },
 };
 </script>
 

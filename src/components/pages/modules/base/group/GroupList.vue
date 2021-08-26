@@ -66,6 +66,9 @@
             </div>
           </div>
         </div>
+          <div class="col-md-12"> 
+    <Pagination :pagination="pagination" /> 
+        </div>
       </div>
     </template>
   </Layout>
@@ -77,24 +80,44 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
+import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
   name: "DepartmentList",
   components: {
     Layout,
     PageTitle,
+    Pagination
   },
   data() {
     return {
       group_list: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+  }
     };
   },
   methods: {
     getGroupList: function () {
+      let endPoint = "groups/"
+      var queryParam = {
+        name: this.$route.query.name,
+        page: this.$route.query.page,
+      }
       axios
-        .get("groups/")
+        .get(endPoint, {
+          params: queryParam
+        })
         .then((response) => {
           this.group_list = response.data.results;
+          this.pagination.count = response.data.count;
+          this.pagination.next = response.data.next;
+          this.pagination.previous = response.data.previous;
+          this.pagination.showing = response.data.results.length;
         })
         .catch(function (error) {
           console.log(error);
