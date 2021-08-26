@@ -209,9 +209,11 @@
                               </button>
                             </td>
                             <td>
+                             <span v-if="req.status_update_by">
                               {{ req.status_update_by.first_name }}
                               {{ req.status_update_by.last_name }}
                               ({{ req.status_update_by.username }})
+                             </span>
                             </td>
                           </tr>
                           <tr>
