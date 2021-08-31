@@ -135,7 +135,7 @@ export default {
     };
   },
   methods: {
-    getDeptList: function (e) {
+    getDeptList: function () {
       let endPoint = "departments/"
       var queryParam = {
         name: this.$route.query.name,

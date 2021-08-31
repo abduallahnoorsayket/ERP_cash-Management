@@ -309,20 +309,15 @@ export default {
   },
   methods: {
     getAllData: function () {
+      this.version = null;
+      this.sprint = null;
+      this.parent = null;
       this.getVersion();
       this.getMember();
+     
     },
 
-    // getStatus: function () {
-    //   axios
-    //     .get("project_status")
-    //     .then((response) => {
-    //       this.statusData = response.data.data;
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // },
+ 
     getProjectList: function () {
       axios
         .get("project_short/")
@@ -344,6 +339,7 @@ export default {
 
           this.version =
             currentVersion.length > 0 ? currentVersion[0].id : null;
+            
           if (this.version) {
             this.getSprint();
           }
@@ -363,7 +359,9 @@ export default {
 
           this.sprint = currentSprint.length > 0 ? currentSprint[0].id : null;
 
-          this.getParents();
+          if(this.sprint) {
+            this.getParents();
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -455,7 +453,7 @@ export default {
             icon: "success",
             text: "You have successfully created a Requisition.",
           }).then(() => {
-            this.$router.push("project_requisition-list");
+            this.$router.push("project-requisition-list");
           });
         })
         .catch((error) => {
