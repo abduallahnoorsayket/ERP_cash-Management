@@ -66,22 +66,7 @@
                   </div>
                 </div>
 
-                <div class="col-lg-2">
-                  <div class="form-group">
-                    <label>Submitted For</label>
-                    <select
-                      class="form-control"
-                      data-toggle="select2"
-                      v-model="submitted_for"
-                    >
-                      <option value="false" disabled selected>Select</option>
-
-                     <option v-for="(m, i) in assignees" :key="i" :value="m.id">
-                      {{ m.first_name }} {{ m.last_name }} ({{ m.username }})
-                    </option>
-                    </select>
-                  </div>
-                </div>
+              
                <div class="col-lg-2">
                   <div class="form-group">
                     <label>Task</label>
@@ -103,7 +88,53 @@
                   </div>
                 </div>
 
-                <div class="col-lg-1">
+                  <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="search_status"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                      <option
+                                  v-for="(u, i) in requisition_status"
+                                  :key="i"
+                                  :value="u.key"
+                                >
+                                  {{ u.value }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                  <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Submitted For</label>
+                    <select
+                      class="form-control"
+                      data-toggle="select2"
+                      v-model="submitted_for"
+                    >
+                      <option value="false" disabled selected>Select</option>
+
+                     <option v-for="(m, i) in assignees" :key="i" :value="m.id">
+                      {{ m.first_name }} {{ m.last_name }} ({{ m.username }})
+                    </option>
+                    </select>
+                  </div>
+                </div>
+
+                 <div class="col-lg-2">
+                  <div class="form-group">
+                    <label>Submitted Date</label>
+                
+                    <input type="date" class="form-control" v-model="submitted_date" />
+                  
+                  </div>
+                </div>
+
+                <div class="col-lg-2 offset-lg-10">
                   <div class="form-group">
                     <label style="visibility: hidden">fgggggggf</label>
                     <button
@@ -170,25 +201,27 @@
                           <tr>
                             <td>
                               <select
-                                v-model="status"
+                             
                                 v-if="is_superuser || can_approve_requisition"
-                                @change="updateStatus(req.id)"
+                                @change="updateStatus(req.id,$event)"
                               >
                                 <option
                                   v-for="(u, i) in requisition_status"
                                   :key="i"
                                   :value="u.key"
+                                  :selected= "u.key == req.status" 
                                 >
                                   {{ u.value }}
                                 </option>
                               </select>
 
                               <select
-                                v-model="status"
+                                @change="updateStatus(req.id,$event)"
                                 v-else-if="
                                   can_verify_requisition && req.status === 'PN'
                                 "
                               >
+                                <option selected>Pending</option>
                                 <option value="RJ">Rejected</option>
                                 <option value="VE">Verified</option>
                               </select>
@@ -201,7 +234,7 @@
                                 type="button"
                                 data-toggle="modal"
                                 data-target=".bs-example-modal-xl"
-                                class="btn btn-purple btn-xs edit_btn"
+                                class="btn btn-primary btn-xs edit_btn"
                                 @click="modal_requisition(req.id)"
                                 v-if="is_superuser || can_approve_requisition"
                               >
@@ -494,6 +527,8 @@ export default {
       task: null,
       submitted_for: null,
       assignees: null,
+      search_status: null,
+      submitted_date: null,
       pagination: {
         count: null,
         next: null,
@@ -507,12 +542,13 @@ export default {
     getRequisitionList: function () {
       let endPoint = "project_requisition/";
       var queryParam = {
-        name: this.$route.query.name,
-        current: this.$route.query.current,
+        task: this.$route.query.task,
+        search_status: this.$route.query.search_status,
         project: this.$route.query.project,
-        sprintId: this.$route.query.sprint_id,
+        sprint: this.$route.query.sprint,
         version: this.$route.query.version,
-        status: this.$route.query.status,
+        submitted_date: this.$route.query.submitted_date,
+        submitted_for: this.$route.query.submitted_for,
         page: this.$route.query.page,
       };
       axios
@@ -566,11 +602,11 @@ export default {
         });
     },
 
-    updateStatus: function (id) {
+    updateStatus: function (id,e) {
       // console.log("186", id);
       axios
         .put("project_requisition_approval/" + id + "/", {
-          status: this.status,
+          status: e.target.value,
         })
         .then(() => {
           Swal.fire({
@@ -758,12 +794,13 @@ export default {
       this.$router.push({
         path: "project-requisition-list",
         query: {
-          name: this.name,
           project: this.project,
-          current: this.current,
-          status: this.status,
-          sprint_id: this.sprint_id,
+          search_status: this.search_status,
+          sprint: this.sprint,
           version: this.version,
+          submitted_for: this.submitted_for,
+          task: this.task,
+          submitted_date: this.submitted_date,
         },
       });
 
@@ -779,6 +816,9 @@ export default {
     this.getTaskList();
     this.getMember();
   },
+   updated() {
+    this.getRequisitionList()
+  }
 };
 </script>
 
