@@ -90,11 +90,12 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="parent"
+                    @change="hasTargetChange($event)"
                     :class="{ 'parsley-error': errors && errors.task }"
                   >
                     <option value="false" disabled selected>No Parent</option>
 
-                    <option v-for="(p, i) in parents" :key="i" :value="p.id">
+                    <option v-for="(p, i) in parents" :key="i" :value="p.id" :data-hastarget="p.has_target">
                       {{ p.name }} - ({{ p.taskId }})
                     </option>
                   </select>
@@ -295,6 +296,7 @@ export default {
       items: null,
       units: null,
       all_total: 0.0,
+      has_target: null,
       dom_repeats: [
         {
           item: "",
@@ -412,6 +414,25 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+
+    hasTargetChange: function(event) {
+      // console.log('419',typeof(JSON.parse(event.target.selectedOptions[0].dataset.hastarget)));
+       this.has_target = JSON.parse(event.target.selectedOptions[0].dataset.hastarget)
+        console.log('422 has_target ', this.has_target )
+      if(this.has_target) {
+         let id = this.parent;
+         console.log('id 425', id)
+       axios
+        .get(`task_target/${id}`)
+        .then((response) => {
+           response.data.target;
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+      }
+     
     },
 
     calculateTotal: function (dom_repeat) {

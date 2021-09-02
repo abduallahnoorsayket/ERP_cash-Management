@@ -543,7 +543,7 @@ export default {
       let endPoint = "project_requisition/";
       var queryParam = {
         task: this.$route.query.task,
-        search_status: this.$route.query.search_status,
+        status: this.$route.query.search_status,
         project: this.$route.query.project,
         sprint: this.$route.query.sprint,
         version: this.$route.query.version,
@@ -798,6 +798,7 @@ export default {
           search_status: this.search_status,
           sprint: this.sprint,
           version: this.version,
+          status: this.status,
           submitted_for: this.submitted_for,
           task: this.task,
           submitted_date: this.submitted_date,
