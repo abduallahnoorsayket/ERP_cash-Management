@@ -16,7 +16,7 @@
             <!-- End mobile menu toggle-->
           </li>
 
-          <!-- <li class="dropdown d-none d-lg-block">
+         <li class="dropdown d-none d-lg-block">
             <a
               class="nav-link dropdown-toggle mr-0"
               data-toggle="dropdown"
@@ -37,7 +37,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right"> -->
               <!-- item-->
-              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/germany.jpg"
                   alt="user-image"
@@ -45,10 +45,10 @@
                   height="12"
                 />
                 <span class="align-middle">German</span>
-              </a> -->
+              </a> 
 
               <!-- item-->
-              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/italy.jpg"
                   alt="user-image"
@@ -56,10 +56,10 @@
                   height="12"
                 />
                 <span class="align-middle">Italian</span>
-              </a> -->
+              </a> 
 
               <!-- item-->
-              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/spain.jpg"
                   alt="user-image"
@@ -67,10 +67,10 @@
                   height="12"
                 />
                 <span class="align-middle">Spanish</span>
-              </a> -->
+              </a> 
 
               <!-- item-->
-              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img
                   src="assets/images/flags/russia.jpg"
                   alt="user-image"
@@ -79,8 +79,8 @@
                 />
                 <span class="align-middle">Russian</span>
               </a>
-            </div> -->
-          <!-- </li> -->
+            </div> 
+           </li>
 
           <li class="dropdown notification-list">
             <a

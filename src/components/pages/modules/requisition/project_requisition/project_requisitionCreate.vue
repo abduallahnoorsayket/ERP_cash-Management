@@ -124,6 +124,7 @@
                     type="button"
                     class="btn btn-info mr-3"
                     @click="addNewRow"
+                    v-if="!has_target"
                   >
                     <i class="fas fa-plus-circle"></i>
                   </button>
@@ -202,6 +203,9 @@
                               v-model="dom_repeat.quantity"
                               @change="calculateTotal(dom_repeat)"
                             />
+                              <ul class="parsley-errors-list filled" v-if="has_target">
+           <li class="parsley-required">Target is {{dom_repeat.target_quantity}}</li>
+                           </ul>
                           </td>
                           <td>
                             <input
@@ -299,12 +303,12 @@ export default {
       has_target: null,
       dom_repeats: [
         {
-          item: "",
-          amount: "",
-          quantity: "",
-          total: "",
-          unit: 0,
-          remarks: "",
+          item: null,
+          amount: null,
+          quantity: null,
+          total: null,
+          unit: null,
+          remarks: null,
         },
       ],
     };
@@ -423,14 +427,36 @@ export default {
       if(this.has_target) {
          let id = this.parent;
          console.log('id 425', id)
+          this.dom_repeats = []
        axios
         .get(`task_target/${id}`)
         .then((response) => {
-           response.data.target;
+            response.data.target.map((target) => {
+            this.dom_repeats.push({
+                  item: target.item.id,
+                  unit: target.unit.id,
+                  quantity: null,
+                  target_quantity: target.quantity,
+                  amount: null,
+                  total: null,
+                  remarks: null,
+             });
+           });
         })
         .catch(function (error) {
           console.log(error);
         })
+      }else {
+         this.dom_repeats = [
+        {
+          item: null,
+          amount: null,
+          quantity: null,
+          total: null,
+          unit: null,
+          remarks: null,
+        },
+      ]
       }
      
     },

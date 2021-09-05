@@ -161,16 +161,29 @@
                 <table class="table table-sm mb-0 table-bordered">
                   <thead>
                     <tr>
+                      <th scope="col">Project</th>
+                      <th scope="col">Version</th>
+                      <th scope="col">Sprint</th>
                       <th scope="col">Task</th>
-                      <th scope="col">Requisition Details</th>
-                      <th scope="col">Status</th>
+                      <th scope="col" class="text-center">Requisition Details</th>
+                      <th scope="col" class="text-center">Status & Date</th>
                       <th scope="col">Information</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(req, index) in requisition_list" :key="index">
-                      <th scope="row">{{ req.task.name }}</th>
+                      <td scope="row">{{  req.task.sprint.version.project.name}}</td>
+                      <td scope="row">{{  req.task.sprint.version.name }}</td>
+                      <td scope="row">{{ req.task.sprint.name }}</td>
+                      <td scope="row">
+                        {{ req.task.name}}
+
+                       <span class="badge badge-pill badge-primary" v-if="req.task.has_target">
+                         <i class="fas fa-rocket"></i>
+                        </span>
+
+                      </td>
                       <td>
                         <div class="table-responsive">
                           <table class="table table-sm mb-0">
@@ -322,6 +335,14 @@
                           </ul>
                         </div>
                       </td>
+                    </tr>
+                    <tr>
+                     <td colspan="4">
+                       Total
+                     </td>
+                     <td >
+                       {{ total_amount }}
+                     </td>
                     </tr>
                   </tbody>
                 </table>
@@ -529,6 +550,7 @@ export default {
       assignees: null,
       search_status: null,
       submitted_date: null,
+      total_amount: null,
       pagination: {
         count: null,
         next: null,
@@ -557,6 +579,7 @@ export default {
         })
         .then((response) => {
           this.requisition_list = response.data.results;
+          this.total_amount = response.data.total_amount;
           this.pagination.count = response.data.count;
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;
@@ -827,5 +850,8 @@ export default {
 .edit_btn {
   margin-left: 10px;
   cursor: pointer;
+}
+.table-bordered td, .table-bordered th {
+  font-size: 90%;
 }
 </style>
