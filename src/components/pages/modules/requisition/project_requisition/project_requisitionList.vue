@@ -179,34 +179,13 @@
                       <td scope="row">
                         {{ req.task.name}}
 
-                       <span class="badge badge-pill badge-primary" v-if="req.task.has_target">
-                         <i class="fas fa-rocket"></i>
-                        </span>
+                         <button class="btn btn-sm btn-primary waves-effect waves-light" v-if="req.task.has_target">
+                           <i class="fas fa-rocket mr-1"></i>  
+                          </button>
 
                       </td>
                       <td>
-                        <div class="table-responsive">
-                          <table class="table table-sm mb-0">
-                            <thead>
-                              <tr>
-                                <th scope="col">Item</th>
-                                <th scope="col">Unit</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Total</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-for="(r, index) in req.detail" :key="index">
-                                <td>{{ r.item.name }}</td>
-                                <td>{{ r.unit.name }}</td>
-                                <td>{{ r.quantity }}</td>
-                                <td>{{ r.amount }}</td>
-                                <td>{{ r.total }}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                       <RequisitionDetailsTable :reqDetail="req.detail" />
                       </td>
 
                       <td>
@@ -261,6 +240,11 @@
                               ({{ req.status_update_by.username }})
                              </span>
                             </td>
+                            
+                          </tr>
+                         <tr>
+                            <td>Submitted For</td>
+                            <td>{{ req.submitted_for.first_name }} {{ req.submitted_for.last_name }}({{ req.submitted_for.username }})</td>
                           </tr>
                           <tr>
                             <td>Submitted At</td>
@@ -276,6 +260,8 @@
                           </tr>
                         </table>
                       </td>
+
+                  
                       <td>
                         <span class="badge badge-success"
                           >Total Count - {{ req.requisition_count }}</span
@@ -512,6 +498,7 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
 import Pagination from "@/components/layouts/partials/Pagination";
+import RequisitionDetailsTable from "./partial/RequisitionDetailsTable";
 
 export default {
   name: "project_requisitionList",
@@ -519,6 +506,7 @@ export default {
     Layout,
     PageTitle,
     Pagination,
+    RequisitionDetailsTable
   },
   data() {
     return {
