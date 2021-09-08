@@ -342,6 +342,14 @@
         </div>
       </div>
 
+        <CommonModal>
+        <template v-slot:modal_header>
+            <p>This is modal Header</p>
+        </template>
+        <template v-slot:modal_body>
+            <p>This is modal body</p>
+        </template>
+        </CommonModal>
       <!-- modal start -->
 
       <div
@@ -485,7 +493,7 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- modal end -->
-
+      
       <!-- <div id="back_drop" class="modal-backdrop fade show" v-if="modal_show"></div> -->
     </template>
   </Layout>
@@ -498,6 +506,7 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
 import Pagination from "@/components/layouts/partials/Pagination";
+import CommonModal from "@/components/layouts/partials/CommonModal";
 import RequisitionDetailsTable from "./partial/RequisitionDetailsTable";
 
 export default {
@@ -506,7 +515,8 @@ export default {
     Layout,
     PageTitle,
     Pagination,
-    RequisitionDetailsTable
+    RequisitionDetailsTable,
+    CommonModal
   },
   data() {
     return {
