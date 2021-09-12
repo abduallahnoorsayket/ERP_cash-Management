@@ -35,7 +35,7 @@
                 >English <i class="mdi mdi-chevron-down"></i>
               </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right"> -->
+            <div class="dropdown-menu dropdown-menu-right"> 
               <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <img

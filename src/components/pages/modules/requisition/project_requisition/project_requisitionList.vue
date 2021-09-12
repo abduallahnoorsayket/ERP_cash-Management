@@ -179,7 +179,13 @@
                       <td scope="row">
                         {{ req.task.name}}
 
-                         <button class="btn btn-sm btn-primary waves-effect waves-light" v-if="req.task.has_target">
+                         <button
+                          data-toggle="modal"
+                          data-target=".bs-example-modal-xl"
+                          class="btn btn-sm btn-primary waves-effect waves-light" 
+                          v-if="req.task.has_target"
+                          @click="getTask_target(req.task.id)"
+                          >
                            <i class="fas fa-rocket mr-1"></i>  
                           </button>
 
@@ -342,12 +348,117 @@
         </div>
       </div>
 
-        <CommonModal>
+        <CommonModal :isModalVisible="isModalVisible" v-if="task_targets">
+      
         <template v-slot:modal_header>
-            <p>This is modal Header</p>
+            <p>Task Targets</p>
         </template>
         <template v-slot:modal_body>
-            <p>This is modal body</p>
+            
+          <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col text-right">Quantity</th>
+                        <th scope="col text-right">Amount</th>
+                        <th scope="col text-right">Total</th>
+                        <th scope="col text-right">Remarks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(task_target, k) in task_targets"
+                        :key="k"
+                      >
+                        <td>
+                          <select
+                            class="form-control text-right"
+                            v-model="task_target.item"
+                          >
+                            <option
+                              v-for="(it, i) in items"
+                              :key="i"
+                              :value="it.id"
+                            >
+                              {{ it.name }}
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            class="form-control text-right"
+                            v-model="task_target.unit"
+                          >
+                            <option
+                              v-for="(u, i) in units"
+                              :key="i"
+                              :value="u.id"
+                            >
+                              {{ u.name }}
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                            v-model="task_target.quantity"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            readonly="readonly"
+                            type="number"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                      
+                          />
+                        </td>
+                        <td>
+                          <textarea
+                            type="text"
+                            rows="1"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="6" class="text-right">
+                          <button
+             
+                            type="button"
+                            class="
+                              btn btn-primary
+                              waves-effect waves-light
+                              cus_right
+                            "
+                          >
+                            Submit
+                          </button>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
         </template>
         </CommonModal>
       <!-- modal start -->
@@ -549,6 +660,8 @@ export default {
       search_status: null,
       submitted_date: null,
       total_amount: null,
+      isModalVisible: false,
+      task_targets: null,
       pagination: {
         count: null,
         next: null,
@@ -826,7 +939,37 @@ export default {
         },
       });
 
+    },
+ 
+      getTask_target: function (id) {
+        this.task_targets = null;
+        this.isModalVisible = false;
+      axios
+        .get("task_target/" + id )
+        .then((response) => {
+          // this.task_targets = response.data.target
+         
+          this.task_targets = response.data.target.map(
+            (detail) => {
+              return {
+                id: detail.id,
+                quantity: detail.quantity,
+                item: detail.item.id,
+                unit: detail.unit.id,
+                task: id,
+              };
+            }
+          );
+
+          this.getItem();
+          this.getUnit();
+          this.isModalVisible = true
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
+      
   },
   created() {
     this.getRequisitionList();
