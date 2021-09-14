@@ -331,7 +331,7 @@ export default {
           this.getVersion();
           this.getSprint();
           // this.getTask();
-          this.getAllTotal();
+          // this.getAllTotal();
         })
         .catch((err) => {
           console.log("error", err);

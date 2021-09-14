@@ -4,11 +4,11 @@
       <PageTitle title="Project Requisition List" />
 
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label>Project</label>
                     <select
@@ -28,7 +28,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label>Version</label>
                     <select
@@ -49,7 +49,7 @@
                   </div>
                 </div>
 
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label>Sprint</label>
                     <select
@@ -66,8 +66,7 @@
                   </div>
                 </div>
 
-              
-               <div class="col-lg-2">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label>Task</label>
                     <select
@@ -77,18 +76,14 @@
                     >
                       <option value="false" disabled selected>Select</option>
 
-                      <option
-                        v-for="(t, i) in tasks"
-                        :key="i"
-                        :value="t.id"
-                      >
+                      <option v-for="(t, i) in tasks" :key="i" :value="t.id">
                         {{ t.name }}
                       </option>
                     </select>
                   </div>
                 </div>
 
-                  <div class="col-lg-2">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label>Status</label>
                     <select
@@ -99,16 +94,16 @@
                       <option value="false" disabled selected>Select</option>
 
                       <option
-                                  v-for="(u, i) in requisition_status"
-                                  :key="i"
-                                  :value="u.key"
-                                >
-                                  {{ u.value }}
+                        v-for="(u, i) in requisition_status"
+                        :key="i"
+                        :value="u.key"
+                      >
+                        {{ u.value }}
                       </option>
                     </select>
                   </div>
                 </div>
-                  <div class="col-lg-2">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label>Submitted For</label>
                     <select
@@ -118,19 +113,26 @@
                     >
                       <option value="false" disabled selected>Select</option>
 
-                     <option v-for="(m, i) in assignees" :key="i" :value="m.id">
-                      {{ m.first_name }} {{ m.last_name }} ({{ m.username }})
-                    </option>
+                      <option
+                        v-for="(m, i) in assignees"
+                        :key="i"
+                        :value="m.id"
+                      >
+                        {{ m.first_name }} {{ m.last_name }} ({{ m.username }})
+                      </option>
                     </select>
                   </div>
                 </div>
 
-                 <div class="col-lg-2">
+                <div class="col-lg-4">
                   <div class="form-group">
                     <label>Submitted Date</label>
-                
-                    <input type="date" class="form-control" v-model="submitted_date" />
-                  
+
+                    <input
+                      type="date"
+                      class="form-control"
+                      v-model="submitted_date"
+                    />
                   </div>
                 </div>
 
@@ -154,6 +156,41 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+      
+              <div class="table-responsive">
+                <table class="table table-sm mb-0">
+                
+                  <tbody>
+                    <tr v-show="total_pending">
+                      <th>Pending</th>
+                      <td >{{total_pending}}</td>
+                    </tr>
+                    <tr v-show="total_approved">
+                      <th>Approved</th>
+                      <td>{{total_approved}}</td>
+                    </tr>
+                    <tr v-show="total_verified">
+                      <th>Verified</th>
+                      <td>{{total_verified}}</td>
+                    </tr>
+                    <tr v-show="total_rejected">
+                      <th>Rejected</th>
+                      <td>{{total_rejected}}</td>
+                    </tr>
+                    <tr v-show="total_amount">
+                      <th>Total</th>
+                      <td>{{total_amount}}</td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
@@ -165,7 +202,9 @@
                       <th scope="col">Version</th>
                       <th scope="col">Sprint</th>
                       <th scope="col">Task</th>
-                      <th scope="col" class="text-center">Requisition Details</th>
+                      <th scope="col" class="text-center">
+                        Requisition Details
+                      </th>
                       <th scope="col" class="text-center">Status & Date</th>
                       <th scope="col">Information</th>
                       <th scope="col">Action</th>
@@ -173,25 +212,29 @@
                   </thead>
                   <tbody>
                     <tr v-for="(req, index) in requisition_list" :key="index">
-                      <td scope="row">{{  req.task.sprint.version.project.name}}</td>
-                      <td scope="row">{{  req.task.sprint.version.name }}</td>
+                      <td scope="row">
+                        {{ req.task.sprint.version.project.name }}
+                      </td>
+                      <td scope="row">{{ req.task.sprint.version.name }}</td>
                       <td scope="row">{{ req.task.sprint.name }}</td>
                       <td scope="row">
-                        {{ req.task.name}}
+                        {{ req.task.name }}
 
-                         <button
+                        <button
                           data-toggle="modal"
                           data-target=".bs-example-modal-xl"
-                          class="btn btn-sm btn-primary waves-effect waves-light" 
+                          class="
+                            btn btn-sm btn-primary
+                            waves-effect waves-light
+                          "
                           v-if="req.task.has_target"
                           @click="getTask_target(req.task.id)"
-                          >
-                           <i class="fas fa-rocket mr-1"></i>  
-                          </button>
-
+                        >
+                          <i class="fas fa-rocket mr-1"></i>
+                        </button>
                       </td>
                       <td>
-                       <RequisitionDetailsTable :reqDetail="req.detail" />
+                        <RequisitionDetailsTable :reqDetail="req.detail" />
                       </td>
 
                       <td>
@@ -199,22 +242,21 @@
                           <tr>
                             <td>
                               <select
-                             
                                 v-if="is_superuser || can_approve_requisition"
-                                @change="updateStatus(req.id,$event)"
+                                @change="updateStatus(req.id, $event)"
                               >
                                 <option
                                   v-for="(u, i) in requisition_status"
                                   :key="i"
                                   :value="u.key"
-                                  :selected= "u.key == req.status" 
+                                  :selected="u.key == req.status"
                                 >
                                   {{ u.value }}
                                 </option>
                               </select>
 
                               <select
-                                @change="updateStatus(req.id,$event)"
+                                @change="updateStatus(req.id, $event)"
                                 v-else-if="
                                   can_verify_requisition && req.status === 'PN'
                                 "
@@ -240,17 +282,21 @@
                               </button>
                             </td>
                             <td>
-                             <span v-if="req.status_update_by">
-                              {{ req.status_update_by.first_name }}
-                              {{ req.status_update_by.last_name }}
-                              ({{ req.status_update_by.username }})
-                             </span>
+                              <span v-if="req.status_update_by">
+                                {{ req.status_update_by.first_name }}
+                                {{ req.status_update_by.last_name }}
+                                ({{ req.status_update_by.username }})
+                              </span>
                             </td>
-                            
                           </tr>
-                         <tr>
+                          <tr>
                             <td>Submitted For</td>
-                            <td>{{ req.submitted_for.first_name }} {{ req.submitted_for.last_name }}({{ req.submitted_for.username }})</td>
+                            <td>
+                              {{ req.submitted_for.first_name }}
+                              {{ req.submitted_for.last_name }}({{
+                                req.submitted_for.username
+                              }})
+                            </td>
                           </tr>
                           <tr>
                             <td>Submitted At</td>
@@ -267,7 +313,6 @@
                         </table>
                       </td>
 
-                  
                       <td>
                         <span class="badge badge-success"
                           >Total Count - {{ req.requisition_count }}</span
@@ -328,14 +373,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
-                     <td colspan="4">
-                       Total
-                     </td>
-                     <td >
-                       {{ total_amount }}
-                     </td>
-                    </tr>
+                   
                   </tbody>
                 </table>
               </div>
@@ -348,119 +386,48 @@
         </div>
       </div>
 
-        <CommonModal :isModalVisible="isModalVisible" v-if="task_targets">
-      
+      <CommonModal :isModalVisible="isModalVisible" v-if="task_targets">
         <template v-slot:modal_header>
-            <p>Task Targets</p>
+          <p>Task Targets</p>
         </template>
         <template v-slot:modal_body>
-            
           <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Item</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col text-right">Quantity</th>
-                        <th scope="col text-right">Amount</th>
-                        <th scope="col text-right">Total</th>
-                        <th scope="col text-right">Remarks</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="(task_target, k) in task_targets"
-                        :key="k"
-                      >
-                        <td>
-                          <select
-                            class="form-control text-right"
-                            v-model="task_target.item"
-                          >
-                            <option
-                              v-for="(it, i) in items"
-                              :key="i"
-                              :value="it.id"
-                            >
-                              {{ it.name }}
-                            </option>
-                          </select>
-                        </td>
-                        <td>
-                          <select
-                            class="form-control text-right"
-                            v-model="task_target.unit"
-                          >
-                            <option
-                              v-for="(u, i) in units"
-                              :key="i"
-                              :value="u.id"
-                            >
-                              {{ u.name }}
-                            </option>
-                          </select>
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                            v-model="task_target.quantity"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            readonly="readonly"
-                            type="number"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                      
-                          />
-                        </td>
-                        <td>
-                          <textarea
-                            type="text"
-                            rows="1"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colspan="6" class="text-right">
-                          <button
-             
-                            type="button"
-                            class="
-                              btn btn-primary
-                              waves-effect waves-light
-                              cus_right
-                            "
-                          >
-                            Submit
-                          </button>
-                        </td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col text-right">Quantity</th>
+                    <th scope="col text-right">Acquired Quantity</th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(task_target, k) in task_targets" :key="k">
+                    <td>
+                    {{task_target.item}}
+                    </td>
+                    <td>
+                    {{task_target.unit}}
+                    </td>
+                    <td>
+                      {{task_target.quantity}}
+                    </td>
+                    <td>
+                     {{task_target.acquired_quantity}}
+                    </td>
+                    
+                  </tr>
+                </tbody>
+                <tfoot>
+                 
+                </tfoot>
+              </table>
+            </div>
+          </div>
         </template>
-        </CommonModal>
+      </CommonModal>
       <!-- modal start -->
 
       <div
@@ -604,7 +571,7 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- modal end -->
-      
+
       <!-- <div id="back_drop" class="modal-backdrop fade show" v-if="modal_show"></div> -->
     </template>
   </Layout>
@@ -627,7 +594,7 @@ export default {
     PageTitle,
     Pagination,
     RequisitionDetailsTable,
-    CommonModal
+    CommonModal,
   },
   data() {
     return {
@@ -659,9 +626,13 @@ export default {
       assignees: null,
       search_status: null,
       submitted_date: null,
-      total_amount: null,
       isModalVisible: false,
       task_targets: null,
+      total_amount: null,
+      total_pending: null,
+      total_approved: null,
+      total_rejected: null,
+      total_verified: null,
       pagination: {
         count: null,
         next: null,
@@ -691,6 +662,10 @@ export default {
         .then((response) => {
           this.requisition_list = response.data.results;
           this.total_amount = response.data.total_amount;
+          this.total_pending = response.data.total_pending;
+          this.total_approved = response.data.total_approved;
+          this.total_rejected = response.data.total_rejected;
+          this.total_verified = response.data.total_verified;
           this.pagination.count = response.data.count;
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;
@@ -736,7 +711,7 @@ export default {
         });
     },
 
-    updateStatus: function (id,e) {
+    updateStatus: function (id, e) {
       // console.log("186", id);
       axios
         .put("project_requisition_approval/" + id + "/", {
@@ -922,9 +897,8 @@ export default {
           console.log(error);
         });
     },
-     // search section start 
-      searchRequisition() {
-
+    // search section start
+    searchRequisition() {
       this.$router.push({
         path: "project-requisition-list",
         query: {
@@ -938,38 +912,35 @@ export default {
           submitted_date: this.submitted_date,
         },
       });
-
     },
- 
-      getTask_target: function (id) {
-        this.task_targets = null;
-        this.isModalVisible = false;
+
+    getTask_target: function (id) {
+      this.task_targets = null;
+      this.isModalVisible = false;
       axios
-        .get("task_target/" + id )
+        .get("task_target/" + id)
         .then((response) => {
           // this.task_targets = response.data.target
-         
-          this.task_targets = response.data.target.map(
-            (detail) => {
-              return {
-                id: detail.id,
-                quantity: detail.quantity,
-                item: detail.item.id,
-                unit: detail.unit.id,
-                task: id,
-              };
-            }
-          );
+
+          this.task_targets = response.data.target.map((detail) => {
+            return {
+              id: detail.id,
+              quantity: detail.quantity,
+              item: detail.item.name,
+              unit: detail.unit.name,
+              task: id,
+              acquired_quantity: detail.acquired_quantity,
+            };
+          });
 
           this.getItem();
           this.getUnit();
-          this.isModalVisible = true
+          this.isModalVisible = true;
         })
         .catch(function (error) {
           console.log(error);
         });
-    }
-      
+    },
   },
   created() {
     this.getRequisitionList();
@@ -981,9 +952,9 @@ export default {
     this.getTaskList();
     this.getMember();
   },
-   updated() {
-    this.getRequisitionList()
-  }
+  updated() {
+    this.getRequisitionList();
+  },
 };
 </script>
 
@@ -992,7 +963,8 @@ export default {
   margin-left: 10px;
   cursor: pointer;
 }
-.table-bordered td, .table-bordered th {
+.table-bordered td,
+.table-bordered th {
   font-size: 90%;
 }
 </style>

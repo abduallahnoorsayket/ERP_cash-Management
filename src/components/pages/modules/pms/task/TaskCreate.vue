@@ -291,8 +291,12 @@
                     <i class="fas fa-plus-circle"></i>
                   </button>
                 </div>
-               
-                
+               {{errors}} fdhfjgkky
+                <div class="col-md-12 mb-3" v-if="errors && errors.item_task">
+                  <div class="alert alert-warning">
+                    <strong>Warning!</strong> {{errors.item_task[0]}}
+                  </div>
+                </div>
 
                 <div class="col-md-12">
                   <div class="table-responsive">
@@ -332,7 +336,7 @@
                                 {{ it.name }}
                               </option>
                             </select>
-                             <ValidationError :error="errors.target[k].item" v-if="errors && errors.target[k].item" />
+                             <ValidationError :error="errors.target[k].item" v-if="errors && errors.target && errors.target[k].item" />
                           </td>
                           <td>
                             <select
@@ -356,7 +360,7 @@
                               step=".01"
                               class="form-control text-right"
                               v-model="dom_repeat.quantity"
-                              @change="calculateTotal(dom_repeat)"
+                              
                             />
                             <ValidationError :error="errors.target[k].item" v-if="errors && errors.target[k].item" />
                           </td>
