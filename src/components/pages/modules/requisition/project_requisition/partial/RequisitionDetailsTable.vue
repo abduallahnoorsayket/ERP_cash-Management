@@ -12,7 +12,12 @@
       </thead>
       <tbody>
         <tr v-for="(r, index) in reqDetail" :key="index">
-          <td>{{ r.item.name }}</td>
+          <td >
+            <button class="btn btn-purple waves-effect waves-light btn-xs" 
+            @click="details_obj(r.object_history)">
+             {{ r.item.name }}
+            </button>
+          </td>
           <td>{{ r.unit.name }}</td>
           <td>{{ r.quantity }}</td>
           <td>{{ r.amount }}</td>
@@ -28,8 +33,13 @@ export default {
     name:"RequisitionDetailsTable",
     props: ['reqDetail'],
   data() {
-    return {};
+    return {
+
+    };
   },
+  methods: {
+
+  }
 };
 </script>
 

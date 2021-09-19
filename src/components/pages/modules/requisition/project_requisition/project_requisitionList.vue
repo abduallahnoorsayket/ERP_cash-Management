@@ -220,18 +220,12 @@
                       <td scope="row">
                         {{ req.task.name }}
 
-                        <button
-                          data-toggle="modal"
-                          data-target=".bs-example-modal-xl"
-                          class="
-                            btn btn-sm btn-primary
-                            waves-effect waves-light
-                          "
-                          v-if="req.task.has_target"
-                          @click="getTask_target(req.task.id)"
-                        >
-                          <i class="fas fa-rocket mr-1"></i>
-                        </button>
+                   <br>
+                       
+                          <span class="badge badge-primary req_btn" v-if="req.task.has_target" @click="getTask_target(req.task.id)">
+                            <i class="fas fa-rocket mr-1"></i>
+                            </span>
+                         
                       </td>
                       <td>
                         <RequisitionDetailsTable :reqDetail="req.detail" />
@@ -270,22 +264,31 @@
                                 requisition_obj[req.status]
                               }}</span>
 
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target=".bs-example-modal-xl"
-                                class="btn btn-primary btn-xs edit_btn"
-                                @click="modal_requisition(req.id)"
-                                v-if="is_superuser || can_approve_requisition"
-                              >
+                            
+                              <span  
+                              data-toggle="modal"
+                              data-target=".bs-example-modal-xl"
+                              class="badge badge-primary req_btn"
+                              @click="modal_requisition(req.id)"  
+                              v-if="is_superuser || can_approve_requisition">
                                 <i class="far fa-edit"></i>
-                              </button>
+                              </span>
+                            
+                             
+
                             </td>
                             <td>
                               <span v-if="req.status_update_by">
                                 {{ req.status_update_by.first_name }}
                                 {{ req.status_update_by.last_name }}
                                 ({{ req.status_update_by.username }})
+                              </span>
+                              <span  
+                              data-toggle="modal"
+                              data-target=".bs-example-modal-xl"
+                              class="badge badge-primary req_btn"
+                              @click="requisition_history(req.id)">
+                                <i class="fas fa-history"></i>
                               </span>
                             </td>
                           </tr>
@@ -429,6 +432,44 @@
         </template>
       </CommonModal>
       <!-- modal start -->
+        <CommonModal :isModalVisible="isModalVisible" v-if="history_obj">
+        <template v-slot:modal_header>
+          <p>Requisition Status history</p>
+        </template>
+        <template v-slot:modal_body>
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Datetime</th>
+                    <th scope="col">Status</th>
+                    <th scope="col text-right">status_update_by</th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(history, k) in history_obj" :key="k">
+                    <td>
+                    {{history.datetime}}
+                    </td>
+                    <td>
+                    {{ requisition_obj[history.status]}}
+                    </td>
+                    <td>
+                      {{history.status_update_by}}
+                    </td>     
+                    
+                  </tr>
+                </tbody>
+                <tfoot>
+                 
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </template>
+      </CommonModal>
 
       <div
         :class="{ 'modal fade bs-example-modal-xl': modal_show }"
@@ -594,7 +635,7 @@ export default {
     PageTitle,
     Pagination,
     RequisitionDetailsTable,
-    CommonModal,
+    CommonModal
   },
   data() {
     return {
@@ -633,6 +674,7 @@ export default {
       total_approved: null,
       total_rejected: null,
       total_verified: null,
+      history_obj: null,
       pagination: {
         count: null,
         next: null,
@@ -941,6 +983,39 @@ export default {
           console.log(error);
         });
     },
+    requisition_history: function (id) {
+      this.history_obj = null;
+      this.isModalVisible = false;
+      var today = new Date().toLocaleString('en-us', 
+      { 
+        weekday:"long",
+        year:"numeric",
+        month:"short",
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+          })
+       axios
+        .get("project_requisition/" + id + "/")
+        .then((response) => {
+          // this.task_targets = response.data.target
+
+          this.history_obj = response.data.status_history.map((history) => {
+            return {
+              id: history.id,
+              datetime: today.toLocaleString(history.datetime),
+              status: history.status,
+              status_update_by: history.status_update_by,
+            };
+          })
+
+          this.isModalVisible = true;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   },
   created() {
     this.getRequisitionList();
@@ -966,5 +1041,8 @@ export default {
 .table-bordered td,
 .table-bordered th {
   font-size: 90%;
+}
+.req_btn {
+  cursor: pointer;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="modal fade bs-example-modal-xl show"
+    class="modal fade bs-example-modal-xl show "
     tabindex="-1"
     role="dialog"
     aria-labelledby="myExtraLargeModalLabel"
@@ -29,7 +29,7 @@
           </button>
         
         </div>
-        <div class="modal-body">
+        <div class="modal-body ">
            <slot name="modal_body">
         
           </slot>
@@ -66,5 +66,9 @@ methods: {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}
 </style>

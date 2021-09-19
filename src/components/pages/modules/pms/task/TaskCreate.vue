@@ -291,7 +291,7 @@
                     <i class="fas fa-plus-circle"></i>
                   </button>
                 </div>
-               {{errors}} fdhfjgkky
+              
                 <div class="col-md-12 mb-3" v-if="errors && errors.item_task">
                   <div class="alert alert-warning">
                     <strong>Warning!</strong> {{errors.item_task[0]}}
@@ -336,7 +336,7 @@
                                 {{ it.name }}
                               </option>
                             </select>
-                             <ValidationError :error="errors.target[k].item" v-if="errors && errors.target && errors.target[k].item" />
+                             <ValidationError :error="errors.target[k].item" v-if="errors &&  errors.target && errors.target[k].item" />
                           </td>
                           <td>
                             <select
@@ -351,7 +351,7 @@
                                 {{ u.name }}
                               </option>
                             </select>
-                            <ValidationError :error="errors.target[k].item" v-if="errors && errors.target[k].item" />
+                            <ValidationError :error="errors.target[k].item" v-if="errors &&  errors.target && errors.target[k].item" />
                           </td>
                           <td>
                             <input
@@ -362,7 +362,7 @@
                               v-model="dom_repeat.quantity"
                               
                             />
-                            <ValidationError :error="errors.target[k].item" v-if="errors && errors.target[k].item" />
+                            <ValidationError v-if="errors && errors.target && errors.target[k].item" :error="errors.target[k].item"  />
                           </td>
                          
                         </tr>
@@ -434,9 +434,9 @@ export default {
       id:null,
       target: [
         {
-        item: "",
-        amount: "",
-        quantity: ""
+        item: null,
+        unit: null,
+        quantity: null
         }
       ],
       has_target : false,
@@ -567,7 +567,7 @@ export default {
      addNewRow: function () {
       this.target.push({
         item: null,
-        amount: null,
+        unit: null,
         quantity: null
       });
 
@@ -584,6 +584,9 @@ export default {
     },
 
     submitUserForm: function () {
+      if(!this.has_target){
+          this.target = []
+      }
       axios
         .post("tasks/", {
           name: this.name,
