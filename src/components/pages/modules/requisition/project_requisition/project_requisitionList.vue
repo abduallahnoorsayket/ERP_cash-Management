@@ -136,7 +136,26 @@
                   </div>
                 </div>
 
-                <div class="col-lg-2 offset-lg-10">
+                  <div class="col-lg-2 offset-lg-8">
+                  <div class="form-group">
+                    <label style="visibility: hidden">fgggggggf</label>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-primary btn-sm
+                        waves-effect waves-light
+                        pull-right
+                      "
+                      @click="resetSearch()"
+                    >
+                      <i class="fas fa-undo"></i>
+                    </button>
+                    
+                  </div>
+                  
+                </div>
+
+                <div class="col-lg-2">
                   <div class="form-group">
                     <label style="visibility: hidden">fgggggggf</label>
                     <button
@@ -150,8 +169,11 @@
                     >
                       Search
                     </button>
+                    
                   </div>
+                  
                 </div>
+               
               </div>
             </div>
           </div>
@@ -271,7 +293,7 @@
                               class="badge badge-primary req_btn"
                               @click="modal_requisition(req.id)"  
                               v-if="is_superuser || can_approve_requisition">
-                                <i class="far fa-edit"></i>
+                                  <i class="far fa-edit"></i>
                               </span>
                             
                              
@@ -1015,7 +1037,17 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-    }
+    },
+   resetSearch: function (){
+    this.project = null;
+    this.search_status = null;
+    this.sprint = null;
+    this.version = null;
+    this.status = null;
+    this.task = null;
+    this.submitted_date = null;
+    this.submitted_for = null;
+  },
   },
   created() {
     this.getRequisitionList();

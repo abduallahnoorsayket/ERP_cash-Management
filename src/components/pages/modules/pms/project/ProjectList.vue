@@ -156,18 +156,20 @@
                           }"
                         >
                           <span class="badge badge-pill badge-info">
-                            {{ project.no_of_version }}
+                           Version- {{ project.no_of_version }}
                           </span>
                         </router-link>
+                        <br>
                         <router-link
                           :to="{
                             name: 'SprintList',
                             query: { project_id: project.id },
                           }"
                         >
-                          <span class="badge badge-pill badge-danger">{{
-                            project.no_of_sprint
-                          }}</span>
+                          <span class="badge badge-pill badge-danger">
+                            
+                            Sprint- {{project.no_of_sprint}}
+                          </span>
                         </router-link>
                       </td>
                       <td>{{ project.status_list[project.status] }}</td>
