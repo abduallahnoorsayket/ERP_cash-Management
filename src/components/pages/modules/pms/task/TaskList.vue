@@ -8,11 +8,14 @@
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-hover mb-0 table-bordered">
+                <table class="table table-hover mb-0 table-bordered task-table">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col">Task Id</th>
+                      <th>Project</th>
+                      <th>Version</th>
+                      <th>Sprint</th>
                       <th scope="col" title="Expected Start Date">ESD</th>
                       <th scope="col" title="Start Date">SD</th>
                       <th scope="col" title="Expected complete Date">ECD</th>
@@ -31,13 +34,22 @@
                     >
                       <th scope="row">{{ task.name }}</th>
                       <td>{{ task.taskId }}</td>
+                      <td>{{ task.sprint.version.project.name }}</td>
+                      <td>{{ task.sprint.version.name }}</td>
+                      <td>{{ task.sprint.name }}</td>
                       <td>{{ task.expected_start_date }}</td>
                       <td>{{ task.start_date }}</td>
                       <td>{{ task.expected_complete_date }}</td>
                       <td>{{ task.complete_date }}</td>
                       <td>{{ task.estimated_duration }}</td>
                       <td>{{ task.progress }}</td>
-                      <td>{{ task.total_amount }}</td>
+                      <td>
+                        <span class="badge badge-info">Total:- {{ task.total_amount }}</span> <br/>
+                        <span class="badge badge-warning">Pending:- {{ task.total_pending }}</span>  <br/>
+                        <span class="badge badge-success">Approved:- {{ task.total_approved }}</span> <br/>
+                        <span class="badge badge-danger">Rejected:- {{ task.total_rejected }}</span> <br/> 
+                        <span class="badge badge-dark">Verified:- {{ task.total_verified }}</span>  
+                      </td>
                       <td>{{ task.status_list[task.status] }}</td>
 
                       <td>
@@ -169,5 +181,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+  .task-table td, th{
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: 12px;
+  }
 </style>

@@ -186,25 +186,25 @@
                 <table class="table table-sm mb-0">
                 
                   <tbody>
-                    <tr v-show="total_pending">
+                    <tr>
                       <th>Pending</th>
                       <td >{{total_pending}}</td>
                     </tr>
-                    <tr v-show="total_approved">
+                    <tr>
                       <th>Approved</th>
                       <td>{{total_approved}}</td>
                     </tr>
-                    <tr v-show="total_verified">
+                    <tr>
                       <th>Verified</th>
                       <td>{{total_verified}}</td>
                     </tr>
-                    <tr v-show="total_rejected">
+                    <tr>
                       <th>Rejected</th>
                       <td>{{total_rejected}}</td>
                     </tr>
-                    <tr v-show="total_amount">
+                    <tr>
                       <th>Total</th>
-                      <td>{{total_amount}}</td>
+                      <th>{{total_amount}}</th>
                     </tr>
                     
                   </tbody>

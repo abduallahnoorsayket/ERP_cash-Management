@@ -171,6 +171,18 @@
                             Sprint- {{project.no_of_sprint}}
                           </span>
                         </router-link>
+                        <br>
+                        <router-link
+                          :to="{
+                            name: 'TaskList',
+                            query: { project_id: project.id },
+                          }"
+                        >
+                          <span class="badge badge-pill badge-success">
+                            
+                            Task- {{project.no_of_task}}
+                          </span>
+                        </router-link>
                       </td>
                       <td>{{ project.status_list[project.status] }}</td>
                       <td>

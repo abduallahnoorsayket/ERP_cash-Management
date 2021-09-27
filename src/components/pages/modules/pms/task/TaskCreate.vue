@@ -113,7 +113,7 @@
                 </div>
 
                  <div class="form-group">
-                    <label>Has Target</label>
+                    <label>Has Budget</label>
                     <div class="checkbox checkbox-primary">
                       <input
                         id="checkbox2"

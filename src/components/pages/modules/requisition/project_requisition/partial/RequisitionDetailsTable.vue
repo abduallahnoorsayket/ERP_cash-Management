@@ -36,6 +36,7 @@
                     <th scope="col">Unit</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Total</th>
+                    <th scope="col">By</th>
                   </tr>
                 </thead>
                   <tr  v-for="(r, index) in r.object_history" :key="index">
@@ -43,6 +44,7 @@
                     <td>{{r.unit}}</td>
                     <td>{{r.quantity}}</td>
                     <td>{{r.total}}</td>
+                    <td>{{r.created_by}}</td>
                   </tr>
                 
                 </table>
