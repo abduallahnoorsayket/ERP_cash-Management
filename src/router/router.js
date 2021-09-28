@@ -10,6 +10,7 @@ import permissions from '@/permisson'
 import projectRoutes from '../components/pages/modules/pms/project/routes'
 import versionRoutes from '../components/pages/modules/pms/version/routes'
 import sprintRoutes from '../components/pages/modules/pms/sprint/routes'
+import taskCategory from '../components/pages/modules/pms/task_category/routes'
 import taskRoutes from '../components/pages/modules/pms/task/routes'
 import departmentRoutes from '../components/pages/modules/base/department/routes'
 import clientsRoutes from '../components/pages/modules/base/clients/routes'
@@ -84,6 +85,7 @@ const routes = [].concat(
   versionRoutes,
   sprintRoutes,
   taskRoutes,
+  taskCategory,
   departmentRoutes,
   clientsRoutes,
   itemRoutes,

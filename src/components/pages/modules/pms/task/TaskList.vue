@@ -73,7 +73,6 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="parent"
-                    :class="{ 'parsley-error': errors && errors.sprint }"
                   >
                     <option value="false" disabled selected>No Parent</option>
 
@@ -431,8 +430,8 @@ export default {
         query: {
           name: this.name,
           project: this.project,
-          current: this.parent,
-          current: this.taskId,
+          parent: this.parent,
+          taskId: this.taskId,
           status: this.status,
           sprint: this.sprint,
           version: this.version,

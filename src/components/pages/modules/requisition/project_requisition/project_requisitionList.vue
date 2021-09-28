@@ -15,6 +15,7 @@
                       class="form-control"
                       data-toggle="select2"
                       v-model="project"
+                      @change="getAllData()"
                     >
                       <option value="false" disabled selected>Select</option>
 
@@ -35,11 +36,12 @@
                       class="form-control"
                       data-toggle="select2"
                       v-model="version"
+                      @change="getSprint()"
                     >
                       <option value="false" disabled selected>Select</option>
 
                       <option
-                        v-for="(v, i) in versionId"
+                        v-for="(v, i) in versions"
                         :key="i"
                         :value="v.id"
                       >
@@ -56,6 +58,7 @@
                       class="form-control"
                       data-toggle="select2"
                       v-model="sprint"
+                      @change="getParents()"
                     >
                       <option value="false" disabled selected>Select</option>
 
@@ -678,7 +681,7 @@ export default {
       all_total: null,
       projectId: null,
       statusData: null,
-      versionId: null,
+      versions: null,
       version: null,
       sprints: null,
       sprint: null,
@@ -707,6 +710,13 @@ export default {
     };
   },
   methods: {
+     getAllData: function () {
+      this.version = null;
+      this.sprint = null;
+      this.parent = null;
+      this.getVersion();
+      this.getMember();
+    },
     getRequisitionList: function () {
       let endPoint = "project_requisition/";
       var queryParam = {
@@ -921,31 +931,53 @@ export default {
           console.log(error);
         });
     },
-    getVersionList: function () {
+    getVersion: function () {
       axios
-        .get("version_short")
+        .get("version_short?project=" + this.project)
         .then((response) => {
-          this.versionId = response.data;
+          this.versions = response.data;
+          let currentVersion = this.versions.filter((version) => {
+            return version.current;
+          });
+
+          this.version =
+            currentVersion.length > 0 ? currentVersion[0].id : null;
+            
+          if (this.version) {
+            this.getSprint();
+          }
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    getSprintList: function () {
+    getSprint: function () {
       axios
-        .get("sprint_short")
+        .get("sprint_short?version=" + this.version)
         .then((response) => {
           this.sprints = response.data;
+          let currentSprint = this.sprints.filter((sprint) => {
+            return sprint.current;
+          });
+
+          this.sprint = currentSprint.length > 0 ? currentSprint[0].id : null;
+
+          if(this.sprint) {
+            this.getParents();
+          }
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    getTaskList: function () {
+
+    getParents: function () {
       axios
-        .get("task_short")
+        .get("task_short?sprint=" + this.sprint)
         .then((response) => {
-          this.tasks = response.data;
+          this.tasks = response.data.filter((p) => {
+            return p.id !== parseInt(this.id);
+          });
         })
         .catch(function (error) {
           console.log(error);
@@ -1054,9 +1086,6 @@ export default {
     this.getPermissions();
     this.getRequisitionStatus();
     this.getProjectList();
-    this.getVersionList();
-    this.getSprintList();
-    this.getTaskList();
     this.getMember();
   },
   updated() {

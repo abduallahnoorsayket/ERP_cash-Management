@@ -29,12 +29,13 @@
             </a>
             <div class="dropdown-menu dropdown-lg">
               <div class="noti-scroll" style="height: auto !important">
-                <table class="table table-sm mb-0 table-bordered">
+                <table class="table table-sm mb-0 table-bordered obj_history">
                    <thead>
                   <tr>
                     <th scope="col">Item</th>
                     <th scope="col">Unit</th>
                     <th scope="col">Quantity</th>
+                    <th scope="col">Amount</th>
                     <th scope="col">Total</th>
                     <th scope="col">By</th>
                   </tr>
@@ -43,6 +44,7 @@
                     <td>{{r.item}}</td>
                     <td>{{r.unit}}</td>
                     <td>{{r.quantity}}</td>
+                    <td>{{r.amount}}</td>
                     <td>{{r.total}}</td>
                     <td>{{r.created_by}}</td>
                   </tr>
@@ -81,4 +83,7 @@ export default {
 </script>
 
 <style scoped>
+.obj_history {
+  font-size: 11px;
+}
 </style>

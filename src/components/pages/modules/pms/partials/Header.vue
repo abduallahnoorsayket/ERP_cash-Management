@@ -70,6 +70,17 @@
               <li v-if="hasPermission('add_task')"><router-link to="/task-create">Task Create</router-link></li>
             </ul>
           </li>
+
+          <li class="has-submenu" v-if="hasModelPermission('task')">
+            <a href="#">
+              <i class="fab fa-sketch"></i>Task Category
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li v-if="hasPermission('view_taskcategory')"><router-link to="/task-category-list">Task Category List</router-link></li>
+              <li v-if="hasPermission('add_taskcategory')"><router-link to="/task-category-create">Task Category Create</router-link></li>
+            </ul>
+          </li>
         </ul>
 
         <!-- End navigation menu -->
