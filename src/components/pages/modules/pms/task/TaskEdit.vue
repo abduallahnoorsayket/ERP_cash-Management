@@ -8,6 +8,27 @@
           <form @submit.prevent="submitUserForm" autocomplete="off">
             <div class="row">
               <div class="col-md-6">
+
+                <div class="form-group">
+                  <label>Task Category</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="category"
+                    :class="{ 'parsley-error': errors && errors.category }"
+                  >
+                    <option value="false" disabled selected>Select</option>
+
+                    <option
+                      v-for="(s, i) in task_category_list"
+                      :key="i"
+                      :value="s.id"
+                    >
+                      {{ s.name }}
+                    </option>
+                  </select>
+                 <ValidationError :error="errors.category" v-if="errors" />
+                </div>
                 <div class="form-group">
                   <label>Name</label>
                   <input
@@ -428,6 +449,8 @@ export default {
       progress: 0,
       parent: null,
       parents: null,
+      category: null,
+      task_category_list: null,
       id : null,
       target: [
         {
@@ -468,6 +491,7 @@ export default {
           // this.project = response.data.version.project.id;
           this.assignee = response.data.assignee;
           this.parent = response.data.parent
+          this.category = response.data.category
           this.has_target = response.data.has_target
           this.target =response.data.target.map((detail) => {
             return {
@@ -645,6 +669,16 @@ export default {
         // this.has_target = false;
       }
     },
+    getTaskCategory: function () {
+      axios
+        .get("task_category_short")
+        .then((response) => {
+          this.task_category_list = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
 
     submitUserForm: function () {
       axios
@@ -661,6 +695,7 @@ export default {
           sprint: this.sprint,
           progress: this.progress,
           parent : this.parent,
+          category : this.category,
           has_target : this.has_target,
           target : this.target,
         })
@@ -686,6 +721,7 @@ export default {
     this.getProjectList();
     this.getTaskeditData();
     this.getItem();
+    this.getTaskCategory();
     this.getUnit();
   },
 };

@@ -7,7 +7,28 @@
     
           <form @submit.prevent="submitUserForm" autocomplete="off">
             <div class="row">
+              
               <div class="col-md-6">
+                <div class="form-group">
+                  <label>Task Category</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="category"
+                    :class="{ 'parsley-error': errors && errors.category }"
+                  >
+                    <option value="false" disabled selected>Select</option>
+
+                    <option
+                      v-for="(s, i) in task_category_list"
+                      :key="i"
+                      :value="s.id"
+                    >
+                      {{ s.name }}
+                    </option>
+                  </select>
+                 <ValidationError :error="errors.category" v-if="errors" />
+                </div>
                 <div class="form-group">
                   <label>Name</label>
                   <input
@@ -407,7 +428,6 @@ export default {
   },
   data() {
     return {
-      name: null,
       project: null,
       description: null,
       expected_start_date: null,
@@ -432,6 +452,9 @@ export default {
       parent: null,
       parents: null,
       id:null,
+      task_category_list: null,
+      name: null,
+      category: null,
       target: [
         {
         item: null,
@@ -457,6 +480,16 @@ export default {
         .get("project_status")
         .then((response) => {
           this.statusData = response.data.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getTaskCategory: function () {
+      axios
+        .get("task_category_short")
+        .then((response) => {
+          this.task_category_list = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -604,6 +637,7 @@ export default {
           parent: this.parent,
           has_target: this.has_target,
           target: this.target,
+          category: this.category,
         })
         .then(() => {
           Swal.fire({
@@ -627,6 +661,7 @@ export default {
     this.getProjectList();
     this.getItem();
     this.getUnit();
+    this.getTaskCategory();
   },
 };
 </script>
