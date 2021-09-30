@@ -186,7 +186,16 @@
                       v-for="(task, index) in all_task_list"
                       :key="index"
                     >
-                      <th scope="row">{{ task.name }}</th>
+                      <th scope="row">
+                      <a 
+                      href="#"
+                      data-toggle="modal"
+                      data-target=".bs-example-modal-xl"
+                      @click="modal_task()"  
+                      >
+                      {{ task.name }}
+                      </a>
+                      </th>
                       <td>{{ task.taskId }}</td>
                       <td>{{ task.sprint.version.project.name }}</td>
                       <td>{{ task.sprint.version.name }}</td>
@@ -244,6 +253,146 @@
     <Pagination :pagination="pagination" /> 
         </div>
       </div>
+       <div
+        :class="{ 'modal fade bs-example-modal-xl': modal_show }"
+        v-if="modal_show"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myExtraLargeModalLabel"
+        style="display: block; padding-right: 15px"
+        aria-modal="true"
+      >
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="myLargeModalLabel">
+                Requisition Details
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+                @click="closeModalBtn"
+              >
+                ×
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col text-right">Quantity</th>
+                        <th scope="col text-right">Amount</th>
+                        <th scope="col text-right">Total</th>
+                        <th scope="col text-right">Remarks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(dom_repeat, k) in requisition_modal_details"
+                        :key="k"
+                      >
+                        <td>
+                          <select
+                            class="form-control text-right"
+                            v-model="dom_repeat.item"
+                          >
+                            <option
+                              v-for="(it, i) in items"
+                              :key="i"
+                              :value="it.id"
+                            >
+                              {{ it.name }}
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            class="form-control text-right"
+                            v-model="dom_repeat.unit"
+                          >
+                            <option
+                              v-for="(u, i) in units"
+                              :key="i"
+                              :value="u.id"
+                            >
+                              {{ u.name }}
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                            v-model="dom_repeat.quantity"
+                            @keyup="calculateTotal(dom_repeat)"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                            v-model="dom_repeat.amount"
+                            @keyup="calculateTotal(dom_repeat)"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            readonly="readonly"
+                            type="number"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                            v-model="dom_repeat.total"
+                          />
+                        </td>
+                        <td>
+                          <textarea
+                            type="text"
+                            rows="1"
+                            min="0"
+                            step=".01"
+                            class="form-control text-right"
+                            v-model="dom_repeat.remarks"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="6" class="text-right">
+                          <button
+                            @click="submitCorrectionDetails"
+                            type="button"
+                            class="
+                              btn btn-primary
+                              waves-effect waves-light
+                              cus_right
+                            "
+                          >
+                            Submit
+                          </button>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
     </template>
   </Layout>
 </template>
@@ -278,6 +427,7 @@ export default {
       taskId: null,
       version: null,
       versions: null,
+      modal_show: false,
       pagination: {
         count: null,
         next: null,
@@ -438,7 +588,40 @@ export default {
         },
       });
 
-    }
+    },
+     modal_task: function () {
+      this.modal_show = true;
+      // this.getDetailsRequisition(id);
+    },
+     closeModalBtn: function () {
+      this.modal_show = false;
+    },
+    getTaskDetails: function (id) {
+      axios
+        .get("tasks/" + id + "/")
+        .then((response) => {
+          this.requisition_modal_details = response.data.detail.map(
+            (detail) => {
+              return {
+                id: detail.id,
+                quantity: detail.quantity,
+                amount: detail.amount,
+                total: detail.total,
+                remarks: detail.remarks,
+                item: detail.item.id,
+                unit: detail.unit.id,
+                requisition: id,
+              };
+            }
+          );
+
+          this.getItem();
+          this.getUnit();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   created() {
     this.getTaskList();

@@ -85,6 +85,7 @@
                     </select>
                   </div>
                 </div>
+                
 
                 <div class="col-lg-3">
                   <div class="form-group">
@@ -127,7 +128,7 @@
                   </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label>Submitted Date</label>
 
@@ -138,9 +139,30 @@
                     />
                   </div>
                 </div>
+                <div class="col-lg-3">
+                <div class="form-group">
+                  <label>Task Category</label>
+                  <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="category"
+                    :class="{ 'parsley-error': errors && errors.category }"
+                  >
+                    <option value="false" disabled selected>Select</option>
 
-                  <div class="col-lg-2 offset-lg-8">
-                  <div class="form-group">
+                    <option
+                      v-for="(s, i) in task_category_list"
+                      :key="i"
+                      :value="s.id"
+                    >
+                      {{ s.name }}
+                    </option>
+                  </select>
+                 <ValidationError :error="errors.category" v-if="errors" />
+                </div>
+                </div>
+                <div class="col-lg-3 offset-lg-6">
+                 <div class="form-group">
                     <label style="visibility: hidden">fgggggggf</label>
                     <button
                       type="button"
@@ -155,10 +177,11 @@
                     </button>
                     
                   </div>
-                  
                 </div>
 
-                <div class="col-lg-2">
+                  <div class="col-lg-3">
+                 
+                 
                   <div class="form-group">
                     <label style="visibility: hidden">fgggggggf</label>
                     <button
@@ -175,7 +198,10 @@
                     
                   </div>
                   
+                
                 </div>
+
+               
                
               </div>
             </div>
@@ -700,6 +726,8 @@ export default {
       total_rejected: null,
       total_verified: null,
       history_obj: null,
+      task_category_list: null,
+      category: null,
       pagination: {
         count: null,
         next: null,
@@ -727,6 +755,7 @@ export default {
         version: this.$route.query.version,
         submitted_date: this.$route.query.submitted_date,
         submitted_for: this.$route.query.submitted_for,
+        category: this.$route.query.category,
         page: this.$route.query.page,
       };
       axios
@@ -993,6 +1022,16 @@ export default {
           console.log(error);
         });
     },
+     getTaskCategory: function () {
+      axios
+        .get("task_category_short")
+        .then((response) => {
+          this.task_category_list = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     // search section start
     searchRequisition() {
       this.$router.push({
@@ -1006,6 +1045,7 @@ export default {
           submitted_for: this.submitted_for,
           task: this.task,
           submitted_date: this.submitted_date,
+          category: this.category,
         },
       });
     },
@@ -1079,6 +1119,7 @@ export default {
     this.task = null;
     this.submitted_date = null;
     this.submitted_for = null;
+    this.category = null;
   },
   },
   created() {
@@ -1086,6 +1127,7 @@ export default {
     this.getPermissions();
     this.getRequisitionStatus();
     this.getProjectList();
+    this.getTaskCategory();
     this.getMember();
   },
   updated() {
