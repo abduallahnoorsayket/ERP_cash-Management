@@ -191,7 +191,7 @@
                       href="#"
                       data-toggle="modal"
                       data-target=".bs-example-modal-xl"
-                      @click="modal_task()"  
+                      @click="modal_task(task.id)"  
                       >
                       {{ task.name }}
                       </a>
@@ -266,7 +266,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="myLargeModalLabel">
-                Requisition Details
+                Task Details
               </h5>
               <button
                 type="button"
@@ -284,104 +284,124 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">Item</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col text-right">Quantity</th>
-                        <th scope="col text-right">Amount</th>
-                        <th scope="col text-right">Total</th>
-                        <th scope="col text-right">Remarks</th>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Project</th>
+                        <th scope="col text-right">Version</th>
+                        <th scope="col text-right">Sprint</th>
+                        <th scope="col text-right">TaskId</th>
+                        <th scope="col text-right">Status</th>
+                        <th scope="col text-right">Progress</th>
+                        <th scope="col text-right">ESD</th>
+                        <th scope="col text-right">SD</th>
+                        <th scope="col text-right">ECD</th>
+                        <th scope="col text-right">CD</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr
-                        v-for="(dom_repeat, k) in requisition_modal_details"
-                        :key="k"
+                      
                       >
                         <td>
-                          <select
-                            class="form-control text-right"
-                            v-model="dom_repeat.item"
-                          >
-                            <option
-                              v-for="(it, i) in items"
-                              :key="i"
-                              :value="it.id"
-                            >
-                              {{ it.name }}
-                            </option>
-                          </select>
+                         {{modal_task_name}}
                         </td>
                         <td>
-                          <select
-                            class="form-control text-right"
-                            v-model="dom_repeat.unit"
-                          >
-                            <option
-                              v-for="(u, i) in units"
-                              :key="i"
-                              :value="u.id"
-                            >
-                              {{ u.name }}
-                            </option>
-                          </select>
+                         {{modal_project}}
                         </td>
                         <td>
-                          <input
-                            type="number"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                            v-model="dom_repeat.quantity"
-                            @keyup="calculateTotal(dom_repeat)"
-                          />
+                          {{modal_version}} - {{modal_version_id}}
                         </td>
                         <td>
-                          <input
-                            type="number"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                            v-model="dom_repeat.amount"
-                            @keyup="calculateTotal(dom_repeat)"
-                          />
+                          {{modal_sprint}} - {{modal_sprint_id}}
                         </td>
                         <td>
-                          <input
-                            readonly="readonly"
-                            type="number"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                            v-model="dom_repeat.total"
-                          />
+                         {{modal_taskId}}
+                        </td>
+                        <td>          
+                         {{requisition_obj[modal_status]}}
                         </td>
                         <td>
-                          <textarea
-                            type="text"
-                            rows="1"
-                            min="0"
-                            step=".01"
-                            class="form-control text-right"
-                            v-model="dom_repeat.remarks"
-                          />
+                          {{modal_progress}}
+                        </td>
+                        <td>
+                          {{modal_expected_start_date}}
+                        </td>
+                        <td>
+                          {{modal_start_date}}
+                        </td>
+                        <td>
+                          {{modal_expected_complete_date}}
+                        </td>
+                        <td>
+                          {{modal_complete_date}}
                         </td>
                       </tr>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td colspan="6" class="text-right">
-                          <button
-                            @click="submitCorrectionDetails"
-                            type="button"
-                            class="
-                              btn btn-primary
-                              waves-effect waves-light
-                              cus_right
-                            "
-                          >
-                            Submit
-                          </button>
+                      
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <br>
+              <hr> 
+              <p>Task History</p>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">TaskId</th>
+                        <!-- <th scope="col text-right">assignee</th> -->
+                        <th scope="col text-right">progress</th>
+                        <th scope="col text-right">status</th>
+                        <th scope="col text-right">created_at</th>
+                        <th scope="col text-right">SD</th>
+                        <th scope="col text-right">CD</th>
+                        <th scope="col text-right">ESD</th>
+                        <th scope="col text-right">ECD</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                         v-for="(h, i) in modal_history"
+                         :key="i"
+                      >
+                        <td>
+                        {{h.name}}
                         </td>
+                        <td>
+                         {{h.taskId}}
+                        </td>
+                        <td>
+                         {{h.progress}}
+                        </td>
+                        <td>
+                        {{requisition_obj[h.status]}}
+                        </td>
+                        <td>
+                        {{h.created_at}}
+                        </td>
+                        <td>          
+                       {{h.start_date}}
+                        </td>
+                        <td>
+                        {{h.complete_date}}
+                        </td>
+                        <td>
+                         {{h.expected_start_date}}
+                        </td>
+                        <td>
+                        {{h.expected_complete_date}}
+                        </td>
+                        
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                      
                       </tr>
                     </tfoot>
                   </table>
@@ -434,7 +454,23 @@ export default {
         previous: null,
         showing: 0,
         page: null,
-  }
+  },
+  modal_sprint: null,
+  modal_sprint_id: null,
+  modal_task_name: null,
+  modal_project: null,
+  modal_version: null,
+  modal_version_id: null,
+  modal_progress: null,
+  modal_history: null,
+  modal_taskId: null,
+  requisition_obj: {},
+  modal_status: null,
+  requisition_status: null,
+  modal_expected_start_date: null,
+  modal_start_date: null,
+  modal_expected_complete_date: null,
+  modal_complete_date: null,
     };
   },
   methods: {
@@ -589,9 +625,10 @@ export default {
       });
 
     },
-     modal_task: function () {
+     modal_task: function (id) {
       this.modal_show = true;
-      // this.getDetailsRequisition(id);
+      console.log("595",id)
+      this.getTaskDetails(id);
     },
      closeModalBtn: function () {
       this.modal_show = false;
@@ -600,23 +637,38 @@ export default {
       axios
         .get("tasks/" + id + "/")
         .then((response) => {
-          this.requisition_modal_details = response.data.detail.map(
-            (detail) => {
-              return {
-                id: detail.id,
-                quantity: detail.quantity,
-                amount: detail.amount,
-                total: detail.total,
-                remarks: detail.remarks,
-                item: detail.item.id,
-                unit: detail.unit.id,
-                requisition: id,
-              };
-            }
-          );
+         console.log('605',response.data)
+          this.modal_sprint = response.data.sprint.name
+          this.modal_sprint_id = response.data.sprint.sprintId
+          this.modal_version = response.data.sprint.version.name
+          this.modal_version_id = response.data.sprint.version.versionId
+          this.modal_project = response.data.sprint.version.project.name
+          this.modal_task_name = response.data.name
+          this.modal_taskId = response.data.taskId
+          this.modal_progress = response.data.progress
+          this.modal_status = response.data.status
+          this.modal_history = response.data.history
+          this.modal_complete_date = response.data.complete_date
+          this.modal_expected_complete_date = response.data.expected_complete_date
+          this.modal_start_date = response.data.start_date
+          this.modal_expected_start_date = response.data.expected_start_date
 
-          this.getItem();
-          this.getUnit();
+         this.getStatusObj()
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getStatusObj: function () {
+      axios
+        .get("project_status")
+        .then((response) => {
+          this.requisition_status = response.data.data;
+          this.requisition_status.map((req) => {
+            // console.log("140", req);
+            this.requisition_obj[req.key] = req.value;
+          });
         })
         .catch(function (error) {
           console.log(error);
@@ -640,4 +692,8 @@ export default {
     white-space: nowrap;
     font-size: 12px;
   }
+  .modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}
 </style>
