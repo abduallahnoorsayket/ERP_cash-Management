@@ -7,7 +7,7 @@
         <div class="card-body">
           <form @submit.prevent="submitUserForm" autocomplete="off">
             <div class="row">
-              <div class="col-md-6">
+                <div class="col-md-6">
                 <div class="form-group">
                   <label>First Name</label>
                   <input
@@ -20,8 +20,7 @@
                   />
                   <ValidationError :error="errors.first_name" v-if="errors" />
                 </div>
-
-                <div class="form-group">
+                 <div class="form-group">
                   <label>User Name</label>
                   <input
                     type="text"
@@ -31,7 +30,42 @@
                   />
                   <ValidationError :error="errors.username" v-if="errors" />
                 </div>
-
+                 
+                 
+               
+              </div>
+              <div class="col-md-6">
+                   <div class="form-group">
+                  <label>Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    data-toggle="input-mask"
+                    data-mask-format="00/00/0000"
+                    v-model="form_data.last_name"
+                    :class="{ 'parsley-error': errors && errors.last_name }"
+                  />
+                  <ValidationError :error="errors.last_name" v-if="errors" />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    data-toggle="input-mask"
+                    data-mask-format="00/00/0000"
+                    v-model="form_data.email"
+                    :class="{ 'parsley-error': errors && errors.email }"
+                  />
+                  <ValidationError :error="errors.email" v-if="errors" />
+                </div>
+                
+              </div>
+            </div>
+              
+              <!-- end col -->
+              <div class="row">
+                <div class="col-md-12">
                 <div class="form-group">
                   <label>Password </label>
                   <input
@@ -42,8 +76,76 @@
                   />
                   <ValidationError :error="errors.password" v-if="errors" />
                 </div>
+              </div>
+              </div>
+             
+             <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                  <label>Active </label>
+                  <div class="cus_check_padding checkbox-primary">
+                    <input
+                      id="checkbox"
+                      type="checkbox"
+                      unchecked=""
+                      v-model="form_data.is_active"
+                    />
+                    <label for="checkbox"
+                      >{{ form_data.is_active == true ? "Yes" : "No" }}
+                    </label>
+                  </div>
+                </div>
+              
 
+              </div>
+              <div class="col-md-6">
+                   <div class="form-group">
+                  <label>Superuser </label>
+                  <div class="cus_check_padding checkbox-primary">
+                    <input
+                      id="checkbox1"
+                      type="checkbox"
+                      unchecked=""
+                      v-model="form_data.is_superuser"
+                    />
+                    <label for="checkbox"
+                      >{{ form_data.is_superuser == true ? "Yes" : "No" }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+             </div>
+              <!-- end col -->
+              <div class="col-md-12">
                 <div class="form-group">
+                  <label>User Groups</label>
+                  <input
+                    type="text"
+                    class="form-control search-input"
+                    autocomplete="off"
+                    placeholder="search..."
+                    v-model="group_search"
+                  />
+                  <div class="scr_view">
+                    <div
+                      class="cus_check_padding checkbox-primary"
+                      v-for="g in filterGroups"
+                      :key="g.id"
+                    >
+                      <input
+                        :id="g.id"
+                        type="checkbox"
+                        name="form_data.groups[]"
+                        unchecked=""
+                        v-model="form_data.groups"
+                        :value="g.id"
+                      />
+                      <label for="checkbox"> {{ g.name }} </label>
+                    </div>
+                    <ValidationError :error="errors.groups" v-if="errors" />
+                  </div>
+                </div>
+                 <div class="form-group">
                   <label>User Permissions</label>
                   <input
                     type="text"
@@ -74,96 +176,9 @@
                     />
                   </div>
                 </div>
+                
 
-                <div class="form-group">
-                  <label>Superuser </label>
-                  <div class="cus_check_padding checkbox-primary">
-                    <input
-                      id="checkbox1"
-                      type="checkbox"
-                      unchecked=""
-                      v-model="form_data.is_superuser"
-                    />
-                    <label for="checkbox"
-                      >{{ form_data.is_superuser == true ? "Yes" : "No" }}
-                    </label>
-                  </div>
-                </div>
               </div>
-              <!-- end col -->
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
-                    v-model="form_data.last_name"
-                    :class="{ 'parsley-error': errors && errors.last_name }"
-                  />
-                  <ValidationError :error="errors.last_name" v-if="errors" />
-                </div>
-
-                <div class="form-group">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
-                    v-model="form_data.email"
-                    :class="{ 'parsley-error': errors && errors.email }"
-                  />
-                  <ValidationError :error="errors.email" v-if="errors" />
-                </div>
-
-                <div class="form-group">
-                  <label>Active </label>
-                  <div class="cus_check_padding checkbox-primary">
-                    <input
-                      id="checkbox"
-                      type="checkbox"
-                      unchecked=""
-                      v-model="form_data.is_active"
-                    />
-                    <label for="checkbox"
-                      >{{ form_data.is_active == true ? "Yes" : "No" }}
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label>User Groups</label>
-                  <input
-                    type="text"
-                    class="form-control search-input"
-                    autocomplete="off"
-                    placeholder="search..."
-                    v-model="group_search"
-                  />
-                  <div class="scr_view">
-                    <div
-                      class="cus_check_padding checkbox-primary"
-                      v-for="g in filterGroups"
-                      :key="g.id"
-                    >
-                      <input
-                        :id="g.id"
-                        type="checkbox"
-                        name="form_data.groups[]"
-                        unchecked=""
-                        v-model="form_data.groups"
-                        :value="g.id"
-                      />
-                      <label for="checkbox"> {{ g.name }} </label>
-                    </div>
-                    <ValidationError :error="errors.groups" v-if="errors" />
-                  </div>
-                </div>
-              </div>
-              <!-- end col -->
 
               <div class="col-md-12">
                 <div class="form-group">
@@ -176,7 +191,6 @@
                   </button>
                 </div>
               </div>
-            </div>
           </form>
           <!-- end row -->
         </div>
@@ -267,7 +281,7 @@ export default {
           Swal.fire({
             icon: "success",
             text: "You have successfully created a User.",
-          }).then((result) => {
+          }).then(() => {
             this.$router.push("user-list");
           });
         })
