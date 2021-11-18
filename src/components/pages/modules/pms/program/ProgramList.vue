@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Project List Basic" />
+      <PageTitle title="Program List" />
 
       <div class="row">
         <div class="col-lg-12">
@@ -117,74 +117,68 @@
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
+               
                 <table class="table table-hover mb-0 table-bordered table-sm">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col">Department</th>
-                      <th scope="col">Client</th>
-                      <th scope="col">Project Id</th>
-                      <th scope="col" title="Assign Date">AD</th>
-                      <th scope="col" title="Expected Start Date">ESD</th>
-                      <th scope="col" title="Start Date">SD</th>
-                      <th scope="col" title="Expected complete Date">ECD</th>
-                      <th scope="col" title="complete_date">CD</th>
+                      <th scope="col">Program Id</th>
+                      <th scope="col" title="Assign Date">CAT</th>
                       <th scope="col" title="Number Of Quantity">QTY</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
+                  
                     <tr
-                      v-for="(project, index) in all_project_list"
+                      v-for="(program, index) in all_program_list"
                       :key="index"
                     >
-                      <th scope="row">{{ project.name }}</th>
-                      <td>{{ project.department.name }}</td>
-                      <td>{{ project.client.name }}</td>
-                      <td>{{ project.projectId }}</td>
-                      <td>{{ project.assign_date }}</td>
-                      <td>{{ project.expected_start_date }}</td>
-                      <td>{{ project.start_date }}</td>
-                      <td>{{ project.expected_complete_date }}</td>
-                      <td>{{ project.complete_date }}</td>
+                      <th scope="row">{{ program.name }}</th>
+                      <td>{{ program.department.name }}</td>
+                      <td>{{ program.programId }}</td>
+                      <td>{{ program.created_at }}</td>
+                      <td>{{ program.status_list[program.status] }}</td>
+           
                       <td>
                         <router-link
                           :to="{
                             name: 'VersionList',
-                            query: { project_id: project.id },
+                            query: { program: program.id },
                           }"
                         >
                           <span class="badge badge-pill badge-info">
-                           Version- {{ project.no_of_version }}
+                           Version- {{ program.no_of_version }}
                           </span>
                         </router-link>
                         <br>
                         <router-link
                           :to="{
                             name: 'SprintList',
-                            query: { project_id: project.id },
+                            query: { program: program.id },
                           }"
                         >
                           <span class="badge badge-pill badge-danger">
                             
-                            Sprint- {{project.no_of_sprint}}
+                            Sprint- {{program.no_of_sprint}}
                           </span>
                         </router-link>
                         <br>
                         <router-link
                           :to="{
                             name: 'TaskList',
-                            query: { project_id: project.id },
+                            query: { program: program.id },
                           }"
                         >
                           <span class="badge badge-pill badge-success">
                             
-                            Task- {{project.no_of_task}}
+                            Task- {{program.no_of_task}}
                           </span>
                         </router-link>
                       </td>
-                      <td>{{ project.status_list[project.status] }}</td>
+                      <!-- <td>{{ project.status_list[project.status] }}</td> -->
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
                           <button
@@ -204,8 +198,8 @@
                             <li v-if="hasPermission('change_project')">
                               <router-link
                                 :to="{
-                                  name: 'ProjectEdit',
-                                  params: { id: project.id },
+                                  name: 'ProgramEdit',
+                                  params: { id: program.id },
                                 }"
                                 class="dropdown-item"
                               >
@@ -215,7 +209,7 @@
                             <li v-if="hasPermission('delete_project')">
                               <a
                                 href="#"
-                                @click="deleteClient(project.id)"
+                                @click="deleteProgram(program.id)"
                                 class="dropdown-item"
                               >
                                 <i class="fas fa-trash"></i> Delete</a
@@ -248,7 +242,7 @@ import permissions from "@/permisson";
 import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
-  name: "ProjectList",
+  name: "ProgramList",
   components: {
     Layout,
     PageTitle,
@@ -256,15 +250,12 @@ export default {
   },
   data() {
     return {
-      all_project_list: null,
+      all_program_list: null,
       department: null,
       departmentId: null,
-      projectId: null,
-      project: null,
       statusData: null,
       status: null,
       name: null,
-      project_id: null,
       pagination: {
         count: null,
         next: null,
@@ -275,8 +266,8 @@ export default {
     };
   },
   methods: {
-    getProjectList: function () {
-      let endPoint = "projects";
+    getProgramList: function () {
+      let endPoint = "program";
       var queryParam = {
         name: this.$route.query.name,
         client: this.$route.query.project,
@@ -285,13 +276,13 @@ export default {
         status: this.$route.query.status,
         page: this.$route.query.page,
       };
-      console.log("265", queryParam);
+      // console.log("265", queryParam);
       axios
         .get(endPoint, {
           params: queryParam,
         })
         .then((response) => {
-          this.all_project_list = response.data.results;
+          this.all_program_list = response.data.results;
           this.pagination.count = response.data.count;
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;
@@ -311,7 +302,7 @@ export default {
       return permissions.hasPermission(permission_name);
     },
 
-    deleteClient: function (id) {
+    deleteProgram: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -322,27 +313,18 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
         if (response.isConfirmed) {
-          axios.delete("projects/" + id + "/").then((response) => {
+          axios.delete("program/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getProjectList();
+              this.getProgramList();
             }
           });
-          Swal.fire("Deleted!", "Project has been deleted!!", "success");
+          Swal.fire("Deleted!", "Program has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Project has not been deleted !", "error");
+          Swal.fire("Cancelled", "Program has not been deleted !", "error");
         }
       });
     },
-    getProjectClients: function () {
-      axios
-        .get("project_clients")
-        .then((response) => {
-          this.projectId = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
+ 
     getStatus: function () {
       axios
         .get("project_status")
@@ -379,13 +361,12 @@ export default {
     },
   },
   created() {
-    this.getProjectClients();
-    this.getProjectList();
+    this.getProgramList();
     this.getStatus();
     this.getDepartment();
   },
   updated() {
-    this.getProjectList();
+    this.getProgramList();
   },
 };
 </script>

@@ -6,7 +6,7 @@ import ProgramEdit from './ProgramEdit'
 const programRoutes = [
 
     {
-        path: '/program-basic-list',
+        path: '/program-list',
         component: ProgramList,
         name: 'ProgramList'
 
@@ -17,12 +17,7 @@ const programRoutes = [
         name: 'ProgramCreate'
 
     },
-    {
-        path: '/project-advance-list',
-        component: ProjectAdvanceList,
-        name: 'ProjectAdvanceList'
 
-    },
     {
         path: '/program-edit/:id',
         component: ProgramEdit,
@@ -30,10 +25,6 @@ const programRoutes = [
 
     },
   
-   
-   
-
-
 ];
 
 export default programRoutes;

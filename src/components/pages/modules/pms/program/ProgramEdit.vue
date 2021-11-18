@@ -7,20 +7,18 @@
       <div class="card">
         <div class="card-body">
       
-          <div class="row">
-            <div class="col-md-6">
-              <form @submit.prevent="submitUserForm" autocomplete="off">
+          <form @submit.prevent="submitUserForm" autocomplete="off">
+            <div class="row">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label>Name</label>
                   <input
                     type="text"
                     class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
                     v-model="name"
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
-                <ValidationError :error="errors.name" v-if="errors" />
+                  <ValidationError :error="errors.name" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -37,158 +35,45 @@
                     </option>
                   </select>
                 </div>
+              </div>
+              <!-- end col -->
 
-              
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label>Assign Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
-                    v-model="assign_date"
-                    :class="{ 'parsley-error': errors && errors.assign_date }"
-                  />
-                <ValidationError :error="errors.assign_date" v-if="errors" />
-                </div>
-
-                <div class="form-group">
-                  <label> Start Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
-                    v-model="start_date"
-                  />
-                </div>
-
-                <div class="form-group">
-                  <div class="form-group">
-                    <label>Members</label>
-                    <div
-                      class="checkbox-primary"
-                      v-for="m in members"
-                      :key="m.id"
-                    >
-                      <input
-                        :id="m.id"
-                        type="checkbox"
-                        name="member[]"
-                        unchecked=""
-                        v-model="member"
-                        :value="m.id"
-                      />
-                      <label for="checkbox2">
-                        {{ m.first_name }} {{ m.last_name }} ({{
-                          m.username
-                        }})</label
-                      >
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <!-- end col -->
-
-            <div class="col-md-6">
-              <form
-                @submit.prevent="submitUserForm"
-                autocomplete="off"
-                class="mt-4 mt-md-0"
-              >
-                <div class="form-group">
-                  <label>Project Id</label>
+                  <label>Program Id</label>
                   <input
                     type="text"
                     class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00:00:00"
-                    v-model="projectId"
-                    :class="{ 'parsley-error': errors && errors.projectId }"
+                    v-model="programId"
+                    :class="{ 'parsley-error': errors && errors.programId }"
                   />
-                  <ValidationError :error="errors.projectId" v-if="errors" />
+                  <ValidationError :error="errors.programId" v-if="errors" />
                 </div>
+
                 <div class="form-group">
-                  <label>Client</label>
+                  <label>Status</label>
                   <select
                     class="form-control"
                     data-toggle="select2"
-                    v-model="client"
-                  >
-                    <option value="false" disabled selected>Select</option>
-
-                    <option v-for="c in clients" :key="c.id" :value="c.id">
-                      {{ c.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Expected Start Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="0000-0000"
-                    v-model="expected_start_date"
-                    :class="{
-                      'parsley-error': errors && errors.expected_start_date,
-                    }"
-                  />
-                 <ValidationError :error="errors.expected_start_date" v-if="errors" />
-                </div>
-
-                <div class="form-group">
-                  <label>Expected Completed Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="(00) 00000-0000"
-                    v-model="expected_complete_date"
-                    :class="{
-                      'parsley-error': errors && errors.expected_complete_date,
-                    }"
-                  />
-                 <ValidationError :error="errors.expected_complete_date" v-if="errors" />
-                </div>
-                <div class="form-group">
-                  <label>Complete Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="000.000.000-00"
-                    data-reverse="true"
-                    v-model="complete_date"
-                    :class="{ 'parsley-error': errors && errors.complete_date }"
-                  />
-                 <ValidationError :error="errors.complete_date" v-if="errors" />
-                </div>
-                <div class="form-group">
-                  <label>Status</label>
-                 <select
-                    class="form-control"
-                    data-toggle="select2"
                     v-model="status"
+                    :class="{ 'parsley-error': errors && errors.status }"
                   >
                     <option value="false" disabled selected>Select</option>
 
-                    <option v-for="(s,i) in statusData" :key="i" :value="s.key" >
-                      {{ s.value }} 
+                    <option
+                      v-for="(s, i) in statusData"
+                      :key="i"
+                      :value="s.key"
+                    >
+                      {{ s.value }}
                     </option>
                   </select>
+                  <ValidationError :error="errors.status" v-if="errors" />
                 </div>
-              </form>
-            </div>
-            <!-- end col -->
+              </div>
+              <!-- end col -->
 
-            <div class="col-md-12">
-              <form
-                @submit.prevent="submitUserForm"
-                autocomplete="off"
-                class="mt-4 mt-md-0"
-              >
+              <div class="col-md-12">
                 <div class="form-group">
                   <label>Description </label>
                   <textarea
@@ -198,9 +83,7 @@
                     data-mask-format="000.000.000-00"
                     data-reverse="true"
                     v-model="description"
-                    :class="{ 'parsley-error': errors && errors.description }"
                   />
-                  <ValidationError :error="errors.description" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -212,9 +95,9 @@
                     Submit
                   </button>
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
+          </form>
           <!-- end row -->
         </div>
       </div>
@@ -240,46 +123,25 @@ export default {
   data() {
     return {
       name: null,
-      projectId: null,
-      clients: null,
+      programId: null,
       departments: null,
-      description: null,
-      assign_date: null,
-      expected_start_date: null,
-      start_date: null,
-      expected_complete_date: null,
-      complete_date: null,
       status: null,
       department: null,
-      client: null,
-      member: [],
       errors: null,
-      members: null,
-      msg: null,
+      statusData: null,
+      description: null,
     };
   },
   methods: {
     getProjectEditData: function () {
-      axios.get(`projects/${this.$route.params.id}/`).then(
+      axios.get(`program/${this.$route.params.id}/`).then(
         (response) => {
-          console.log("277", response.data);
+          // console.log("277", response.data);
           this.name = response.data.name;
-          this.projectId = response.data.projectId;
-          this.start_date = longDateToStandard(response.data.start_date);
-          this.expected_start_date = longDateToStandard(
-            response.data.expected_start_date
-          );
-          this.expected_complete_date = longDateToStandard(
-            response.data.expected_complete_date
-          );
-          this.complete_date = longDateToStandard(response.data.complete_date);
-          this.assign_date = longDateToStandard(response.data.assign_date);
-          this.start_date = longDateToStandard(response.data.start_date);
-          this.client = response.data.client.id;
+          this.programId = response.data.programId;
           this.department = response.data.department.id;
-          this.member = response.data.members.map((member) => member.id);
-          this.status = response.data.status;
           this.description = response.data.description;
+          this.status = response.data.status;
         }
       ).catch((err) => {
         console.log("error", err)
@@ -296,40 +158,23 @@ export default {
           console.log(error);
         });
     },
-    getClients: function () {
-      axios
-        .get("project_clients")
-        .then((response) => {
-          console.log("203", response.data);
-          this.clients = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
+   
     submitUserForm: function () {
       axios
-        .put("projects/" + this.$route.params.id + "/", {
-          department: this.department,
-          client: this.client,
+        .put("program/" + this.$route.params.id + "/", {
+         department: this.department,
           name: this.name,
-          projectId: this.projectId,
-          assign_date: this.assign_date,
-          start_date: this.start_date,
-          expected_start_date: this.expected_start_date,
-          expected_complete_date: this.expected_complete_date,
+          programId: this.programId,
           status: this.status,
-          complete_date: this.complete_date,
           description: this.description,
-          members: this.member,
         })
-        .then((response) => {
+        .then(() => {
           Swal.fire({
             icon: "success",
-            text: "You have successfully Updated a project.",
-          }).then((result) => {
-            this.$router.push("/project-basic-list");
-            console.log(result);
+            text: "You have successfully updated a program.",
+          }).then(() => {
+            this.$router.push("/program-list");
+            // console.log(result);
           });
           
         })
@@ -339,17 +184,7 @@ export default {
           this.errors = error.response.data;
         });
     },
-    getMembers: function () {
-      axios
-        .get("project_member")
-        .then((response) => {
-          console.log("252", response.data);
-          this.members = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
+  
     getStatus: function () {
       axios
         .get("project_status")
@@ -364,8 +199,6 @@ export default {
   },
   created() {
     this.getDepartment();
-    this.getClients();
-    this.getMembers();
     this.getProjectEditData();
     this.getStatus();
   },
