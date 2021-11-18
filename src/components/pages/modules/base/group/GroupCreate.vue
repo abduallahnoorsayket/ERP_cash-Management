@@ -760,16 +760,5 @@ export default {
 .cus_check_padding label {
   padding-left: 8px;
 }
-.lastActivityCard {
-    /* background: #e6f7f4; */
-    background: #f6627247;
-    padding: 1px;
-    border-left: 2px solid #F66272;
-    border-radius: 1px;
-    margin: 0px 0px 15px 0px;
-  }
-  .listTitle {
-    margin-left: 10px;
-    margin-top: 10px;
-  }
+
 </style>

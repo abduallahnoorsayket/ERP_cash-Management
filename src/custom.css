@@ -1,4 +1,18 @@
 /*  new permission UI */
+.lastActivityCard {
+  /* background: #e6f7f4; */
+  background: #f6627247;
+  padding: 1px;
+  border-left: 2px solid #F66272;
+  border-radius: 1px;
+  margin: 0px 0px 15px 0px;
+}
+.listTitle {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+/*  */
 .p-listbox .p-listbox-list {
     /* padding: 0.5rem 0; */
     /* height: 485px; */
@@ -171,73 +185,3 @@
   }
 
   /* custom checkbox */
-/* Customize the label (the container) */
-.form-check-label {
-    display: block;
-    /* position: relative; */
-    padding-left: 10px;
-    margin-bottom: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    margin-top: -4px;
-  }
-  
-  /* Hide the browser's default checkbox */
-  .form-check-label input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  
-  /* Create a custom checkbox */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 15px;
-    width: 15px;
-    /* background-color: #d4d6d8f7; */
-    border: 1px solid #777a8df5;
-    border-radius: 3px;
-  }
-  
-  /* On mouse-over, add a grey background color */
-  .form-check-label :hover input ~ .checkmark {
-    background-color: #ccc;
-  }
-  
-  /* When the checkbox is checked, add a blue background */
-  .form-check-label input:checked ~ .checkmark {
-    background-color: #F66272;
-    border: none;
-  }
-  
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  /* Show the checkmark when checked */
-  .form-check-label input:checked ~ .checkmark:after {
-    display: block;
-  }
-  
-  /* Style the checkmark/indicator */
-  .form-check-label .checkmark:after {
-    left: 5px;
-    top: 1px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
-  
