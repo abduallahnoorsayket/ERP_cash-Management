@@ -453,7 +453,7 @@ export default {
           Swal.fire({
             icon: "success",
             text: "You have successfully Update a Requisition.",
-          }).then((result) => {
+          }).then(() => {
             this.$router.push({ name: "project_requisitionList" });
           });
         })
