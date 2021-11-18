@@ -8,6 +8,7 @@ import BaseHome from '../components/pages/modules/base/Home'
 import RequisitionHome from '../components/pages/modules/requisition/Home'
 import permissions from '@/permisson'
 import projectRoutes from '../components/pages/modules/pms/project/routes'
+import programRoutes from '../components/pages/modules/pms/program/routes'
 import versionRoutes from '../components/pages/modules/pms/version/routes'
 import sprintRoutes from '../components/pages/modules/pms/sprint/routes'
 import taskCategory from '../components/pages/modules/pms/task_category/routes'
@@ -92,7 +93,8 @@ const routes = [].concat(
   unitsRoutes,
   userRoutes,
   groupRoutes,
-  project_requisitionRoutes
+  project_requisitionRoutes,
+  programRoutes
   );
 
 

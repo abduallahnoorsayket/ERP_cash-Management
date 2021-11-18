@@ -9,6 +9,20 @@
               <i class="mdi mdi-speedometer"></i>Dashboard
             </router-link>
           </li>
+           <li class="has-submenu" v-if="hasModelPermission('version')">
+            <a href="#">
+              <i class="fas fa-ring"></i>Program
+              <div class="arrow-down"></div
+            ></a>
+            <ul class="submenu">
+              <li v-if="hasPermission('view_version')">
+                <router-link to="/program-list">Program List</router-link>
+              </li>
+              <li v-if="hasPermission('add_version')">
+                <router-link to="/program-create">Program Create</router-link>
+              </li>
+            </ul>
+          </li>
 
           <li class="has-submenu" v-if="hasModelPermission('project')">
             <a href="#">
