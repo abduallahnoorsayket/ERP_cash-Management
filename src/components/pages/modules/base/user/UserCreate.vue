@@ -109,11 +109,9 @@
                 <div class="form-group">
                   <label>Email</label>
                   <input
-                    type="email"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
+                    type="text"
                     v-model="form_data.email"
+                    class="form-control"
                     :class="{ 'parsley-error': errors && errors.email }"
                   />
                   <ValidationError :error="errors.email" v-if="errors" />

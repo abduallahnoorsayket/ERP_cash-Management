@@ -8,48 +8,31 @@
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-2">
+      
+                <div class="col-lg-4">
                   <div class="form-group">
-                    <label>Client</label>
-                    <select
+                    <label>Name</label>
+                    <input
+                      type="text"
                       class="form-control"
-                      data-toggle="select2"
-                      v-model="project"
-                    >
-                      <option value="false" disabled selected>Select</option>
-
-                      <option
-                        v-for="(s, i) in projectId"
-                        :key="i"
-                        :value="s.id"
-                      >
-                        {{ s.name }}
-                      </option>
-                    </select>
+                      data-toggle="input-mask"
+                      data-mask-format="00/00/0000"
+                      v-model="name"
+                    />
                   </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-4">
                   <div class="form-group">
-                    <label>Department</label>
-                    <select
+                    <label>Project Id</label>
+                    <input
+                      type="text"
                       class="form-control"
-                      data-toggle="select2"
-                      v-model="department"
-                    >
-                      <option value="false" disabled selected>Select</option>
-
-                      <option
-                        v-for="(v, i) in departmentId"
-                        :key="i"
-                        :value="v.id"
-                      >
-                        {{ v.name }}
-                      </option>
-                    </select>
+                      v-model="programId"
+                    />
                   </div>
                 </div>
 
-                <div class="col-lg-2">
+                    <div class="col-lg-3">
                   <div class="form-group">
                     <label>Status</label>
                     <select
@@ -67,28 +50,6 @@
                         {{ s.value }}
                       </option>
                     </select>
-                  </div>
-                </div>
-                <div class="col-lg-2">
-                  <div class="form-group">
-                    <label>Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      data-toggle="input-mask"
-                      data-mask-format="00/00/0000"
-                      v-model="name"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-2">
-                  <div class="form-group">
-                    <label>Project Id</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="project_id"
-                    />
                   </div>
                 </div>
 
@@ -256,6 +217,7 @@ export default {
       statusData: null,
       status: null,
       name: null,
+      programId: null,
       pagination: {
         count: null,
         next: null,
@@ -270,9 +232,7 @@ export default {
       let endPoint = "program";
       var queryParam = {
         name: this.$route.query.name,
-        client: this.$route.query.project,
-        projectId: this.$route.query.project_id,
-        department: this.$route.query.department,
+        programId: this.$route.query.programId,
         status: this.$route.query.status,
         page: this.$route.query.page,
       };
@@ -349,13 +309,12 @@ export default {
     // search section start
     searchVersion() {
       this.$router.push({
-        path: "project-basic-list",
+        path: "program-list",
         query: {
           name: this.name,
-          project: this.project,
-          project_id: this.project_id,
+          programId: this.programId,
           status: this.status,
-          department: this.department,
+
         },
       });
     },
