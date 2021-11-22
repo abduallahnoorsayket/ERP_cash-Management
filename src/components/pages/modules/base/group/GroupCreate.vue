@@ -21,7 +21,105 @@
 
                  <div class="form-group">
                   <label>User Permissions</label>
-                  <input
+                  <div class="p-listbox p-component">
+                    <!-- <div class="p-listbox-header">
+                      <div class="p-listbox-filter-container">
+                        <input
+                          type="text"
+                          class="p-listbox-filter p-inputtext p-component"
+                          v-model="searchQuery"
+                          placeholder="Filter"
+                        />
+                        <span class="p-listbox-filter-icon pi pi-search"></span>
+                      </div>
+                    </div> -->
+                    <div class="p-listbox-list-wrapper">
+                      <div
+                        role="listbox"
+                        aria-multiselectable="multiple"
+                        class="p-listbox-list permission-custom-height"
+                      >
+                        <div
+                          class="module-permission-section"
+                            v-for="(module_obj, perm_index) in user_permissions" :key="perm_index"
+                        >
+                          <div class="main-card lastActivityCard">
+                            <h5 class="listTitle">{{ module_obj.module }} Module</h5>
+                          </div>
+                          <div class="row module">
+                            <div class="col-md-12">
+                              <div class="p-listbox-item">
+                                <label class="form-check-label">
+                                  <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                     @click="ModuleClick($event, perm_index)" :id="'module_'+perm_index"
+                                  />
+                                  <span class="checkmark"></span>
+                                      {{module_obj.module}} Module
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <template
+                           v-for="(model, m_index) in module_obj.models" :key="m_index"
+                          >
+                           <div class="row submodule">
+                              <div class="col-md-12">
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 600"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                       @click="ModelClick($event, perm_index, m_index)" :id="'module_'+perm_index+'_model_'+m_index"
+                                    />
+                                    <span class="checkmark"></span>
+                                    {{ model.name }}
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row permission_name">
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                                  v-for="(permission, model_index) in model.permissions" :key="model_index"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                      :value="permission.id"  v-model="form_data.permissions"
+                                    />
+                                    <span class="checkmark"></span>
+                                    {{ permission.name.slice(3) }}
+                                  </label>
+                                </div>
+                                 <ValidationError
+                      :error="errors.permissions"
+                      v-if="errors"
+                    />
+                                
+                              </div>
+                             
+                            </div>
+                           
+                           
+                          </template>
+                          
+                           
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <input
                     type="text"
                     class="form-control search-input"
                     autocomplete="off"
@@ -48,17 +146,13 @@
                       :error="errors.permissions"
                       v-if="errors"
                     />
-                  </div>
+                  </div> -->
+                
+                
                 </div>
 
               </div>
-              <!-- end col -->
-
-              <div class="col-md-6">
-               
-              </div>
-              <!-- end col -->
-
+             
               <div class="col-md-12">
                 <div class="form-group">
                   <button
@@ -108,7 +202,7 @@ export default {
   methods: {
     getPermission: function () {
       axios
-        .get("permissions")
+        .get("custom-permissions")
         .then((response) => {
           this.user_permissions = response.data;
         })
@@ -124,7 +218,7 @@ export default {
           Swal.fire({
             icon: "success",
             text: "You have successfully created a Group.",
-          }).then((result) => {
+          }).then(() => {
             this.$router.push("group-list");
           });
         })
@@ -164,4 +258,5 @@ export default {
 .cus_check_padding label {
   padding-left: 8px;
 }
+
 </style>

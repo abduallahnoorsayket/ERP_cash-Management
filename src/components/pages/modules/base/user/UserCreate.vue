@@ -7,7 +7,7 @@
         <div class="card-body">
           <form @submit.prevent="submitUserForm" autocomplete="off">
             <div class="row">
-              <div class="col-md-6">
+                <div class="col-md-6">
                 <div class="form-group">
                   <label>First Name</label>
                   <input
@@ -20,8 +20,7 @@
                   />
                   <ValidationError :error="errors.first_name" v-if="errors" />
                 </div>
-
-                <div class="form-group">
+                 <div class="form-group">
                   <label>User Name</label>
                   <input
                     type="text"
@@ -31,7 +30,42 @@
                   />
                   <ValidationError :error="errors.username" v-if="errors" />
                 </div>
-
+                 
+                 
+               
+              </div>
+              <div class="col-md-6">
+                   <div class="form-group">
+                  <label>Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    data-toggle="input-mask"
+                    data-mask-format="00/00/0000"
+                    v-model="form_data.last_name"
+                    :class="{ 'parsley-error': errors && errors.last_name }"
+                  />
+                  <ValidationError :error="errors.last_name" v-if="errors" />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    data-toggle="input-mask"
+                    data-mask-format="00/00/0000"
+                    v-model="form_data.email"
+                    :class="{ 'parsley-error': errors && errors.email }"
+                  />
+                  <ValidationError :error="errors.email" v-if="errors" />
+                </div>
+                
+              </div>
+            </div>
+              
+              <!-- end col -->
+              <div class="row">
+                <div class="col-md-12">
                 <div class="form-group">
                   <label>Password </label>
                   <input
@@ -42,40 +76,30 @@
                   />
                   <ValidationError :error="errors.password" v-if="errors" />
                 </div>
-
-                <div class="form-group">
-                  <label>User Permissions</label>
-                  <input
-                    type="text"
-                    v-model="searchQuery"
-                    class="form-control search-input"
-                    autocomplete="off"
-                    placeholder="search..."
-                  />
-                  <div class="scr_view">
-                    <div
-                      class="cus_check_padding checkbox-primary"
-                      v-for="p in resultQuery"
-                      :key="p.id"
-                    >
-                      <input
-                        :id="p.id"
-                        type="checkbox"
-                        name="form_data.user_permissions[]"
-                        unchecked=""
-                        v-model="form_data.user_permissions"
-                        :value="p.id"
-                      />
-                      <label for="checkbox"> {{ p.name }} </label>
-                    </div>
-                    <ValidationError
-                      :error="errors.user_permissions"
-                      v-if="errors"
+              </div>
+              </div>
+             
+             <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group ml-1">
+                  <label>Active </label>
+                  <div class="cus_check_padding  checkbox-primary">
+                    <input
+                      id="checkbox"
+                      type="checkbox"
+                      unchecked=""
+                      v-model="form_data.is_active"
                     />
+                    <label for="checkbox"
+                      >{{ form_data.is_active == true ? "Yes" : "No" }}
+                    </label>
                   </div>
                 </div>
+              
 
-                <div class="form-group">
+              </div>
+              <div class="col-md-6">
+                   <div class="form-group ml-1">
                   <label>Superuser </label>
                   <div class="cus_check_padding checkbox-primary">
                     <input
@@ -90,50 +114,10 @@
                   </div>
                 </div>
               </div>
+             </div>
               <!-- end col -->
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
-                    v-model="form_data.last_name"
-                    :class="{ 'parsley-error': errors && errors.last_name }"
-                  />
-                  <ValidationError :error="errors.last_name" v-if="errors" />
-                </div>
-
-                <div class="form-group">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    data-toggle="input-mask"
-                    data-mask-format="00/00/0000"
-                    v-model="form_data.email"
-                    :class="{ 'parsley-error': errors && errors.email }"
-                  />
-                  <ValidationError :error="errors.email" v-if="errors" />
-                </div>
-
-                <div class="form-group">
-                  <label>Active </label>
-                  <div class="cus_check_padding checkbox-primary">
-                    <input
-                      id="checkbox"
-                      type="checkbox"
-                      unchecked=""
-                      v-model="form_data.is_active"
-                    />
-                    <label for="checkbox"
-                      >{{ form_data.is_active == true ? "Yes" : "No" }}
-                    </label>
-                  </div>
-                </div>
-
+             <div class="row">
+                <div class="col-md-12">
                 <div class="form-group">
                   <label>User Groups</label>
                   <input
@@ -162,8 +146,631 @@
                     <ValidationError :error="errors.groups" v-if="errors" />
                   </div>
                 </div>
+                 <div class="form-group">
+                  <label>User Permissions</label>
+                   <div class="p-listbox p-component">
+                    <!-- <div class="p-listbox-header">
+                      <div class="p-listbox-filter-container">
+                        <input
+                          type="text"
+                          class="p-listbox-filter p-inputtext p-component"
+                          v-model="searchQuery"
+                          placeholder="Filter"
+                        />
+                        <span class="p-listbox-filter-icon pi pi-search"></span>
+                      </div>
+                    </div> -->
+                    <div class="p-listbox-list-wrapper">
+                      <div
+                        role="listbox"
+                        aria-multiselectable="multiple"
+                        class="p-listbox-list permission-custom-height"
+                      >
+                        <div
+                          class="module-permission-section"
+                        >
+                          <div class="main-card lastActivityCard">
+                            <h5 class="listTitle">Base Module</h5>
+                          </div>
+                          <div class="row module">
+                            <div class="col-md-12">
+                              <div class="p-listbox-item">
+                                <label class="form-check-label">
+                                  <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                  />
+                                  <span class="checkmark"></span>
+                                    Base Module
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                           <div class="row submodule">
+                              <div class="col-md-12">
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 600"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    User Management
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row permission_name">
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    User Add
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    User Edit
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    User Delete
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    User View
+                                  </label>
+                                </div>
+                                
+                              </div>
+                            </div>
+                            <div class="row submodule">
+                              <div class="col-md-12">
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 600"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Group Management
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row permission_name">
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Group Add
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Group Edit
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Group Delete
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Group View
+                                  </label>
+                                </div>
+                                
+                              </div>
+                            </div>
+                            <div class="row submodule">
+                              <div class="col-md-12">
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 600"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Depertment Management
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row permission_name">
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Depertment Add
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Depertment Edit
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Depertment Delete
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Depertment View
+                                  </label>
+                                </div>
+                                
+                              </div>
+                            </div>
+                             <div class="row submodule">
+                              <div class="col-md-12">
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 600"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Client Management
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row permission_name">
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Client Add
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Client Edit
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Client Delete
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Client View
+                                  </label>
+                                </div>
+                                
+                              </div>
+                            </div>
+                             <div class="row submodule">
+                              <div class="col-md-12">
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 600"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Item Management
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row permission_name">
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Item Add
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Item Edit
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Item Delete
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Item View
+                                  </label>
+                                </div>
+                                
+                              </div>
+                            </div>
+                             <div class="row submodule">
+                              <div class="col-md-12">
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 600"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Unit Management
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row permission_name">
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Unit Add
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Unit Edit
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Unit Delete
+                                  </label>
+                                </div>
+                                
+                              </div>
+                              <div
+                                class="col-sm-6 col-md-6 col-xl-3"
+                              >
+                                <div class="p-listbox-item">
+                                  <label
+                                    class="form-check-label"
+                                    style="font-weight: 300"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      class="form-check-input"
+                                    />
+                                    <span class="checkmark"></span>
+                                    Unit View
+                                  </label>
+                                </div>
+                                
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- <input
+                    type="text"
+                    v-model="searchQuery"
+                    class="form-control search-input"
+                    autocomplete="off"
+                    placeholder="search..."
+                  />
+                  <div class="scr_view">
+                    <div
+                      class="cus_check_padding checkbox-primary"
+                      v-for="p in resultQuery"
+                      :key="p.id"
+                    >
+                      <input
+                        :id="p.id"
+                        type="checkbox"
+                        name="form_data.user_permissions[]"
+                        unchecked=""
+                        v-model="form_data.user_permissions"
+                        :value="p.id"
+                      />
+                      <label for="checkbox"> {{ p.name }} </label>
+                    </div>
+                    <ValidationError
+                      :error="errors.user_permissions"
+                      v-if="errors"
+                    />
+                  </div> -->
+                </div>
+                
+
               </div>
-              <!-- end col -->
+             </div>
 
               <div class="col-md-12">
                 <div class="form-group">
@@ -176,7 +783,6 @@
                   </button>
                 </div>
               </div>
-            </div>
           </form>
           <!-- end row -->
         </div>
@@ -267,7 +873,7 @@ export default {
           Swal.fire({
             icon: "success",
             text: "You have successfully created a User.",
-          }).then((result) => {
+          }).then(() => {
             this.$router.push("user-list");
           });
         })
@@ -319,5 +925,9 @@ export default {
 }
 .cus_check_padding label {
   padding-left: 8px;
+}
+/* list box height */
+.permission-custom-height{
+  height: 500px !important;
 }
 </style>
