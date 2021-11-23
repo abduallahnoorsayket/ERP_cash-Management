@@ -101,10 +101,10 @@
                                     {{ permission.name.slice(3) }}
                                   </label>
                                 </div>
-                                 <ValidationError
+                                 <!-- <ValidationError
                       :error="errors.permissions"
                       v-if="errors"
-                    />
+                    /> -->
                                 
                               </div>
                              
@@ -200,6 +200,33 @@ export default {
     };
   },
   methods: {
+     ModuleClick(e, module_index){
+      // console.log(this.permissions[module_index]['models']);
+        this.user_permissions[module_index]['models'].forEach((element, key) => {
+          // console.log(e, module_index, key);
+          document.getElementById('module_'+module_index+'_model_'+key).checked = e.target.checked;
+          this.ModelClick(e, module_index, key)
+        })
+        
+  
+    },
+    ModelClick(e, module_index, model_index){
+      if(e.target.checked) {
+        //push id in permissions object
+        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+          this.form_data.permissions.push(element.id);
+        })
+      }else{
+        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+          // this.selectedPermissions.push(element.id);
+          let index = this.form_data.permissions.indexOf(element.id);
+          if (index !== -1) {
+            // console.log(this.selectedPermissions.splice(index));
+            this.form_data.permissions.splice(index,1);
+          }
+        })
+      }
+    },
     getPermission: function () {
       axios
         .get("custom-permissions")
