@@ -166,9 +166,10 @@
                       >
                         <div
                           class="module-permission-section"
+                           v-for="(module_obj, perm_index) in user_permissions" :key="perm_index"
                         >
                           <div class="main-card lastActivityCard">
-                            <h5 class="listTitle">Base Module</h5>
+                            <h5 class="listTitle">{{ module_obj.module }} Module</h5>
                           </div>
                           <div class="row module">
                             <div class="col-md-12">
@@ -177,286 +178,15 @@
                                   <input
                                     type="checkbox"
                                     class="form-check-input"
+                                     @click="ModuleClick($event, perm_index)" :id="'module_'+perm_index"
                                   />
                                   <span class="checkmark"></span>
-                                    Base Module
+                                    {{module_obj.module}} Module
                                 </label>
                               </div>
                             </div>
                           </div>
-                           <div class="row submodule">
-                              <div class="col-md-12">
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 600"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    User Management
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row permission_name">
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    User Add
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    User Edit
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    User Delete
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    User View
-                                  </label>
-                                </div>
-                                
-                              </div>
-                            </div>
-                            <div class="row submodule">
-                              <div class="col-md-12">
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 600"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Group Management
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row permission_name">
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Group Add
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Group Edit
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Group Delete
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Group View
-                                  </label>
-                                </div>
-                                
-                              </div>
-                            </div>
-                            <div class="row submodule">
-                              <div class="col-md-12">
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 600"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Depertment Management
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row permission_name">
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Depertment Add
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Depertment Edit
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Depertment Delete
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Depertment View
-                                  </label>
-                                </div>
-                                
-                              </div>
-                            </div>
+                           <template    v-for="(model, m_index) in module_obj.models" :key="m_index">
                              <div class="row submodule">
                               <div class="col-md-12">
                                 <div class="p-listbox-item">
@@ -467,9 +197,10 @@
                                     <input
                                       type="checkbox"
                                       class="form-check-input"
+                                       @click="ModelClick($event, perm_index, m_index)" :id="'module_'+perm_index+'_model_'+m_index"
                                     />
                                     <span class="checkmark"></span>
-                                    Client Management
+                                    {{ model.name }}
                                   </label>
                                 </div>
                               </div>
@@ -477,6 +208,7 @@
                             <div class="row permission_name">
                               <div
                                 class="col-sm-6 col-md-6 col-xl-3"
+                                   v-for="(permission, model_index) in model.permissions" :key="model_index"
                               >
                                 <div class="p-listbox-item">
                                   <label
@@ -486,250 +218,18 @@
                                     <input
                                       type="checkbox"
                                       class="form-check-input"
+                                        :value="permission.id"  v-model="form_data.user_permissions"
                                     />
                                     <span class="checkmark"></span>
-                                    Client Add
+                                    {{ permission.name.slice(3) }}
                                   </label>
                                 </div>
                                 
                               </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Client Edit
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Client Delete
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Client View
-                                  </label>
-                                </div>
-                                
-                              </div>
+                              
                             </div>
-                             <div class="row submodule">
-                              <div class="col-md-12">
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 600"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Item Management
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row permission_name">
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Item Add
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Item Edit
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Item Delete
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Item View
-                                  </label>
-                                </div>
-                                
-                              </div>
-                            </div>
-                             <div class="row submodule">
-                              <div class="col-md-12">
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 600"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Unit Management
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row permission_name">
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Unit Add
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Unit Edit
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Unit Delete
-                                  </label>
-                                </div>
-                                
-                              </div>
-                              <div
-                                class="col-sm-6 col-md-6 col-xl-3"
-                              >
-                                <div class="p-listbox-item">
-                                  <label
-                                    class="form-check-label"
-                                    style="font-weight: 300"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      class="form-check-input"
-                                    />
-                                    <span class="checkmark"></span>
-                                    Unit View
-                                  </label>
-                                </div>
-                                
-                              </div>
-                            </div>
+                           </template>
+                                                      
                         </div>
                       </div>
                     </div>
@@ -825,9 +325,36 @@ export default {
     };
   },
   methods: {
+     ModuleClick(e, module_index){
+      // console.log(this.permissions[module_index]['models']);
+        this.user_permissions[module_index]['models'].forEach((element, key) => {
+          // console.log(e, module_index, key);
+          document.getElementById('module_'+module_index+'_model_'+key).checked = e.target.checked;
+          this.ModelClick(e, module_index, key)
+        })
+        
+  
+    },
+    ModelClick(e, module_index, model_index){
+      if(e.target.checked) {
+        //push id in permissions object
+        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+          this.form_data.user_permissions.push(element.id);
+        })
+      }else{
+        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+          // this.selectedPermissions.push(element.id);
+          let index = this.form_data.user_permissions.indexOf(element.id);
+          if (index !== -1) {
+            // console.log(this.selectedPermissions.splice(index));
+            this.form_data.user_permissions.splice(index,1);
+          }
+        })
+      }
+    },
     getPermission: function () {
       axios
-        .get("permissions")
+        .get("custom-permissions")
         .then((response) => {
           this.user_permissions = response.data;
         })
