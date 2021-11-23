@@ -101,10 +101,10 @@
                                     {{ permission.name.slice(3) }}
                                   </label>
                                 </div>
-                                 <ValidationError
+                                 <!-- <ValidationError
                       :error="errors.permissions"
                       v-if="errors"
-                    />
+                    /> -->
                                 
                               </div>
                              
