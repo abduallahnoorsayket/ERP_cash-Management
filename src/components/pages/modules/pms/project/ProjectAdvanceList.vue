@@ -121,7 +121,6 @@
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
-                      <th scope="col">Department</th>
                       <th scope="col">Client</th>
                       <th scope="col">Project Id</th>
                       <th scope="col" title="Assign Date">AD</th>
@@ -140,7 +139,6 @@
                       :key="index"
                     >
                       <th scope="row">{{ project.name }}</th>
-                      <td>{{ project.department.name }}</td>
                       <td>{{ project.client.name }}</td>
                       <td>{{ project.projectId }}</td>
                       <td>{{ project.assign_date }}</td>
