@@ -1,7 +1,7 @@
 <template>
   <div class="row">
 
-     <div class="col-xl-3 col-md-6" v-if="hasModulePermission('project_management')">
+     <div class="col-xl-3 col-md-6" v-if="hasModulePermission('auth','base')">
       <router-link to="/base">
         <div class="card">
           <div class="card-body">
@@ -67,7 +67,7 @@
 
    
 
-    <div class="col-xl-3 col-md-6" v-if="hasModulePermission('project_management')">
+    <div class="col-xl-3 col-md-6" v-if="hasModulePermission('requisition')">
       <router-link to="/requisition">
         <div class="card">
           <div class="card-body">
