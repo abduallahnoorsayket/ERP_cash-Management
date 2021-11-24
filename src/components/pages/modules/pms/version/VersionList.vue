@@ -177,7 +177,42 @@
                           }}</span>
                         </router-link>
                       </td>
-                      <td>{{ version.status_list[version.status] }}</td>
+                      <td v-if="version.status_list[version.status] =='Running'"
+                      >
+                      <span class="badge badge-primary">
+                           {{ version.status_list[version.status] }}
+                          </span>
+                      </td>
+                       <td v-if="version.status_list[version.status] =='Assigned'"
+                      >
+                      <span class="badge badge-info">
+                           {{ version.status_list[version.status] }}
+                          </span>
+                      </td>
+                       <td v-if="version.status_list[version.status] =='Completed'"
+                      >
+                      <span class="badge badge-success">
+                           {{ version.status_list[version.status] }}
+                          </span>
+                      </td>
+                       <td v-if="version.status_list[version.status] =='Postponed'"
+                      >
+                      <span class="badge badge-warning">
+                           {{ version.status_list[version.status] }}
+                          </span>
+                      </td>
+                       <td v-if="version.status_list[version.status] =='Problematic'"
+                      >
+                      <span class="badge badge-danger">
+                           {{ version.status_list[version.status] }}
+                          </span>
+                      </td>
+                       <td v-if="version.status_list[version.status] =='Upcoming'"
+                      >
+                      <span class="badge badge-purple">
+                           {{ version.status_list[version.status] }}
+                          </span>
+                      </td>
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -299,7 +334,7 @@ export default {
         this.pagination.previous = response.data.previous;
         this.pagination.showing = response.data.results.length;
       }).catch((error) => {
-        console.log('302 version',error);
+        console.log('302 version',error,e);
       });
     },
       hasModulePermission(...module_name) {
