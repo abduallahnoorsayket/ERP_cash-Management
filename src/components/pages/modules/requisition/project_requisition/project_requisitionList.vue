@@ -442,7 +442,7 @@
 
       <CommonModal :isModalVisible="isModalVisible" v-if="task_targets">
         <template v-slot:modal_header>
-          <p>Task Targets</p>
+          <p>Task Budget</p>
         </template>
         <template v-slot:modal_body>
           <div class="col-md-12">

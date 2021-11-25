@@ -362,9 +362,9 @@ export default {
               this.getSprintList();
             }
           });
-          Swal.fire("Deleted!", "Version has been deleted!!", "success");
+          Swal.fire("Deleted!", "Sprint has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Version has not been deleted !", "error");
+          Swal.fire("Cancelled", "Sprint has not been deleted !", "error");
         }
       });
     },

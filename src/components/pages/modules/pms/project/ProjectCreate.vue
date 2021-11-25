@@ -22,15 +22,15 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Department</label>
+                  <label>Program</label>
                   <select
                     class="form-control"
                     data-toggle="select2"
-                    v-model="department"
+                    v-model="program"
                   >
                     <option value="false" disabled selected>Select</option>
 
-                    <option v-for="d in departments" :key="d.id" :value="d.id">
+                    <option v-for="d in programs" :key="d.id" :value="d.id">
                       {{ d.name }}
                     </option>
                   </select>
@@ -230,7 +230,7 @@ export default {
       name: null,
       projectId: null,
       clients: null,
-      departments: null,
+      programs: null,
       description: null,
       assign_date: null,
       expected_start_date: null,
@@ -238,7 +238,7 @@ export default {
       expected_complete_date: null,
       complete_date: null,
       status: null,
-      department: null,
+      program: null,
       client: null,
       member: [],
       errors: null,
@@ -248,12 +248,12 @@ export default {
     };
   },
   methods: {
-    getDepartment: function () {
+    getProgramShortList: function () {
       axios
-        .get("project_department")
+        .get("programme-short-list/")
         .then((response) => {
           // console.log("203", response.data);
-          this.departments = response.data;
+          this.programs = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -285,7 +285,7 @@ export default {
     submitUserForm: function () {
       axios
         .post("projects/", {
-          department: this.department,
+          program: this.program,
           client: this.client,
           name: this.name,
           projectId: this.projectId,
@@ -326,7 +326,7 @@ export default {
     },
   },
   created() {
-    this.getDepartment();
+    this.getProgramShortList();
     this.getClients();
     this.getMembers();
     this.getStatus();

@@ -24,16 +24,16 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Department</label>
+                  <label>Program</label>
                   <select
                     class="form-control"
                     data-toggle="select2"
-                    v-model="department"
+                    v-model="program"
                   >
                     <option value="false" disabled selected>Select</option>
 
-                    <option v-for="d in departments" :key="d.id" :value="d.id">
-                      {{ d.name }}
+                    <option v-for="p in programs" :key="p.id" :value="p.id">
+                      {{ p.name }}
                     </option>
                   </select>
                 </div>
@@ -242,7 +242,7 @@ export default {
       name: null,
       projectId: null,
       clients: null,
-      departments: null,
+      programs: null,
       description: null,
       assign_date: null,
       expected_start_date: null,
@@ -250,7 +250,7 @@ export default {
       expected_complete_date: null,
       complete_date: null,
       status: null,
-      department: null,
+      program: null,
       client: null,
       member: [],
       errors: null,
@@ -262,7 +262,7 @@ export default {
     getProjectEditData: function () {
       axios.get(`projects/${this.$route.params.id}/`).then(
         (response) => {
-          console.log("277", response.data);
+          // console.log("277", response.data);
           this.name = response.data.name;
           this.projectId = response.data.projectId;
           this.start_date = longDateToStandard(response.data.start_date);
@@ -276,8 +276,8 @@ export default {
           this.assign_date = longDateToStandard(response.data.assign_date);
           this.start_date = longDateToStandard(response.data.start_date);
           this.client = response.data.client.id;
-          this.department = response.data.department.id;
-          this.member = response.data.members.map((member) => member.id);
+          this.program = response.data.program.id;
+          this.member = response.data.members.map((m) =>m.id);
           this.status = response.data.status;
           this.description = response.data.description;
         }
@@ -285,12 +285,12 @@ export default {
         console.log("error", err)
       })
     },
-    getDepartment: function () {
+    getProgramsShortList: function () {
       axios
-        .get("project_department")
+        .get("programme-short-list/")
         .then((response) => {
-          console.log("203", response.data);
-          this.departments = response.data;
+          // console.log("203", response.data);
+          this.programs = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -354,7 +354,7 @@ export default {
       axios
         .get("project_status")
         .then((response) => {
-          console.log("300", response.data);
+          // console.log("300", response.data);
           this.statusData = response.data.data;
         })
         .catch(function (error) {
@@ -363,7 +363,7 @@ export default {
     },
   },
   created() {
-    this.getDepartment();
+    this.getProgramsShortList();
     this.getClients();
     this.getMembers();
     this.getProjectEditData();

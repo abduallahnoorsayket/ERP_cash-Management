@@ -172,8 +172,8 @@
                             query: { version: version.id },
                           }"
                         >
-                          <span class="badge badge-pill badge-primary">{{
-                            version.no_of_sprints
+                          <span class="badge badge-info"> Sprint -{{
+                           version.no_of_sprints
                           }}</span>
                         </router-link>
                       </td>
