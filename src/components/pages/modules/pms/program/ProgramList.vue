@@ -101,37 +101,13 @@
                       <td>{{ program.department.name }}</td>
                       <td>{{ program.programId }}</td>
                       <td>{{ program.created_at }}</td>
-                      <td v-if="program.status_list[program.status] =='Running'">
-                        <span class="badge badge-primary">
-                           {{ program.status_list[program.status] }}
+                      <td >
+                        <span :class="status_map[program.status]">
+                             {{ program.status_list[program.status] }}
                           </span>
                         </td>
-                        <td v-if="program.status_list[program.status] =='Assigned'">
-                        <span class="badge badge-info">
-                           {{ program.status_list[program.status] }}
-                          </span>
-                        </td>
-                        <td v-if="program.status_list[program.status] =='Completed'">
-                        <span class="badge badge-success">
-                           {{ program.status_list[program.status] }}
-                          </span>
-                        </td>
-                        <td v-if="program.status_list[program.status] =='Postponed'">
-                        <span class="badge badge-warning">
-                           {{ program.status_list[program.status] }}
-                          </span>
-                        </td>
-                        <td v-if="program.status_list[program.status] =='Problematic'">
-                        <span class="badge badge-danger">
-                           {{ program.status_list[program.status] }}
-                          </span>
-                        </td>
-                        <td v-if="program.status_list[program.status] =='Upcoming'">
-                        <span class="badge badge-purple">
-                           {{ program.status_list[program.status] }}
-                          </span>
-                        </td>
-           
+
+
                       <td>
                         <router-link
                           :to="{
@@ -240,6 +216,14 @@ export default {
   },
   data() {
     return {
+       status_map:{
+        RU:"badge badge-primary", //Running
+        AS:"badge badge-info", //Assigned
+        CO:"badge badge-success", //Completed
+        PO:"badge badge-warning", //Postponed
+        PR:"badge badge-danger", //Problematic
+        UP:"badge badge-purple", //Upcoming
+      },
       all_program_list: null,
       department: null,
       departmentId: null,
