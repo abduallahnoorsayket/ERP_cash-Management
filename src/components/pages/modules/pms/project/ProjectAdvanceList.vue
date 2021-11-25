@@ -168,7 +168,11 @@
                           }}</span>
                         </router-link>
                       </td>
-                      <td>{{ project.status_list[project.status] }}</td>
+                      <td >
+                        <span :class="status_map[project.status]">
+                             {{ project.status_list[project.status] }}
+                          </span>
+                        </td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
                           <button
@@ -240,6 +244,14 @@ export default {
   },
   data() {
     return {
+       status_map:{
+        RU:"badge badge-primary", //Running
+        AS:"badge badge-info", //Assigned
+        CO:"badge badge-success", //Completed
+        PO:"badge badge-warning", //Postponed
+        PR:"badge badge-danger", //Problematic
+        UP:"badge badge-purple", //Upcoming
+      },
       all_project_list: null,
       department: null,
       departmentId: null,

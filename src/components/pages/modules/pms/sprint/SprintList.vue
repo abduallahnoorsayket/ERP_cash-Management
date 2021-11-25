@@ -196,37 +196,11 @@
 
                       </td> -->
                       
-                       <td v-if="sprint.status_list[sprint.status] =='Running'">
-                        <span class="badge badge-primary">
-                           {{ sprint.status_list[sprint.status] }}
-                          </span>
-                        </td>
-                        <td v-if="sprint.status_list[sprint.status] =='Assigned'">
-                        <span class="badge badge-info">
+                        <td >
+                        <span :class="status_map[sprint.status]">
                              {{ sprint.status_list[sprint.status] }}
                           </span>
                         </td>
-                        <td v-if="sprint.status_list[sprint.status] =='Completed'">
-                        <span class="badge badge-success">
-                           {{ sprint.status_list[sprint.status] }}
-                          </span>
-                        </td>
-                        <td v-if="sprint.status_list[sprint.status] =='Postponed'">
-                        <span class="badge badge-warning">
-                           {{ sprint.status_list[sprint.status] }}
-                          </span>
-                        </td>
-                        <td v-if="sprint.status_list[sprint.status] =='Problematic'">
-                        <span class="badge badge-danger">
-                           {{ sprint.status_list[sprint.status] }}
-                          </span>
-                        </td>
-                        <td v-if="sprint.status_list[sprint.status]  =='Upcoming'">
-                        <span class="badge badge-purple">
-                           {{ sprint.status_list[sprint.status] }}
-                          </span>
-                        </td>
-                      
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -287,6 +261,15 @@ export default {
   },
   data() {
     return {
+      status_map:{
+        RU:"badge badge-primary", //Running
+        AS:"badge badge-info", //Assigned
+        CO:"badge badge-success", //Completed
+        PO:"badge badge-warning", //Postponed
+        PR:"badge badge-danger", //Problematic
+        UP:"badge badge-purple", //Upcoming
+      },
+      
       all_sprint_list: null,
       projectId: null,
       statusData: null,

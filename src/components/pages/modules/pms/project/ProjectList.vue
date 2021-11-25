@@ -184,42 +184,12 @@
                           </span>
                         </router-link>
                       </td>
-                      <td v-if="project.status_list[project.status] =='Running'"
-                      >
-                      <span class="badge badge-primary">
-                           {{ project.status_list[project.status] }}
+                       <td >
+                        <span :class="status_map[project.status]">
+                             {{ project.status_list[project.status] }}
                           </span>
-                      </td>
-                      <td v-if="project.status_list[project.status] =='Assigned'"
-                      >
-                      <span class="badge badge-info">
-                           {{ project.status_list[project.status] }}
-                          </span>
-                      </td>
-                      <td v-if="project.status_list[project.status] =='Completed'"
-                      >
-                      <span class="badge badge-success">
-                           {{ project.status_list[project.status] }}
-                          </span>
-                      </td>
-                      <td v-if="project.status_list[project.status] =='Postponed'"
-                      >
-                      <span class="badge badge-warning">
-                           {{ project.status_list[project.status] }}
-                          </span>
-                      </td>
-                      <td v-if="project.status_list[project.status] =='Problematic'"
-                      >
-                      <span class="badge badge-danger">
-                           {{ project.status_list[project.status] }}
-                          </span>
-                      </td>
-                      <td v-if="project.status_list[project.status] =='Upcoming'"
-                      >
-                      <span class="badge badge-purple">
-                           {{ project.status_list[project.status] }}
-                          </span>
-                      </td>
+                        </td>
+
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
                           <button
@@ -291,6 +261,14 @@ export default {
   },
   data() {
     return {
+       status_map:{
+        RU:"badge badge-primary", //Running
+        AS:"badge badge-info", //Assigned
+        CO:"badge badge-success", //Completed
+        PO:"badge badge-warning", //Postponed
+        PR:"badge badge-danger", //Problematic
+        UP:"badge badge-purple", //Upcoming
+      },
       all_project_list: null,
       department: null,
       departmentId: null,

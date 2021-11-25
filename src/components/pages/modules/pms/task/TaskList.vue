@@ -213,7 +213,12 @@
                         <span class="badge badge-danger">Rejected:- {{ task.total_rejected }}</span> <br/> 
                         <span class="badge badge-dark">Verified:- {{ task.total_verified }}</span>  
                       </td>
-                      <td>{{ task.status_list[task.status] }}</td>
+                      
+                       <td >
+                        <span :class="status_map[task.status]">
+                             {{ task.status_list[task.status] }}
+                          </span>
+                        </td>
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -434,6 +439,14 @@ export default {
   },
   data() {
     return {
+       status_map:{
+        RU:"badge badge-primary", //Running
+        AS:"badge badge-info", //Assigned
+        CO:"badge badge-success", //Completed
+        PO:"badge badge-warning", //Postponed
+        PR:"badge badge-danger", //Problematic
+        UP:"badge badge-purple", //Upcoming
+      },
       all_task_list: null,
       projectId: null,
       statusData: null,
