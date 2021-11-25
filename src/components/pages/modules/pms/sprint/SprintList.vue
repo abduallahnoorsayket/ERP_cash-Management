@@ -195,7 +195,38 @@
                         </router-link>
 
                       </td> -->
-                      <td>{{ sprint.status_list[sprint.status] }}</td>
+                      
+                       <td v-if="sprint.status_list[sprint.status] =='Running'">
+                        <span class="badge badge-primary">
+                           {{ sprint.status_list[sprint.status] }}
+                          </span>
+                        </td>
+                        <td v-if="sprint.status_list[sprint.status] =='Assigned'">
+                        <span class="badge badge-info">
+                             {{ sprint.status_list[sprint.status] }}
+                          </span>
+                        </td>
+                        <td v-if="sprint.status_list[sprint.status] =='Completed'">
+                        <span class="badge badge-success">
+                           {{ sprint.status_list[sprint.status] }}
+                          </span>
+                        </td>
+                        <td v-if="sprint.status_list[sprint.status] =='Postponed'">
+                        <span class="badge badge-warning">
+                           {{ sprint.status_list[sprint.status] }}
+                          </span>
+                        </td>
+                        <td v-if="sprint.status_list[sprint.status] =='Problematic'">
+                        <span class="badge badge-danger">
+                           {{ sprint.status_list[sprint.status] }}
+                          </span>
+                        </td>
+                        <td v-if="sprint.status_list[sprint.status]  =='Upcoming'">
+                        <span class="badge badge-purple">
+                           {{ sprint.status_list[sprint.status] }}
+                          </span>
+                        </td>
+                      
 
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
@@ -288,7 +319,7 @@ export default {
         status: this.$route.query.status,
         page: this.$route.query.page,
       }
-      console.log('265', queryParam);
+      console.log('265', queryParam,e);
       axios.get(endPoint,{
         params: queryParam
       }).then((response) => {

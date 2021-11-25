@@ -86,8 +86,8 @@
                       <th scope="col">Department</th>
                       <th scope="col">Program Id</th>
                       <th scope="col" title="Assign Date">CAT</th>
-                      <th scope="col" title="Number Of Quantity">QTY</th>
                       <th scope="col">Status</th>
+                      <th scope="col" title="Number Of Quantity">QTY</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -101,7 +101,36 @@
                       <td>{{ program.department.name }}</td>
                       <td>{{ program.programId }}</td>
                       <td>{{ program.created_at }}</td>
-                      <td>{{ program.status_list[program.status] }}</td>
+                      <td v-if="program.status_list[program.status] =='Running'">
+                        <span class="badge badge-primary">
+                           {{ program.status_list[program.status] }}
+                          </span>
+                        </td>
+                        <td v-if="program.status_list[program.status] =='Assigned'">
+                        <span class="badge badge-info">
+                           {{ program.status_list[program.status] }}
+                          </span>
+                        </td>
+                        <td v-if="program.status_list[program.status] =='Completed'">
+                        <span class="badge badge-success">
+                           {{ program.status_list[program.status] }}
+                          </span>
+                        </td>
+                        <td v-if="program.status_list[program.status] =='Postponed'">
+                        <span class="badge badge-warning">
+                           {{ program.status_list[program.status] }}
+                          </span>
+                        </td>
+                        <td v-if="program.status_list[program.status] =='Problematic'">
+                        <span class="badge badge-danger">
+                           {{ program.status_list[program.status] }}
+                          </span>
+                        </td>
+                        <td v-if="program.status_list[program.status] =='Upcoming'">
+                        <span class="badge badge-purple">
+                           {{ program.status_list[program.status] }}
+                          </span>
+                        </td>
            
                       <td>
                         <router-link

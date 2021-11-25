@@ -182,7 +182,42 @@
                           </span>
                         </router-link>
                       </td>
-                      <td>{{ project.status_list[project.status] }}</td>
+                      <td v-if="project.status_list[project.status] =='Running'"
+                      >
+                      <span class="badge badge-primary">
+                           {{ project.status_list[project.status] }}
+                          </span>
+                      </td>
+                      <td v-if="project.status_list[project.status] =='Assigned'"
+                      >
+                      <span class="badge badge-info">
+                           {{ project.status_list[project.status] }}
+                          </span>
+                      </td>
+                      <td v-if="project.status_list[project.status] =='Completed'"
+                      >
+                      <span class="badge badge-success">
+                           {{ project.status_list[project.status] }}
+                          </span>
+                      </td>
+                      <td v-if="project.status_list[project.status] =='Postponed'"
+                      >
+                      <span class="badge badge-warning">
+                           {{ project.status_list[project.status] }}
+                          </span>
+                      </td>
+                      <td v-if="project.status_list[project.status] =='Problematic'"
+                      >
+                      <span class="badge badge-danger">
+                           {{ project.status_list[project.status] }}
+                          </span>
+                      </td>
+                      <td v-if="project.status_list[project.status] =='Upcoming'"
+                      >
+                      <span class="badge badge-purple">
+                           {{ project.status_list[project.status] }}
+                          </span>
+                      </td>
                       <td>
                         <div class="btn-group dropdown mt-2 mr-1">
                           <button
