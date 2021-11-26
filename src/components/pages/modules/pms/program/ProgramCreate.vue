@@ -8,7 +8,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -19,11 +19,12 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Department</label>
+                  <label>Department <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
                     v-model="department"
+                    :class="{ 'parsley-error': errors && errors.department }"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -31,13 +32,14 @@
                       {{ d.name }}
                     </option>
                   </select>
+                  <ValidationError :error="errors.department" v-if="errors" />
                 </div>
               </div>
               <!-- end col -->
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Program Id</label>
+                  <label>Program Id <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -48,7 +50,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Status</label>
+                  <label>Status <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"

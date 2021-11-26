@@ -10,7 +10,7 @@
             <div class="col-md-6">
               <form @submit.prevent="submitUserForm" autocomplete="off">
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label> Expected Start Date</label>
+                  <label> Expected Start Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -70,7 +70,7 @@
                 class="mt-4 mt-md-0"
               >
                <div class="form-group">
-                  <label>Project</label>
+                  <label>Project <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -89,7 +89,7 @@
           
 
                 <div class="form-group">
-                  <label>Expected Completed Date</label>
+                  <label>Expected Completed Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -116,7 +116,7 @@
                  
                 </div>
                 <div class="form-group">
-                  <label>Status</label>
+                  <label>Status <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
