@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name  <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"

@@ -9,7 +9,7 @@
             <div class="col-md-6">
               <form @submit.prevent="submitUserForm" autocomplete="off">
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -22,11 +22,12 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Program</label>
+                  <label>Program <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
                     v-model="program"
+                     :class="{ 'parsley-error': errors && errors.program }"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -34,10 +35,11 @@
                       {{ d.name }}
                     </option>
                   </select>
+                  <ValidationError :error="errors.program" v-if="errors" />
                 </div>
 
                 <div class="form-group">
-                  <label>Assign Date</label>
+                  <label>Assign Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -62,7 +64,7 @@
 
                 <div class="form-group" >
                   <div class="form-group" >
-                    <label>Members</label>
+                    <label>Members <span class="asterisk">*</span></label>
                     <div class=" checkbox-primary" v-for="m in members" :key="m.id">
                       <input
                        :id="m.id"
@@ -71,11 +73,16 @@
                         unchecked=""
                         v-model="member"
                        :value="m.id"
-                      
+                        :class="{ 'parsley-error': errors && errors.members }"
                       
                       />
+                      
                       <label for="checkbox2"> {{ m.first_name }} {{m.last_name}} ({{m.username}})</label>
+                      
                     </div>
+                    <ValidationError :error="errors.members" v-if="errors" />
+                  
+                     
                   </div>
                 </div>
               </form>
@@ -89,7 +96,7 @@
                 class="mt-4 mt-md-0"
               >
                 <div class="form-group">
-                  <label>Project Id</label>
+                  <label>Project Id <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -101,11 +108,12 @@
                    <ValidationError :error="errors.projectId" v-if="errors" />
                 </div>
                 <div class="form-group">
-                  <label>Client</label>
+                  <label>Client <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
                     v-model="client"
+                    :class="{ 'parsley-error': errors && errors.client }"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -113,9 +121,10 @@
                       {{ c.name }}
                     </option>
                   </select>
+                    <ValidationError :error="errors.client" v-if="errors" />
                 </div>
                 <div class="form-group">
-                  <label>Expected Start Date</label>
+                  <label>Expected Start Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -128,7 +137,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Expected Completed Date</label>
+                  <label>Expected Completed Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -155,11 +164,12 @@
                  
                 </div>
                 <div class="form-group">
-                  <label>Status</label>
+                  <label>Status <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
                     v-model="status"
+                    :class="{ 'parsley-error': errors && errors.status }"
                   >
                     <option value="false" disabled selected>Select</option>
 
@@ -167,6 +177,7 @@
                       {{ s.value }} 
                     </option>
                   </select>
+                  <ValidationError :error="errors.status" v-if="errors" />
                 </div>
               </form>
             </div>

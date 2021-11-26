@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Sprint Create" />
+      <PageTitle title="Sprint Edit" />
       <div class="card">
         <div class="card-body">
 
@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label> Expected Start Date</label>
+                  <label> Expected Start Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Expected Completed Date</label>
+                  <label>Expected Completed Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Version</label>
+                  <label>Version <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -137,7 +137,7 @@
                 </div>
 
                
-          <label>Estimated Duration </label> 
+          <label>Estimated Duration <span class="asterisk">*</span> </label> 
                 <div class="row form-group">
                  
                   
@@ -187,7 +187,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Status</label>
+                  <label>Status <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -371,7 +371,7 @@ export default {
           Swal.fire({
             icon: "success",
             text: "You have successfully Update a Sprint.",
-          }).then((result) => {
+          }).then(() => {
             this.$router.push({name:'SprintList'});
           });
         })
