@@ -10,7 +10,7 @@
               
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Task Category</label>
+                  <label>Task Category <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -30,7 +30,7 @@
                  <ValidationError :error="errors.category" v-if="errors" />
                 </div>
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label> Expected Start Date</label>
+                  <label> Expected Start Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Expected Completed Date</label>
+                  <label>Expected Completed Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -85,7 +85,7 @@
 
                
                   <div class="form-group" >
-                    <label>Assignee</label>
+                    <label>Assignee <span class="asterisk">*</span></label>
                     <div class=" checkbox-primary" v-for="m in assignees" :key="m.id">
                       <input
                         :id="m.id"
@@ -113,7 +113,7 @@
                
 
                   <div class="form-group">
-                  <label>Status</label>
+                  <label>Status <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -170,7 +170,7 @@
                       {{ s.name }}
                     </option>
                   </select>
-                 <ValidationError :error="errors.status" v-if="errors" />
+                 <ValidationError :error="errors.project" v-if="errors" />
                 </div>
 
                 <div class="form-group">
@@ -179,7 +179,7 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="version"
-                    :class="{ 'parsley-error': errors && errors.status }"
+                    :class="{ 'parsley-error': errors && errors.version }"
                     @change="getSprint()"
                   >
                     <option value="false" disabled selected>Select</option>
@@ -188,11 +188,11 @@
                       {{ v.name }}
                     </option>
                   </select>
-                  <ValidationError :error="errors.status" v-if="errors" />
+                  <ValidationError :error="errors.version" v-if="errors" />
                 </div>
 
                  <div class="form-group">
-                  <label>Sprint</label>
+                  <label>Sprint <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -215,7 +215,7 @@
                     class="form-control"
                     data-toggle="select2"
                     v-model="parent"
-                    :class="{ 'parsley-error': errors && errors.sprint }"
+                    :class="{ 'parsley-error': errors && errors.parent }"
                   >
                     <option value="false" disabled selected>No Parent</option>
 
@@ -242,7 +242,7 @@
                 </div>
 
                
-          <label>Estimated Duration </label> 
+          <label>Estimated Duration <span class="asterisk">*</span></label> 
                 <div class="row form-group">
                  
                   

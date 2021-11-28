@@ -11,7 +11,7 @@
             <div class="col-md-6">
               <form @submit.prevent="submitUserForm" autocomplete="off">
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Program</label>
+                  <label>Program <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -36,11 +36,12 @@
                       {{ p.name }}
                     </option>
                   </select>
+                   <ValidationError :error="errors.program" v-if="errors" />
                 </div>
 
               
                 <div class="form-group">
-                  <label>Assign Date</label>
+                  <label>Assign Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -65,7 +66,7 @@
 
                 <div class="form-group">
                   <div class="form-group">
-                    <label>Members</label>
+                    <label>Members <span class="asterisk">*</span></label>
                     <div
                       class="checkbox-primary"
                       v-for="m in members"
@@ -85,6 +86,7 @@
                         }})</label
                       >
                     </div>
+                     <ValidationError :error="errors.members" v-if="errors" />
                   </div>
                 </div>
               </form>
@@ -98,7 +100,7 @@
                 class="mt-4 mt-md-0"
               >
                 <div class="form-group">
-                  <label>Project Id</label>
+                  <label>Project Id <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -110,7 +112,7 @@
                   <ValidationError :error="errors.projectId" v-if="errors" />
                 </div>
                 <div class="form-group">
-                  <label>Client</label>
+                  <label>Client <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -122,9 +124,10 @@
                       {{ c.name }}
                     </option>
                   </select>
+                  <ValidationError :error="errors.client" v-if="errors" />
                 </div>
                 <div class="form-group">
-                  <label>Expected Start Date</label>
+                  <label>Expected Start Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -139,7 +142,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Expected Completed Date</label>
+                  <label>Expected Completed Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -166,7 +169,7 @@
                  <ValidationError :error="errors.complete_date" v-if="errors" />
                 </div>
                 <div class="form-group">
-                  <label>Status</label>
+                  <label>Status <span class="asterisk">*</span></label>
                  <select
                     class="form-control"
                     data-toggle="select2"
@@ -178,6 +181,7 @@
                       {{ s.value }} 
                     </option>
                   </select>
+                    <ValidationError :error="errors.status" v-if="errors" />
                 </div>
               </form>
             </div>
@@ -310,7 +314,7 @@ export default {
     submitUserForm: function () {
       axios
         .put("projects/" + this.$route.params.id + "/", {
-          department: this.department,
+          program: this.program,
           client: this.client,
           name: this.name,
           projectId: this.projectId,
@@ -322,6 +326,7 @@ export default {
           complete_date: this.complete_date,
           description: this.description,
           members: this.member,
+
         })
         .then(() => {
           Swal.fire({

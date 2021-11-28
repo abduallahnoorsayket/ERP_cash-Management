@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Name</label>
+                  <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
                     class="form-control"
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label> Expected Start Date</label>
+                  <label> Expected Start Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Expected Completed Date</label>
+                  <label>Expected Completed Date <span class="asterisk">*</span></label>
                   <input
                     type="date"
                     class="form-control"
@@ -84,12 +84,12 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Project</label>
+                  <label>Project </label>
                   <select
                     class="form-control"
                     data-toggle="select2"
                     v-model="project"
-                    :class="{ 'parsley-error': errors && errors.status }"
+                    :class="{ 'parsley-error': errors && errors.project }"
                     @change="getVersion()"
                   >
                     <option value="false" disabled selected>Select</option>
@@ -98,11 +98,11 @@
                       {{ s.name }}
                     </option>
                   </select>
-                 <ValidationError :error="errors.status" v-if="errors" />
+                 <ValidationError :error="errors.project" v-if="errors" />
                 </div>
 
                 <div class="form-group">
-                  <label>Version</label>
+                  <label>Version <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -133,7 +133,7 @@
                 </div>
 
                
-          <label>Estimated Duration </label> 
+          <label>Estimated Duration <span class="asterisk">*</span></label> 
                 <div class="row form-group">
                  
                   
@@ -177,7 +177,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Status</label>
+                  <label>Status <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -320,11 +320,11 @@ export default {
           version: this.version,
           estimated_duration: this.estimated_duration,
         })
-        .then((response) => {
+        .then(() => {
           Swal.fire({
             icon: "success",
             text: "You have successfully created a Sprint.",
-          }).then((result) => {
+          }).then(() => {
             this.$router.push("sprint-list");
           });
         })
