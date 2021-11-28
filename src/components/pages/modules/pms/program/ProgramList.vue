@@ -111,6 +111,17 @@
                       <td>
                         <router-link
                           :to="{
+                            name: 'ProjectList',
+                            query: { program: program.id },
+                          }"
+                        >
+                          <span class="badge badge-pill badge-info">
+                           Project- {{ program.no_of_project }}
+                          </span>
+                        </router-link>
+                        <br>
+                        <router-link
+                          :to="{
                             name: 'VersionList',
                             query: { program: program.id },
                           }"

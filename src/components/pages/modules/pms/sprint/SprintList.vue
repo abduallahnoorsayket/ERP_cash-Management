@@ -377,32 +377,32 @@ export default {
           console.log(error);
         });
     },
-    //  getVersionList: function () {
-    //   axios
-    //     .get("version_short")
-    //     .then((response) => {
-    //       this.versionId = response.data;
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // },
-    getVersionList: function () {
+     getVersionList: function () {
       axios
-        .get("version_short?project=" + this.project)
+        .get("version_short")
         .then((response) => {
           this.versionId = response.data;
-          let currentVersion = this.versionId.filter((version) => {
-            return version.current;
-          });
-
-          this.version =
-            currentVersion.length > 0 ? currentVersion[0].id : null;
         })
         .catch(function (error) {
           console.log(error);
         });
     },
+    // getVersionList: function () {
+    //   axios
+    //     .get("version_short?project=" + this.project)
+    //     .then((response) => {
+    //       this.versionId = response.data;
+    //       let currentVersion = this.versionId.filter((version) => {
+    //         return version.current;
+    //       });
+
+    //       this.version =
+    //         currentVersion.length > 0 ? currentVersion[0].id : null;
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // },
      getStatus: function () {
       axios
         .get("project_status")
@@ -428,7 +428,7 @@ export default {
     this.getSprintList();
     this.getProjectList();
     this.getStatus()
-    // this.getVersionList()
+    this.getVersionList()
   },
    updated() {
     this.getSprintList()

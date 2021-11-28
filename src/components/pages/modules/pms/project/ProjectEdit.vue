@@ -323,7 +323,7 @@ export default {
           description: this.description,
           members: this.member,
         })
-        .then((response) => {
+        .then(() => {
           Swal.fire({
             icon: "success",
             text: "You have successfully Updated a project.",
