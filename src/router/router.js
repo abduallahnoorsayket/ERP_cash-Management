@@ -6,6 +6,7 @@ import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 import BaseHome from '../components/pages/modules/base/Home'
 import RequisitionHome from '../components/pages/modules/requisition/Home'
+import FileHome from '../components/pages/modules/file/Home'
 import permissions from '@/permisson'
 import projectRoutes from '../components/pages/modules/pms/project/routes'
 import programRoutes from '../components/pages/modules/pms/program/routes'
@@ -77,6 +78,12 @@ const baseRoutes = [
       name: 'RequisitionHome'
 
   }, 
+  {
+    path: '/files-list',
+    component: FileHome,
+    name: 'FileHome'
+
+}, 
 
 ];
 
