@@ -20,22 +20,22 @@ import unitsRoutes from '../components/pages/modules/base/units/routes'
 import userRoutes from '../components/pages/modules/base/user/routes'
 import groupRoutes from '../components/pages/modules/base/group/routes'
 import project_requisitionRoutes from '../components/pages/modules/requisition/project_requisition/routes'
-
+import commentHome from '../components/pages/modules/comment/Home'
 const userData = JSON.parse(localStorage.getItem("userData"))
 
 
 // route guard
 function guardMyRoute(to, from, next) {
-    to.matched.some((record) => {
-      if (record.meta.authentication_required) {
-        if (permissions.superuser_status || record.meta.title === "common") {
-          next();
-        } else if (userData.id && permissions.hasPermission(record.meta.title)) {
-          next();
-        } else next("/");
-      } else next();
-    });
-  }
+  to.matched.some((record) => {
+    if (record.meta.authentication_required) {
+      if (permissions.superuser_status || record.meta.title === "common") {
+        next();
+      } else if (userData.id && permissions.hasPermission(record.meta.title)) {
+        next();
+      } else next("/");
+    } else next();
+  });
+}
 
 
 
@@ -45,38 +45,44 @@ function guardMyRoute(to, from, next) {
 
 const baseRoutes = [
 
-    {
-        path: '/',
-        component: Login,
-        name: 'Login'
+  {
+    path: '/',
+    component: Login,
+    name: 'Login'
 
-    },
-    {
-        path: '/dashboard',
-        component: Dashboard,
-        name: 'Dashboard',
-        beforeEnter: guardMyRoute,
-        meta: { title: "common", authentication_required: true },
+  },
+  {
+    path: '/dashboard',
+    component: Dashboard,
+    name: 'Dashboard',
+    beforeEnter: guardMyRoute,
+    meta: { title: "common", authentication_required: true },
 
-    },
-    {
-        path: '/pms',
-        component: Home,
-        name: 'Home'
+  },
+  {
+    path: '/pms',
+    component: Home,
+    name: 'Home'
 
-    },  
-    {
-        path: '/base',
-        component: BaseHome,
-        name: 'BaseHome'
+  },
+  {
+    path: '/base',
+    component: BaseHome,
+    name: 'BaseHome'
 
-    },  
-    {
-      path: '/requisition',
-      component: RequisitionHome,
-      name: 'RequisitionHome'
+  },
+  {
+    path: '/requisition',
+    component: RequisitionHome,
+    name: 'RequisitionHome'
 
-  }, 
+  },
+  {
+    path: '/comment',
+    component: commentHome,
+    name: 'commentHome'
+
+  },
 
 ];
 
@@ -94,16 +100,17 @@ const routes = [].concat(
   userRoutes,
   groupRoutes,
   project_requisitionRoutes,
-  programRoutes
-  );
+  programRoutes,
+  
+);
 
 
 
 
 
 export const router = createRouter({
-	history: createWebHistory(),
-	routes,
+  history: createWebHistory(),
+  routes,
 });
 
 // export default router;

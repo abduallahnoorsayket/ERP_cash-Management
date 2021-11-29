@@ -97,6 +97,36 @@
         </div>
       </router-link>
     </div>
+    <div class="col-xl-3 col-md-6" v-if="hasModulePermission('requisition')">
+      <router-link to="/comment">
+        <div class="card">
+          <div class="card-body">
+            <div class="media">
+              <!-- <img
+              src="assets/images/users/avatar-3.jpg"
+              class="avatar-md rounded-circle mr-3 align-self-center"
+              alt="user"
+            /> -->
+
+              
+              <i class="fab fa-sith avatar-md rounded-circle
+                  align-self-center fa-2x"></i>
+
+              <div class="media-body overflow-hidden">
+                <h5 class="font-14 mt-0 mb-1">Comment List</h5>
+                <p
+                  class="mb-1 font-13 text-truncate"
+                  title="Comment Management System"
+                >
+                  Comment Management System
+                </p>
+                <!-- <small class="text-primary"><b>Admin</b></small> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </router-link>
+    </div>
 
     
   </div>
