@@ -8,10 +8,11 @@
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-2">
+                <div class="col-md-10 col-lg-10">
                  <div class="form-group">
-                  <label>First Name</label>
+                  <!-- <label>First Name</label> -->
                    <input
+                   placeholder="Search..."
                     type="text"
                     class="form-control"
                     v-model="first_name"
@@ -20,7 +21,29 @@
                 </div>
                 
                 </div>
-                   <div class="col-lg-2">
+                <div class="col-md col-lg">
+                   <div class="form-group mt-1">
+                     <!-- <label style="visibility: hidden">fgggggggf</label> -->
+                     <button
+                            type="button"
+                            class="
+                              btn btn-primary btn-sm
+                              
+                              waves-effect waves-light
+                              pull-left
+                            "
+                    
+                            
+                          >
+                          <!-- @click="searchUser()" -->
+                            Search
+                          </button>
+                  
+                  </div>
+
+                </div>
+                
+                   <!-- <div class="col-lg-2">
                  <div class="form-group">
                   <label>Last Name</label>
                    <input
@@ -97,107 +120,239 @@
 
                  
 
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                 <div class="form-group">
+                  <label>File Name</label>
+                   <input
+                    type="text"
+                    class="form-control"
+                    v-model="first_name"
+                  />
+                
+                </div>
+                <div class="form-group">
+                  <label>Created by</label>
+                   <input
+                    type="text"
+                    class="form-control"
+                    v-model="last_name"
+                  />
+                
+                </div>
+                <div class="form-group">
+                  <label>Created date</label>
+                   <input
+                    type="date"
+                    class="form-control"
+                    v-model="username"
+                  />
+                </div>
+                  <div class="form-group">
+                  <label>Groups</label>
+                      <select
+                    class="form-control"
+                    data-toggle="select2"
+                    v-model="groups"
+                  >
+                    <option value="false" disabled selected>Select</option>
+
+                    <option v-for="(g, i) in group_list" :key="i" :value="g.id">
+                      {{ g.name }}
+                    </option>
+                  </select>
+                </div>
+                
+                </div>
+                   
+                 
+
+                  <div class="col-lg-1">
+                  <div class="form-group ">
+                     <label style="visibility: hidden">fgggggggf</label>
+                     <!--   @click="searchUser()" -->
+                     <button
+                            type="button"
+                            class="
+                              btn btn-primary btn-sm
+                              
+                              waves-effect waves-light
+                              pull-right
+                            "
+                    
+                          
+                          >
+                            Search
+                          </button>
+                  
+                  </div>
+
+                 
+
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-sm mb-0 table-bordered">
-                  <thead>
-                    <tr>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Username</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Groups</th>
-                      <th scope="col">Last Login</th>
-
-                      <th scope="col">Active</th>
-
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(user, index) in user_list" :key="index">
-                      <td scope="row">{{ user.first_name }}</td>
-                      <td scope="row">{{ user.last_name }}</td>
-                      <td scope="row">{{ user.username }}</td>
-                      <td scope="row">{{ user.email }}</td>
-                      <td scope="row">
-                        <span
-                          class="badge badge-info"
-                          v-for="u in user.groups"
-                          :key="u.id"
-                        >
-                          {{ u.name }}
-                        </span>
-                      </td>
-                      <td>
-                        {{ user.last_login }}
-                      </td>
-                      <td scope="row">
-                        <i
-                          :class="[
-                            user.is_active
-                              ? 'fas fa-check-circle  '
-                              : 'fas fa-times-circle',
-                          ]"
-                        ></i>
-                      </td>
-
-                      <td>
-                        <div class="btn-group dropdown mt-2 mr-1">
-                          <button
-                            type="button"
-                            class="
-                              btn btn-primary btn-sm
-                              dropdown-toggle
-                              waves-effect waves-light
-                            "
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i class="fa fa-cog ml-1"></i>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li v-if="hasPermission('change_user')">
-                              <router-link
-                                :to="{
-                                  name: 'UserEdit',
-                                  params: { id: user.id },
-                                }"
-                                class="dropdown-item"
-                              >
-                                <i class="fas fa-edit"></i> Edit
-                              </router-link>
-                            </li>
-                            <li v-if="hasPermission('delete_user')">
-                              <a
-                                href="#"
-                                @click="userDelete(user.id)"
-                                class="dropdown-item"
-                              >
-                                <i class="fas fa-trash"></i> Delete</a
-                              >
-                            </li>
-                          </ul>
+        <div class="col-lg-9">
+           <div class="row">
+                           <div class="col-xl-3 col-md-3">
+                             <div class="fileContainer">
+                                 <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Project Requirements</h5>
+                                        
+                                    </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
+                                    
+                                </div>
+                                <!-- <div class="middle">
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text">
+                      
+                      <br />
+                      <span class="fileInfo">
+                        <label class="labelRightMargin">File type:</label>
+                        <br />
+                        
+                      </span>
+                      <div class="row mt-5">
+                        <div class="col-md-12">
+                          <span class="float-right" >
+                            <a>
+                              <i class="fas fa-download" title="Download"></i>
+                            </a>
+                          </span>
                         </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+                             </div>
+                              
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">System Requirements</h5>
+                                    </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
+                                </div>
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Monthly evaluation</h5>
+                                    </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
+                                </div>
+                                
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Attendance records</h5>
+                                    </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                           <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Project Requirements</h5>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">System Requirements</h5>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Monthly evaluation</h5>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Attendance records</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                           <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Project Requirements</h5>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">System Requirements</h5>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Monthly evaluation</h5>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card widget-user">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16">Attendance records</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <Pagination :pagination="pagination" /> 
         </div>
-       <div class="col-md-12"> 
-    <Pagination :pagination="pagination" /> 
-        </div>
+       
       </div>
     </template>
   </Layout>
@@ -212,7 +367,7 @@ import permissions from "@/permisson";
 import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
-  name: "DepartmentList",
+  name: "FilesList",
   components: {
     Layout,
     PageTitle,
@@ -237,7 +392,7 @@ export default {
     };
   },
   methods: {
-    getUserList: function (e) {
+    getUserList: function () {
 
       let endPoint = "users"
       var queryParam = {
@@ -326,14 +481,32 @@ export default {
     },
   },
   created() {
-    this.getUserList();
-    this.getGroups();
+    // this.getUserList();
+    // this.getGroups();
   },
    updated() {
-    this.getUserList()
+    // this.getUserList()
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
+.fa-file-alt:before {
+    content: "\f15c";
+    font-size: 50px;
+}
+.downloadButton{
+  color: red;
+}
+.fa-download:before {
+    content: "\f019";
+    float: right;
+}
+/* .fileContainer {
+  position: relative;
+  width: 100%;
+}
+.fileContainer:hover .middle {
+  opacity: 1;
+} */
 </style>
