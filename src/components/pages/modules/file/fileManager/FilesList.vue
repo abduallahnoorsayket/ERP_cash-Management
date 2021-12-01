@@ -207,11 +207,16 @@
                            <div class="col-xl-3 col-md-3">
                              <div class="fileContainer">
                                  <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Project Requirements</h5>
+                                    <div class="card-body ">
+                                        <h3 class="text-primary text-center" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16 text-center">Project Requirements</h5>
                                         
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>                                    
                                     <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                     
                                 </div>
@@ -251,6 +256,11 @@
                                         <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">System Requirements</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
                                     <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
                             </div>
@@ -261,6 +271,11 @@
                                         <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">Monthly evaluation</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
                                     <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
                                 
@@ -272,18 +287,60 @@
                                         <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">Attendance records</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
                                     <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
                             </div>
                         </div>
-                         <div class="row">
+                        <div class="row">
                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Project Requirements</h5>
+                             <div class="fileContainer">
+                                 <div class="card widget-user">
+                                    <div class="card-body ">
+                                        <h3 class="text-primary text-center" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16 text-center">Project Requirements</h5>
+                                        
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>                                    
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
+                                    
                                 </div>
+                                <!-- <div class="middle">
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text">
+                      
+                      <br />
+                      <span class="fileInfo">
+                        <label class="labelRightMargin">File type:</label>
+                        <br />
+                        
+                      </span>
+                      <div class="row mt-5">
+                        <div class="col-md-12">
+                          <span class="float-right" >
+                            <a>
+                              <i class="fas fa-download" title="Download"></i>
+                            </a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+                             </div>
+                              
                             </div>
         
                             <div class="col-xl-3 col-md-3">
@@ -292,6 +349,12 @@
                                         <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">System Requirements</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
                             </div>
         
@@ -301,7 +364,14 @@
                                         <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">Monthly evaluation</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
+                                
                             </div>
         
                             <div class="col-xl-3 col-md-3">
@@ -310,17 +380,60 @@
                                         <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">Attendance records</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
                             </div>
                         </div>
-                         <div class="row">
+                        <div class="row">
                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Project Requirements</h5>
+                             <div class="fileContainer">
+                                 <div class="card widget-user">
+                                    <div class="card-body ">
+                                        <h3 class="text-primary text-center" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
+                                        <h5 class="font-16 text-center">Project Requirements</h5>
+                                        
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>                                    
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
+                                    
                                 </div>
+                                <!-- <div class="middle">
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text">
+                      
+                      <br />
+                      <span class="fileInfo">
+                        <label class="labelRightMargin">File type:</label>
+                        <br />
+                        
+                      </span>
+                      <div class="row mt-5">
+                        <div class="col-md-12">
+                          <span class="float-right" >
+                            <a>
+                              <i class="fas fa-download" title="Download"></i>
+                            </a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+                             </div>
+                              
                             </div>
         
                             <div class="col-xl-3 col-md-3">
@@ -329,6 +442,12 @@
                                         <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">System Requirements</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
                             </div>
         
@@ -338,7 +457,14 @@
                                         <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">Monthly evaluation</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
+                                
                             </div>
         
                             <div class="col-xl-3 col-md-3">
@@ -347,12 +473,25 @@
                                         <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
                                         <h5 class="font-16">Attendance records</h5>
                                     </div>
+                                    <div class="row pr-2">
+                                      <div class="col-md-12">
+                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                      </div>
+                                      </div>
+                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
                                 </div>
                             </div>
                         </div>
                         <Pagination :pagination="pagination" /> 
         </div>
        
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+          <FileUploader/>
+
+        </div>
       </div>
     </template>
   </Layout>
@@ -365,13 +504,15 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
 import Pagination from "@/components/layouts/partials/Pagination";
+import FileUploader from "../partials/FileUploader.vue";
 
 export default {
   name: "FilesList",
   components: {
     Layout,
     PageTitle,
-    Pagination
+    Pagination,
+    FileUploader
   },
   data() {
     return {
@@ -495,9 +636,9 @@ export default {
     content: "\f15c";
     font-size: 50px;
 }
-.downloadButton{
+/* .downloadButton{
   color: red;
-}
+} */
 .fa-download:before {
     content: "\f019";
     float: right;
