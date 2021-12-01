@@ -6,6 +6,7 @@ import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 import BaseHome from '../components/pages/modules/base/Home'
 import RequisitionHome from '../components/pages/modules/requisition/Home'
+import FilesList from '../components/pages/modules/file/fileManager/FilesList'
 import permissions from '@/permisson'
 import projectRoutes from '../components/pages/modules/pms/project/routes'
 import programRoutes from '../components/pages/modules/pms/program/routes'
@@ -45,6 +46,7 @@ function guardMyRoute(to, from, next) {
 
 const baseRoutes = [
 
+
   {
     path: '/',
     component: Login,
@@ -83,6 +85,13 @@ const baseRoutes = [
     name: 'commentHome'
 
   },
+   {
+    path: '/files-list',
+    component: FilesList,
+    name: 'FilesList'
+
+}, 
+
 
 ];
 

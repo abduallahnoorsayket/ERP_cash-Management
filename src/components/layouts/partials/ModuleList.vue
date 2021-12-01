@@ -97,8 +97,13 @@
         </div>
       </router-link>
     </div>
+
+     <div class="col-xl-3 col-md-6" >
+      <router-link to="/files-list">
+
     <div class="col-xl-3 col-md-6" v-if="hasModulePermission('requisition')">
       <router-link to="/comment">
+
         <div class="card">
           <div class="card-body">
             <div class="media">
@@ -112,6 +117,20 @@
               <i class="fab fa-sith avatar-md rounded-circle
                   align-self-center fa-2x"></i>
 
+                    <!-- <i
+                          class="fas fa-folder rounded-circle
+                  align-self-center fa-2x"
+                        ></i> -->
+
+              <div class="media-body overflow-hidden">
+                <h5 class="font-14 mt-0 mb-1">File Manager</h5>
+                <p
+                  class="mb-1 font-13 text-truncate"
+                  title="Requisition Management System"
+                >
+                  File Management System
+
+
               <div class="media-body overflow-hidden">
                 <h5 class="font-14 mt-0 mb-1">Comment List</h5>
                 <p
@@ -119,6 +138,7 @@
                   title="Comment Management System"
                 >
                   Comment Management System
+
                 </p>
                 <!-- <small class="text-primary"><b>Admin</b></small> -->
               </div>
