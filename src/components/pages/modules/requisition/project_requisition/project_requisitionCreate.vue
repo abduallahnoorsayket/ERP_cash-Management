@@ -198,13 +198,14 @@
                             <input
                               type="number"
                               min="0"
+                              :max="dom_repeat.target_quantity - dom_repeat.acquired_quantity"
                               step=".01"
                               class="form-control text-right"
                               v-model="dom_repeat.quantity"
                               @change="calculateTotal(dom_repeat)"
                             />
                               <ul class="parsley-errors-list filled" v-if="has_target">
-           <li class="parsley-required">Target is {{dom_repeat.target_quantity}}</li>
+           <li class="parsley-required">Target {{dom_repeat.target_quantity}}, Acquired  {{dom_repeat.acquired_quantity}}</li>
                            </ul>
                           </td>
                           <td>
@@ -437,6 +438,7 @@ export default {
                   unit: target.unit.id,
                   quantity: null,
                   target_quantity: target.quantity,
+                  acquired_quantity: target.acquired_quantity,
                   amount: null,
                   total: null,
                   remarks: null,
