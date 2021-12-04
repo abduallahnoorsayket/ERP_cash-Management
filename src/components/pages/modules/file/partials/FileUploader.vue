@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-11 col-lg-11">
+            <div class="col-md col-lg">
               <div class="form-group">
                 <label>Upload file</label>
                 <div class="custom-file">
@@ -23,6 +23,34 @@
                 </div>
               </div>
             </div>
+            <div class="col-md col-lg">
+              <div class="form-group">
+                <label>File Name</label>
+                      <div class="form-group">
+                        <input v-model="file_name" type="text" class="form-control" />
+                      </div>
+              </div>
+            </div>
+             <div class="col-md-1 col-lg-1">
+                       <div class="form-group mt-1">
+                     <label style="visibility: hidden">fgggggggf</label>
+                     <button
+                            type="button"
+                            class="
+                              btn btn-primary btn-sm
+                              
+                              waves-effect waves-light
+                              pull-left
+                            "
+                    
+                            
+                          >
+                          <!-- @click="searchUser()" -->
+                            Submit
+                          </button>
+                  
+                  </div>
+                    </div>
           </div>
           <div class="col-lg-11 mt-4">
             <div class="row">
