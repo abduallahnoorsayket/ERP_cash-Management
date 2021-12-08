@@ -2,7 +2,6 @@
   <Layout>
     <template v-slot:module_content>
       <PageTitle title="Files List" />
-
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
@@ -43,84 +42,7 @@
 
                 </div>
                 
-                   <!-- <div class="col-lg-2">
-                 <div class="form-group">
-                  <label>Last Name</label>
-                   <input
-                    type="text"
-                    class="form-control"
-                    v-model="last_name"
-                  />
                 
-                </div>
-                
-                </div>
-                
-                  <div class="col-lg-2">
-                   <div class="form-group">
-                  <label>Username</label>
-                   <input
-                    type="text"
-                    class="form-control"
-                    v-model="username"
-                  />
-                </div>
-                </div>
-
-                 <div class="col-lg-2">
-                   <div class="form-group">
-                  <label>Groups</label>
-                      <select
-                    class="form-control"
-                    data-toggle="select2"
-                    v-model="groups"
-                  >
-                    <option value="false" disabled selected>Select</option>
-
-                    <option v-for="(g, i) in group_list" :key="i" :value="g.id">
-                      {{ g.name }}
-                    </option>
-                  </select>
-                </div>
-                </div>
-
-                  <div class="col-lg-2">
-                    <div class="form-group">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    v-model="email"
-                  />
-              
-                </div>
-                </div>
-                 
-
-                 
-
-                  <div class="col-lg-1">
-                  <div class="form-group ">
-                     <label style="visibility: hidden">fgggggggf</label>
-                     <button
-                            type="button"
-                            class="
-                              btn btn-primary btn-sm
-                              
-                              waves-effect waves-light
-                              pull-right
-                            "
-                    
-                            @click="searchUser()"
-                          >
-                            Search
-                          </button>
-                  
-                  </div>
-
-                 
-
-                </div> -->
               </div>
             </div>
           </div>
@@ -135,7 +57,7 @@
                    <input
                     type="text"
                     class="form-control"
-                    v-model="first_name"
+                    v-model="file_name"
                   />
                 
                 </div>
@@ -178,7 +100,6 @@
                   <div class="col-lg-1">
                   <div class="form-group ">
                      <label style="visibility: hidden">fgggggggf</label>
-                     <!--   @click="searchUser()" -->
                      <button
                             type="button"
                             class="
@@ -187,7 +108,7 @@
                               waves-effect waves-light
                               pull-right
                             "
-                    
+                    @click="searchFile()" 
                           
                           >
                             Search
@@ -203,18 +124,22 @@
           </div>
         </div>
         <div class="col-lg-9">
-           <div class="row">
-                           <div class="col-xl-3 col-md-3">
+           <div class="row" v-if="files_list && files_list.length >0">
+                           <div class="col-xl-3 col-md-3" v-for="(file,index) in files_list" :key="index">
                              <div class="fileContainer">
                                  <div class="card widget-user">
                                     <div class="card-body ">
                                         <h3 class="text-primary text-center" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16 text-center">Project Requirements</h5>
+                                        <h5 class="font-16 text-center" v-if="file.file_name">{{file.file_name}}</h5>
                                         
                                     </div>
                                     <div class="row pr-2">
                                       <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
+                                        <span class="downloadButton float-right text-secondary" title="Download" v-if="file.upload_files" >
+                                         <a :href="file.upload_files">
+                              <i class="fas fa-download"></i>
+                            </a>
+                                        </span> 
                                       </div>
                                       </div>                                    
                                     <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
@@ -250,238 +175,10 @@
                               
                             </div>
         
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">System Requirements</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Monthly evaluation</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                                
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Attendance records</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                            </div>
+                            
                         </div>
-                        <div class="row">
-                           <div class="col-xl-3 col-md-3">
-                             <div class="fileContainer">
-                                 <div class="card widget-user">
-                                    <div class="card-body ">
-                                        <h3 class="text-primary text-center" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16 text-center">Project Requirements</h5>
-                                        
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>                                    
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                    
-                                </div>
-                                <!-- <div class="middle">
-                
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="text">
-                      
-                      <br />
-                      <span class="fileInfo">
-                        <label class="labelRightMargin">File type:</label>
-                        <br />
+                        <div v-else class="alert alert-success" role="alert">No Data Found!</div>
                         
-                      </span>
-                      <div class="row mt-5">
-                        <div class="col-md-12">
-                          <span class="float-right" >
-                            <a>
-                              <i class="fas fa-download" title="Download"></i>
-                            </a>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
-                             </div>
-                              
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">System Requirements</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Monthly evaluation</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                                
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Attendance records</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-xl-3 col-md-3">
-                             <div class="fileContainer">
-                                 <div class="card widget-user">
-                                    <div class="card-body ">
-                                        <h3 class="text-primary text-center" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16 text-center">Project Requirements</h5>
-                                        
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>                                    
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                    
-                                </div>
-                                <!-- <div class="middle">
-                
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="text">
-                      
-                      <br />
-                      <span class="fileInfo">
-                        <label class="labelRightMargin">File type:</label>
-                        <br />
-                        
-                      </span>
-                      <div class="row mt-5">
-                        <div class="col-md-12">
-                          <span class="float-right" >
-                            <a>
-                              <i class="fas fa-download" title="Download"></i>
-                            </a>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
-                             </div>
-                              
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"> <i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">System Requirements</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Monthly evaluation</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                                
-                            </div>
-        
-                            <div class="col-xl-3 col-md-3">
-                                <div class="card widget-user">
-                                    <div class="card-body text-center">
-                                        <h3 class="text-primary" data-plugin="counterup"><i class="far fa-file-alt"></i></h3>
-                                        <h5 class="font-16">Attendance records</h5>
-                                    </div>
-                                    <div class="row pr-2">
-                                      <div class="col-md-12">
-                                        <span class="downloadButton float-right"><i class="fas fa-download"></i></span> 
-                                      </div>
-                                      </div>
-                                    <!-- <span class="downloadButton"><i class="fas fa-download"></i></span> -->
-                                </div>
-                            </div>
-                        </div>
                         <Pagination :pagination="pagination" /> 
         </div>
        
@@ -504,7 +201,7 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
 import Pagination from "@/components/layouts/partials/Pagination";
-import FileUploader from "../partials/FileUploader.vue";
+import FileUploader from "../../../../layouts/partials/FileUploader.vue";
 
 export default {
   name: "FilesList",
@@ -516,13 +213,9 @@ export default {
   },
   data() {
     return {
-      user_list: null,
-      first_name: null,
-      last_name: null,
-      email: null,
-      username: null,
-      groups: null,
-      group_list: null,
+      files_list: null,
+      file_name: null,
+     
       pagination: {
         count: null,
         next: null,
@@ -533,16 +226,17 @@ export default {
     };
   },
   methods: {
-    getUserList: function () {
+    getFilesList: function () {
 
-      let endPoint = "users"
+      let endPoint = "file"
       var queryParam = {
-        first_name: this.$route.query.first_name,
-        last_name: this.$route.query.last_name,
-        email: this.$route.query.email,
-        groups: this.$route.query.groups,
-        username: this.$route.query.username,
-        page: this.$route.query.page,
+        file_name: this.$route.query.file_name
+        // first_name: this.$route.query.first_name,
+        // last_name: this.$route.query.last_name,
+        // email: this.$route.query.email,
+        // groups: this.$route.query.groups,
+        // username: this.$route.query.username,
+        // page: this.$route.query.page,
       }
 
       axios
@@ -550,7 +244,7 @@ export default {
         params: queryParam
       })
         .then((response) => {
-          this.user_list = response.data.results;
+          this.files_list = response.data.results;
           this.pagination.count = response.data.count;
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;
@@ -596,37 +290,21 @@ export default {
 
     
 // search start here
-    searchUser() {
-
+    searchFile() {
       this.$router.push({
-        path: "user-list",
+        path: "files-list",
         query: {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          email: this.email,
-          groups: this.groups,
-          username: this.username,
+          file_name: this.file_name,
         },
       });
 
     },
-      getGroups: function () {
-      axios
-        .get("group_short_list")
-        .then((response) => {
-          this.group_list = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
   },
   created() {
-    // this.getUserList();
-    // this.getGroups();
+    this.getFilesList();
   },
    updated() {
-    // this.getUserList()
+    this.getFilesList();
   }
 };
 </script>
@@ -642,6 +320,7 @@ export default {
 .fa-download:before {
     content: "\f019";
     float: right;
+    color: #808080;
 }
 /* .fileContainer {
   position: relative;
