@@ -14,7 +14,7 @@
                    placeholder="Search..."
                     type="text"
                     class="form-control"
-                    v-model="first_name"
+                     v-model="file_name"
                   />
                 
                 </div>
@@ -24,6 +24,7 @@
                    <div class="form-group mt-1">
                      <!-- <label style="visibility: hidden">fgggggggf</label> -->
                      <button
+                     @click="searchFile()" 
                             type="button"
                             class="
                               btn btn-primary btn-sm
@@ -31,10 +32,7 @@
                               waves-effect waves-light
                               pull-left
                             "
-                    
-                            
                           >
-                          <!-- @click="searchUser()" -->
                             Search
                           </button>
                   
@@ -53,12 +51,12 @@
               <div class="row">
                 <div class="col-lg-12">
                  <div class="form-group">
-                  <label>File Name</label>
+                  <!-- <label>File Name</label>
                    <input
                     type="text"
                     class="form-control"
                     v-model="file_name"
-                  />
+                  /> -->
                 
                 </div>
                 <div class="form-group">
@@ -79,7 +77,7 @@
                   />
                 </div>
                   <div class="form-group">
-                  <label>Groups</label>
+                  <label>Created date</label>
                       <select
                     class="form-control"
                     data-toggle="select2"
@@ -87,9 +85,7 @@
                   >
                     <option value="false" disabled selected>Select</option>
 
-                    <option v-for="(g, i) in group_list" :key="i" :value="g.id">
-                      {{ g.name }}
-                    </option>
+                   
                   </select>
                 </div>
                 
