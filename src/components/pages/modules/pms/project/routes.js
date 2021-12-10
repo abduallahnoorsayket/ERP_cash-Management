@@ -2,6 +2,7 @@ import ProjectList from './ProjectList'
 import ProjectAdvanceList from './ProjectAdvanceList'
 import ProjectCreate from './ProjectCreate'
 import ProjectEdit from './ProjectEdit'
+import ProjectDetails from './ProjectDetails'
 
 
 const projectRoutes = [
@@ -28,6 +29,12 @@ const projectRoutes = [
         path: '/project-edit/:id',
         component: ProjectEdit,
         name: 'ProjectEdit'
+
+    },
+    {
+        path: '/project-details/:id',
+        component: ProjectDetails,
+        name: 'ProjectDetails'
 
     },
   

@@ -25,6 +25,7 @@
                       id="message"
                       placeholder="Your message"
                       required=""
+                      v-model="comment_body"
                     ></textarea>
                   </div>
                   <div class="form-group col-xs-12 col-sm-12 col-lg-12">
@@ -35,6 +36,7 @@
                         btn-xs
                         submit_btn
                       "
+                      @click.prevent="commentSubmit"
                     >
                       Submit
                     </button>
@@ -42,10 +44,11 @@
                 </div>
               </fieldset>
 
-              <h3>4 Comments</h3>
+              <h3 v-if="comment_list  && comment_list.length > 0">{{comment_list.length}} Comments</h3>
+              <h3 v-else> 0 Comments</h3>
 
               <!-- COMMENT 1 - START -->
-              <div class="media">
+              <div class="media" v-for="(comment,i) in comment_list" :key="i">
                 <a class="pull-left" href="#"
                   ><img
                     class="media-object comment_width rounded-circle"
@@ -53,14 +56,9 @@
                     alt=""
                 /></a>
                 <div class="media-body">
-                  <h4 class="media-heading">John Doe</h4>
+                  <h4 class="media-heading">{{comment.created_by.first_name}}{{comment.created_by.first_name}}({{comment.created_by.username}})</h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                   {{comment.comment_body}}
                   </p>
                   <div class="row">
                     <div class="col-sm-3 col-lg-10 hidden-xs">
@@ -81,43 +79,7 @@
                 </div>
               </div>
               <!-- COMMENT 1 - END -->
-              <!-- COMMENT 1 - START -->
-              <div class="media">
-                <a class="pull-left" href="#"
-                  ><img
-                    class="media-object comment_width rounded-circle"
-                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                    alt=""
-                /></a>
-                <div class="media-body">
-                  <h4 class="media-heading">John Doe</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                  <div class="row">
-                    <div class="col-sm-3 col-lg-10 hidden-xs">
-                      <ul
-                        class="list-unstyled list-inline media-detail pull-left"
-                      >
-                        <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                        <li><i class="fa fa-thumbs-up"></i>13</li>
-                      </ul>
-                    </div>
-                    <div class="col-sm-9 col-lg-2 hidden-xs like_reply_padding">
-                      <ul class="list-unstyled list-inline media-detail">
-                        <li class=""><a href="">Like</a></li>
-                        <li class=""><a href="">Reply</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- COMMENT 1 - END -->
+     
             </div>
           </div>
         </div>
@@ -128,11 +90,79 @@
 </template>
 
 <script>
+import axios from "@/axios";
+import Swal from "sweetalert2";
 export default {
   name: "CommentPost",
+  props: ['content_type_id','object_id'],
   data() {
-    return {};
+    return {
+      comment_list: null,
+      created_by : null,
+      comment_body: null,
+      pagination: {
+        count: null,
+        next: null,
+        previous: null,
+        showing: 0,
+        page: null,
+      }
+    };
   },
+  methods: {
+ getCommentList: function () {
+      let endPoint = "comment/";
+      var queryParam = {
+        object_id: this.$props.object_id,
+        content_type: this.$props.content_type_id,
+        page: this.$route.query.page,
+      };
+      axios
+        .get(endPoint, {
+          params: queryParam,
+        })
+        .then((response) => {
+          this.comment_list = response.data.results;
+          this.pagination.count = response.data.count;
+          this.pagination.next = response.data.next;
+          this.pagination.previous = response.data.previous;
+          this.pagination.showing = response.data.results.length;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    commentSubmit: function () {
+       axios
+        .post("comment/", {
+         object_id: this.$props.object_id,
+         content_type: this.$props.content_type_id,
+         comment_body: this.comment_body,
+         created_by:  this.created_by
+
+        }).then(() => {
+          Swal.fire({
+            icon: "success",
+            text: "You have successfully created a comment.",
+          }).then(() => {
+           
+            this.comment_body = null;
+            this.$emit("load_comment");
+          });
+          
+        })
+
+        .catch((error) => {
+          // console.log("239", error.response.data);
+          this.errors = error.response.data;
+        });
+    }
+  },
+  created() {
+    this.getCommentList()
+   const userData = JSON.parse(localStorage.getItem("userData"))
+    this.created_by = userData.id
+  }
 };
 </script>
 

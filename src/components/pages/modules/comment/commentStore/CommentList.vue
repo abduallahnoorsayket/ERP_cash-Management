@@ -316,15 +316,5 @@ export default {
 </script>
 
 <style  scoped>
-.edit_btn {
-  margin-left: 10px;
-  cursor: pointer;
-}
-.table-bordered td,
-.table-bordered th {
-  font-size: 90%;
-}
-.req_btn {
-  cursor: pointer;
-}
+
 </style>
