@@ -2,16 +2,17 @@
   <Layout>
     <template v-slot:module_content>
       <PageTitle title="Files List" />
-      <div class="row">
+      <div class="row" v-if="files_list">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <div class="row">
+               <form action @submit.prevent="searchFileName" autocomplete="off">
+                <div class="row">
                 <div class="col-md-10 col-lg-10">
                  <div class="form-group">
                   <!-- <label>First Name</label> -->
                    <input
-                   placeholder="Search..."
+                   placeholder="Search by file name..."
                     type="text"
                     class="form-control"
                      v-model="file_name"
@@ -24,7 +25,6 @@
                    <div class="form-group mt-1">
                      <!-- <label style="visibility: hidden">fgggggggf</label> -->
                      <button
-                     @click="searchFile()" 
                             type="button"
                             class="
                               btn btn-primary btn-sm
@@ -39,9 +39,11 @@
                   </div>
 
                 </div>
-                
+               
                 
               </div>
+                </form>
+              
             </div>
           </div>
         </div>
@@ -60,30 +62,46 @@
                 
                 </div>
                 <div class="form-group">
-                  <label>Created by</label>
-                   <input
-                    type="text"
+                  <label>Content type</label>
+                   <select
                     class="form-control"
-                    v-model="last_name"
-                  />
+                    data-toggle="select2"
+                    v-model="content_type"
+                     :class="{ 'parsley-error': errors && errors.content_type }"
+                  >
+                    <option value="false" selected>Select</option>
+
+                    <option v-for="d in all_content_type" :key="d.id" :value="d.id">
+                      {{ d.model }}
+                    </option>
+                  </select>
                 
                 </div>
                 <div class="form-group">
-                  <label>Created date</label>
-                   <input
-                    type="date"
+                  <label>Created by</label>
+                    <select
                     class="form-control"
-                    v-model="username"
-                  />
+                    data-toggle="select2"
+                    v-model="created_by"
+                     :class="{ 'parsley-error': errors && errors.created_by }"
+                  >
+                    <option value="false" selected>Select</option>
+
+                    <option v-for="d in all_content_type" :key="d.id" :value="d.id">
+                      {{ d.model }}
+                    </option>
+                  </select>
                 </div>
                   <div class="form-group">
                   <label>Created date</label>
                       <select
                     class="form-control"
                     data-toggle="select2"
-                    v-model="groups"
+                    v-model="ordering"
                   >
                     <option value="false" disabled selected>Select</option>
+                    <option value="created_at" >ASC</option>
+                    <option value="-created_at" >DSC</option>
 
                    
                   </select>
@@ -179,13 +197,13 @@
         </div>
        
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-9">
           <FileUploader/>
 
         </div>
-      </div>
+      </div> -->
     </template>
   </Layout>
 </template>
@@ -197,7 +215,7 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
 import Pagination from "@/components/layouts/partials/Pagination";
-import FileUploader from "../../../../layouts/partials/FileUploader.vue";
+// import FileUploader from "../../../../layouts/partials/FileUploader.vue";
 
 export default {
   name: "FilesList",
@@ -205,13 +223,15 @@ export default {
     Layout,
     PageTitle,
     Pagination,
-    FileUploader
+    // FileUploader
   },
   data() {
     return {
       files_list: null,
       file_name: null,
-     
+      all_content_type:null,
+      content_type:null,
+      ordering:null,
       pagination: {
         count: null,
         next: null,
@@ -226,7 +246,9 @@ export default {
 
       let endPoint = "file"
       var queryParam = {
-        file_name: this.$route.query.file_name
+        file_name: this.$route.query.file_name,
+        content_type: this.$route.query.content_type,
+         ordering:this.$route.query.ordering
         // first_name: this.$route.query.first_name,
         // last_name: this.$route.query.last_name,
         // email: this.$route.query.email,
@@ -245,6 +267,26 @@ export default {
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;
           this.pagination.showing = response.data.results.length;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+      getContenttype: function () {
+      axios
+        .get("content-type-short-list")
+        .then((response) => {
+          this.all_content_type = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+     getUsers: function () {
+      axios
+        .get("content-type-short-list")
+        .then((response) => {
+          this.all_content_type = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -291,16 +333,29 @@ export default {
         path: "files-list",
         query: {
           file_name: this.file_name,
+          content_type: this.content_type,
+          ordering:this.ordering
         },
       });
-
+    },
+     searchFileName() {
+      this.$router.push({
+        path: "files-list",
+        query: {
+          file_name: this.file_name,
+        },
+      });
     },
   },
   created() {
     this.getFilesList();
+    this.getContenttype();
+    this.getUsers();
   },
    updated() {
     this.getFilesList();
+    this.getContenttype();
+    this.getUsers();
   }
 };
 </script>
