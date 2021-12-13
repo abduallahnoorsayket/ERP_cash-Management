@@ -12,6 +12,14 @@
       :object_id="object_id"
       @load_comment="CommentLoad"
       />
+       <br><br>
+       <div class="row">
+        <!-- <div class="col-md-3"></div> -->
+        <div class="col-md-12">
+          <FileUploader v-if="project_id"  :content_type_id="content_type_id" 
+      :object_id="object_id" />
+        </div>
+      </div>
     </template>
   </Layout>
 </template>
@@ -23,13 +31,15 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
 import CommentPost from "@/components/layouts/partials/CommentPost";
+import FileUploader from "@/components/layouts/partials/FileUploader";
 
 export default {
   name: "ProjectDetails",
   components: {
     Layout,
     PageTitle,
-    CommentPost
+    CommentPost,
+    FileUploader
   },
   data() {
     return {

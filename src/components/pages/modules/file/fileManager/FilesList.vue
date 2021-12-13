@@ -32,6 +32,7 @@
                               waves-effect waves-light
                               pull-left
                             "
+                              @click="searchFileName()" 
                           >
                             Search
                           </button>
@@ -69,7 +70,7 @@
                     v-model="content_type"
                      :class="{ 'parsley-error': errors && errors.content_type }"
                   >
-                    <option value="false" selected>Select</option>
+                    <option value="" selected>Select</option>
 
                     <option v-for="d in all_content_type" :key="d.id" :value="d.id">
                       {{ d.model }}
@@ -85,21 +86,22 @@
                     v-model="created_by"
                      :class="{ 'parsley-error': errors && errors.created_by }"
                   >
-                    <option value="false" selected>Select</option>
+                    <option value="" selected>Select</option>
 
-                    <option v-for="d in all_content_type" :key="d.id" :value="d.id">
-                      {{ d.model }}
+                    <option v-for="d in members" :key="d.id" :value="d.id">
+                      {{ d.first_name+''+d.last_name }}
                     </option>
                   </select>
                 </div>
                   <div class="form-group">
-                  <label>Created date</label>
+                  <label>Order by </label>
                       <select
                     class="form-control"
                     data-toggle="select2"
                     v-model="ordering"
+                    @change="orderingBy"
                   >
-                    <option value="false" disabled selected>Select</option>
+                    <option value="" selected>Select</option>
                     <option value="created_at" >ASC</option>
                     <option value="-created_at" >DSC</option>
 
@@ -230,6 +232,8 @@ export default {
       files_list: null,
       file_name: null,
       all_content_type:null,
+      created_by:null,
+      members:null,
       content_type:null,
       ordering:null,
       pagination: {
@@ -248,7 +252,9 @@ export default {
       var queryParam = {
         file_name: this.$route.query.file_name,
         content_type: this.$route.query.content_type,
-         ordering:this.$route.query.ordering
+         ordering:this.$route.query.ordering,
+         created_by:this.$route.query.created_by,
+
         // first_name: this.$route.query.first_name,
         // last_name: this.$route.query.last_name,
         // email: this.$route.query.email,
@@ -283,10 +289,10 @@ export default {
         });
     },
      getUsers: function () {
-      axios
-        .get("content-type-short-list")
+       axios
+        .get("project_member")
         .then((response) => {
-          this.all_content_type = response.data;
+          this.members = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -325,16 +331,23 @@ export default {
         }
       });
     },
-
+ orderingBy(){
+  this.$router.push({
+        path: "files-list",
+        query: {
+          ordering: this.ordering,
+        },
+      });
+ },
     
 // search start here
     searchFile() {
       this.$router.push({
         path: "files-list",
         query: {
-          file_name: this.file_name,
+          // file_name: this.file_name,
           content_type: this.content_type,
-          ordering:this.ordering
+          created_by:this.created_by
         },
       });
     },
