@@ -1,6 +1,7 @@
 import VersionList from './VersionList'
 import VersionCreate from './VersionCreate'
 import VersionEdit from './VersionEdit'
+import VersionDetails from './VersionDetails'
 
 
 const versionRoutes = [
@@ -23,9 +24,13 @@ const versionRoutes = [
         name: 'VersionEdit'
 
     },
+    {
+        path: '/version-details/:id',
+        component: VersionDetails,
+        name: 'VersionDetails'
+
+    },
   
-   
-   
 
 
 ];

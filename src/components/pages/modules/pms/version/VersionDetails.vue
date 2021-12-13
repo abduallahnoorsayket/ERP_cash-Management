@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Project Details" />
+      <PageTitle title="Version Details" />
 
       <div class="row">
        <h1>{{name}}</h1>
@@ -10,7 +10,6 @@
       v-if="project_id" 
       :content_type_id="content_type_id" 
       :object_id="object_id"
-
       />
     </template>
   </Layout>
@@ -25,7 +24,7 @@ import permissions from "@/permisson";
 import CommentPost from "@/components/layouts/partials/CommentPost";
 
 export default {
-  name: "ProjectDetails",
+  name: "VersionDetails",
   components: {
     Layout,
     PageTitle,
@@ -47,7 +46,7 @@ export default {
   },
   methods: {
     getProjectDetailsData: function () {
-      axios.get(`projects/${this.$route.params.id}/`).then(
+      axios.get(`versions/${this.$route.params.id}/`).then(
         (response) => {
           // console.log("277", response.data);
           this.project_id = response.data.id;
@@ -60,7 +59,11 @@ export default {
         console.log("error", err)
       })
     },
-  
+    // async CommentLoad() {
+    //   this.project_id = null;
+    //   await this.getProjectDetailsData();
+    // },
+
     hasModulePermission(...module_name) {
       return permissions.hasModulePermission(...module_name);
     },

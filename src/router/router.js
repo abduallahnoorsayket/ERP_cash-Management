@@ -22,6 +22,7 @@ import userRoutes from '../components/pages/modules/base/user/routes'
 import groupRoutes from '../components/pages/modules/base/group/routes'
 import project_requisitionRoutes from '../components/pages/modules/requisition/project_requisition/routes'
 import commentHome from '../components/pages/modules/comment/Home'
+import Notification from '../components/pages/modules/notification/Home'
 const userData = JSON.parse(localStorage.getItem("userData"))
 
 
@@ -89,6 +90,12 @@ const baseRoutes = [
     path: '/files-list',
     component: FilesList,
     name: 'FilesList'
+
+  }, 
+   {
+    path: '/notification',
+     component: Notification,
+     name: 'Notification'
 
 }, 
 

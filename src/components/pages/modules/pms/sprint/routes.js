@@ -1,6 +1,7 @@
 import SprintList from './SprintList'
 import SprintCreate from './SprintCreate'
 import SprintEdit from './SprintEdit'
+import SprintDetails from './SprintDetails'
 
 
 const sprintRoutes = [
@@ -23,10 +24,13 @@ const sprintRoutes = [
         name: 'SprintEdit'
 
     },
-  
-   
-   
+     {
+        path: '/sprint-details/:id',
+        component: SprintDetails,
+        name: 'SprintDetails'
 
+    },
+  
 
 ];
 

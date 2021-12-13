@@ -217,6 +217,17 @@
                                 <i class="fas fa-edit"></i> Edit
                               </router-link>
                             </li>
+                            <li v-if="hasPermission('view_project')">
+                              <router-link
+                                :to="{
+                                  name: 'ProjectDetails',
+                                  params: { id: project.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-edit"></i> View
+                              </router-link>
+                            </li>
                             <li v-if="hasPermission('delete_project')">
                               <a
                                 href="#"
@@ -226,6 +237,7 @@
                                 <i class="fas fa-trash"></i> Delete</a
                               >
                             </li>
+                            
                           </ul>
                         </div>
                       </td>

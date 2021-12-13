@@ -210,6 +210,17 @@
                                 <i class="fas fa-edit"></i> Edit
                               </router-link>
                             </li>
+                            <li v-if="hasPermission('view_version')">
+                              <router-link
+                                :to="{
+                                  name: 'VersionDetails',
+                                  params: { id: version.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-street-view"></i> View
+                              </router-link>
+                            </li>
                             <li v-if="hasPermission('delete_version')">
                               <a
                                 href="#"

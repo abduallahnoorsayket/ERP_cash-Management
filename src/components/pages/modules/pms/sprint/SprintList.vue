@@ -223,6 +223,9 @@
                             <li v-if="hasPermission('change_sprint')">
                               <router-link :to="{name: 'SprintEdit', params: { id: sprint.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
                             </li>
+                            <li v-if="hasPermission('view_sprint')">
+                              <router-link :to="{name: 'SprintDetails', params: { id: sprint.id },}" class="dropdown-item"> <i class="fas fa-street-view"></i> View </router-link>
+                            </li>
                             <li v-if="hasPermission('delete_sprint')">
                               <a href="#" @click="sprintDelete(sprint.id)"  class="dropdown-item"> <i class="fas fa-trash"></i> Delete</a>
                             </li>
