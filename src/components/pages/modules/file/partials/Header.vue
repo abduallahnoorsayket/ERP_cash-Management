@@ -8,6 +8,12 @@
             <router-link to="/pms" class="active">
               <i class="mdi mdi-speedometer"></i>Dashboard
             </router-link>
+           
+          </li>
+          <li>
+             <router-link to="/files-list" class="active text-primary">
+              <i class="far fa-file-alt"></i>FilesList
+            </router-link>
           </li>
            <!-- <li class="has-submenu" v-if="hasModelPermission('version')">
             <a href="#">
