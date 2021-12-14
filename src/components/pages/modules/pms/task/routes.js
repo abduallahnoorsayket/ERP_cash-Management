@@ -1,6 +1,7 @@
 import TaskList from './TaskList'
 import TaskCreate from './TaskCreate'
 import TaskEdit from './TaskEdit'
+import TaskDetails from './TaskDetails'
 
 
 const taskRoutes = [
@@ -21,6 +22,12 @@ const taskRoutes = [
         path: '/task-edit/:id',
         component: TaskEdit,
         name: 'TaskEdit'
+
+    },
+    {
+        path: '/task-details/:id',
+        component: TaskDetails,
+        name: 'TaskDetails'
 
     },
   
