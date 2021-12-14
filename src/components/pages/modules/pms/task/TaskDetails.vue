@@ -1,12 +1,13 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Program details" />
-     <div class="row">
+      <PageTitle title="Task Details" />
+
+      <div class="row">
        <h1>{{name}}</h1>
       </div>
       <CommentPost 
-      v-if="program_id" 
+      v-if="task_id" 
       :content_type_id="content_type_id" 
       :object_id="object_id"
       />
@@ -14,7 +15,7 @@
        <div class="row">
         <!-- <div class="col-md-3"></div> -->
         <div class="col-md-12">
-          <FileUploader v-if="program_id"  :content_type_id="content_type_id" 
+          <FileUploader v-if="task_id"  :content_type_id="content_type_id" 
       :object_id="object_id" />
         </div>
       </div>
@@ -28,38 +29,22 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
-import FileUploader from "@/components/layouts/partials/FileUploader";
 import CommentPost from "@/components/layouts/partials/CommentPost";
-
+import FileUploader from "@/components/layouts/partials/FileUploader";
 
 export default {
-  name: "ProgramDetails",
+  name: "SprintDetails",
   components: {
     Layout,
     PageTitle,
-    FileUploader,
-    CommentPost
+    CommentPost,
+    FileUploader
   },
   data() {
     return {
-       status_map:{
-        RU:"badge badge-primary", //Running
-        AS:"badge badge-info", //Assigned
-        CO:"badge badge-success", //Completed
-        PO:"badge badge-warning", //Postponed
-        PR:"badge badge-danger", //Problematic
-        UP:"badge badge-purple", //Upcoming
-      },
-      program_id:null,
-      content_type_id:null,
-      object_id:null,
-      all_program_list: null,
-      department: null,
-      departmentId: null,
-      statusData: null,
-      status: null,
-      name: null,
-      programId: null,
+      object_id: null,
+      content_type_id: null,
+      task_id: null,
       pagination: {
         count: null,
         next: null,
@@ -70,12 +55,11 @@ export default {
     };
   },
   methods: {
-   
-     getProgramDetailsData: function () {
-      axios.get(`program/${this.$route.params.id}/`).then(
+    getTaskDetailsData: function () {
+      axios.get(`tasks/${this.$route.params.id}/`).then(
         (response) => {
           // console.log("277", response.data);
-          this.program_id = response.data.id;
+          this.task_id = response.data.id;
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;
           this.name = response.data.name;
@@ -85,6 +69,10 @@ export default {
         console.log("error", err)
       })
     },
+    // async CommentLoad() {
+    //   this.project_id = null;
+    //   await this.getProjectDetailsData();
+    // },
 
     hasModulePermission(...module_name) {
       return permissions.hasModulePermission(...module_name);
@@ -98,7 +86,7 @@ export default {
       return permissions.hasPermission(permission_name);
     },
 
-    deleteProgram: function (id) {
+    deleteClient: function (id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -109,18 +97,27 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((response) => {
         if (response.isConfirmed) {
-          axios.delete("program/" + id + "/").then((response) => {
+          axios.delete("projects/" + id + "/").then((response) => {
             if (response.status === 204) {
-              this.getProgramList();
+              this.getProjectList();
             }
           });
-          Swal.fire("Deleted!", "Program has been deleted!!", "success");
+          Swal.fire("Deleted!", "Project has been deleted!!", "success");
         } else {
-          Swal.fire("Cancelled", "Program has not been deleted !", "error");
+          Swal.fire("Cancelled", "Project has not been deleted !", "error");
         }
       });
     },
- 
+    getProjectClients: function () {
+      axios
+        .get("project_clients")
+        .then((response) => {
+          this.projectId = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     getStatus: function () {
       axios
         .get("project_status")
@@ -145,28 +142,26 @@ export default {
     // search section start
     searchVersion() {
       this.$router.push({
-        path: "program-list",
+        path: "project-basic-list",
         query: {
           name: this.name,
-          programId: this.programId,
+          project: this.project,
+          project_id: this.project_id,
           status: this.status,
-
+          department: this.department,
         },
       });
     },
   },
   created() {
-    this.getProgramDetailsData();
-    // this.getProgramList();
+    // this.getProjectClients();
+    this.getTaskDetailsData();
     // this.getStatus();
     // this.getDepartment();
   },
-  updated() {
-    // this.getProgramList();
-  },
+ 
 };
 </script>
 
-<style>
-
+<style lang="scss" scoped>
 </style>

@@ -172,6 +172,18 @@
                             <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
+                            <!-- v-if="hasPermission('change_project')" -->
+                            <li >
+                              <router-link
+                                :to="{
+                                  name: 'ProgramDetails',
+                                  params: { id: program.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-eye"></i> View
+                              </router-link>
+                            </li>
                             <li v-if="hasPermission('change_project')">
                               <router-link
                                 :to="{
