@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-lg-12">
+   <div class="row">
+       <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -104,21 +104,12 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-9">
-      <div class="row"></div>
-      <div class="card comment_card_color">
+        <div class="col-lg-8">
+         <div class="card comment_card_color">
         <div class="card-body">
           <div class="float-right">
             <div class="checkbox checkbox-inline form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox1"
-                value="option1"
-              />
-              <label class="form-check-label" for="inlineCheckbox1">
-                Week
-              </label>
+             <button class="btn btn-primary waves-effect waves-light btn-xs">Button</button>
             </div>
             <div
               class="
@@ -126,38 +117,12 @@
                 form-check form-check-inline
               "
             >
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox2"
-                value="option2"
-                checked=""
-              />
-              <label class="form-check-label" for="inlineCheckbox2">
-                Month
-              </label>
+            <button class="btn btn-primary waves-effect waves-light btn-xs"> small</button>
             </div>
-            <div
-              class="
-                checkbox checkbox-pink checkbox-inline
-                form-check form-check-inline
-                mr-0
-              "
-            >
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox3"
-                value="option3"
-                checked=""
-              />
-              <label class="form-check-label" for="inlineCheckbox3">
-                Year
-              </label>
-            </div>
+          
           </div>
 
-          <h4 class="header-title mb-4">Card with Checkbox</h4>
+          <h4 class="header-title mb-4">Notification List</h4>
 
           <div class="row">
             <div class="col-md-12">
@@ -196,15 +161,11 @@
           </div>
         </div>
       </div>
-      <Pagination :pagination="pagination" />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-9">
-    
-    </div>
-  </div>
+        </div>
+        <div class="col-md-12"> 
+    <Pagination :pagination="pagination" /> 
+        </div>
+      </div>
 </template>
 
 <script>
@@ -214,7 +175,7 @@ import axios from "@/axios";
 import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
-  name: "CommentList",
+  name: "NotificationList",
   components: {
     Pagination,
   },

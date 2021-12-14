@@ -82,144 +82,7 @@
             </div> 
            </li>
 
-          <li class="dropdown notification-list">
-            <a
-              class="nav-link dropdown-toggle waves-effect waves-light"
-              data-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-haspopup="false"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-bell-outline noti-icon"></i>
-              <div class="noti-dot">
-                <span class="dot"></span>
-                <span class="pulse"></span>
-              </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-lg" style="">
-              <!-- item-->
-              <div class="dropdown-item noti-title">
-                <h5 class="font-16 m-0">
-                  <span class="float-right">
-                    <a href="#" class="text-dark">
-                      <small>Clear All</small>
-                    </a> </span
-                  >Notification
-                </h5>
-              </div>
-
-              <div
-                class="slimScrollDiv"
-                style="
-                  position: relative;
-                  overflow: hidden;
-                  width: auto;
-                  height: 353px;
-                "
-              >
-                <div
-                  class="slimscroll noti-scroll"
-                  style="overflow: hidden; width: auto; height: 353px"
-                >
-                  <!-- item-->
-                  <a
-                    href="javascript:void(0);"
-                    class="dropdown-item notify-item"
-                  >
-                    <div class="notify-icon bg-soft-primary text-primary">
-                      <i class="mdi mdi-comment-account-outline"></i>
-                    </div>
-                    <p class="notify-details">
-                      Caleb Flakelar commented on Admin
-                      <small class="noti-time">1 min ago</small>
-                    </p>
-                  </a>
-
-                  <!-- item-->
-                  <a
-                    href="javascript:void(0);"
-                    class="dropdown-item notify-item"
-                  >
-                    <div class="notify-icon bg-soft-success text-success">
-                      <i class="mdi mdi-account-plus"></i>
-                    </div>
-                    <p class="notify-details">
-                      New user registered.
-                      <small class="noti-time">5 hours ago</small>
-                    </p>
-                  </a>
-
-                  <!-- item-->
-                  <a
-                    href="javascript:void(0);"
-                    class="dropdown-item notify-item"
-                  >
-                    <div class="notify-icon bg-soft-danger text-danger">
-                      <i class="mdi mdi-comment-account-outline"></i>
-                    </div>
-                    <p class="notify-details">
-                      Herbert Lim commented on Admin
-                      <small class="noti-time">13 days ago</small>
-                    </p>
-                  </a>
-
-                  <!-- item-->
-                  <a
-                    href="javascript:void(0);"
-                    class="dropdown-item notify-item"
-                  >
-                    <div class="notify-icon bg-soft-secondary text-muted">
-                      <i class="mdi mdi-heart"></i>
-                    </div>
-                    <p class="notify-details">
-                      Carlos Crouch liked
-                      <b>Admin</b>
-                      <small class="noti-time">13 days ago</small>
-                    </p>
-                  </a>
-                </div>
-                <div
-                  class="slimScrollBar"
-                  style="
-                    background: rgb(158, 165, 171);
-                    width: 5px;
-                    position: absolute;
-                    top: 0px;
-                    opacity: 0.4;
-                    display: block;
-                    border-radius: 7px;
-                    z-index: 99;
-                    right: 1px;
-                  "
-                ></div>
-                <div
-                  class="slimScrollRail"
-                  style="
-                    width: 5px;
-                    height: 100%;
-                    position: absolute;
-                    top: 0px;
-                    display: none;
-                    border-radius: 7px;
-                    background: rgb(51, 51, 51);
-                    opacity: 0.2;
-                    z-index: 90;
-                    right: 1px;
-                  "
-                ></div>
-              </div>
-
-              <!-- All-->
-              <a
-                href="javascript:void(0);"
-                class="dropdown-item text-primary notify-item notify-all"
-              >
-                View all
-                <i class="fi-arrow-right"></i>
-              </a>
-            </div>
-          </li>
+          <NotificationHeader/>
 
           <li class="dropdown notification-list">
             <a
@@ -707,10 +570,13 @@
 
 <script>
 import axios from "@/axios";
+import NotificationHeader from "../../pages/modules/notification/notificationStore/partial/NotificationHeader.vue"
 
 export default {
   name: "Header",
-  components: {},
+  components: {
+    NotificationHeader
+  },
 
   data() {
     return {

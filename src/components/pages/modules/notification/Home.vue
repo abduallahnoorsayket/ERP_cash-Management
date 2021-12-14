@@ -3,7 +3,7 @@
     <template v-slot:module_content>
       
       <PageTitle title="Notification"/>
-        <CommentList/>
+        <NotificationList/>
         <!-- <CommentPost/> -->
     </template>
   </Layout>
@@ -12,14 +12,14 @@
 <script>
 import Layout from "./Layout.vue";
 import PageTitle from '@/components/layouts/partials/PageTitle'
-import CommentList from '../comment/commentStore/CommentList.vue'
+import NotificationList from '../notification/notificationStore/NotificationList.vue'
 // import CommentPost from './CommentPost.vue'
 export default {
   name: "Home",
   components: {
     Layout,
     PageTitle,
-    CommentList,
+    NotificationList,
     // CommentPost
   },
   data() {
