@@ -7,10 +7,18 @@
        <h1>{{name}}</h1>
       </div>
       <CommentPost 
-      v-if="project_id" 
+      v-if="sprint_id" 
       :content_type_id="content_type_id" 
       :object_id="object_id"
       />
+      <br><br>
+       <div class="row">
+        <!-- <div class="col-md-3"></div> -->
+        <div class="col-md-12">
+          <FileUploader v-if="sprint_id"  :content_type_id="content_type_id" 
+      :object_id="object_id" />
+        </div>
+      </div>
     </template>
   </Layout>
 </template>
@@ -22,19 +30,21 @@ import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import permissions from "@/permisson";
 import CommentPost from "@/components/layouts/partials/CommentPost";
+import FileUploader from "@/components/layouts/partials/FileUploader";
 
 export default {
   name: "SprintDetails",
   components: {
     Layout,
     PageTitle,
-    CommentPost
+    CommentPost,
+    FileUploader
   },
   data() {
     return {
       object_id: null,
       content_type_id: null,
-      project_id: null,
+      sprint_id: null,
       pagination: {
         count: null,
         next: null,
@@ -49,7 +59,7 @@ export default {
       axios.get(`sprints/${this.$route.params.id}/`).then(
         (response) => {
           // console.log("277", response.data);
-          this.project_id = response.data.id;
+          this.sprint_id = response.data.id;
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;
           this.name = response.data.name;

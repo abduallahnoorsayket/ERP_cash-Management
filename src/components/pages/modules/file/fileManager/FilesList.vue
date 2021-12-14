@@ -94,7 +94,7 @@
                   </select>
                 </div>
                   <div class="form-group">
-                  <label>Order by </label>
+                  <label>Order by <span class="text-muted">(created at)</span></label>
                       <select
                     class="form-control"
                     data-toggle="select2"

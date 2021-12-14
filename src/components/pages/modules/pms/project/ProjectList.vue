@@ -206,6 +206,17 @@
                             <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
+                            <li v-if="hasPermission('view_project')">
+                              <router-link
+                                :to="{
+                                  name: 'ProjectDetails',
+                                  params: { id: project.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-eye"></i> View
+                              </router-link>
+                            </li>
                             <li v-if="hasPermission('change_project')">
                               <router-link
                                 :to="{
@@ -217,17 +228,7 @@
                                 <i class="fas fa-edit"></i> Edit
                               </router-link>
                             </li>
-                            <li v-if="hasPermission('view_project')">
-                              <router-link
-                                :to="{
-                                  name: 'ProjectDetails',
-                                  params: { id: project.id },
-                                }"
-                                class="dropdown-item"
-                              >
-                                <i class="fas fa-edit"></i> View
-                              </router-link>
-                            </li>
+                            
                             <li v-if="hasPermission('delete_project')">
                               <a
                                 href="#"

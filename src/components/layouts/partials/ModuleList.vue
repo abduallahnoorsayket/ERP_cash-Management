@@ -79,7 +79,7 @@
             /> -->
 
               
-              <i class="fab fa-sith avatar-md rounded-circle
+              <i class=" fas fa-file-invoice-dollar avatar-md rounded-circle
                   align-self-center fa-2x"></i>
 
               <div class="media-body overflow-hidden">
@@ -110,7 +110,7 @@
             /> -->
 
               
-              <i class="fab fa-sith avatar-md rounded-circle
+              <i class="far fa-file-alt avatar-md rounded-circle
                   align-self-center fa-2x"></i>
 
                     <!-- <i
@@ -146,7 +146,7 @@
             /> -->
 
               
-              <i class="fab fa-sith avatar-md rounded-circle
+              <i class=" fas fa-comments avatar-md rounded-circle
                   align-self-center fa-2x"></i>
 
                     <!-- <i

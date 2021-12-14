@@ -237,6 +237,9 @@
                              <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
+                            <li v-if="hasPermission('view_task')">
+                              <router-link :to="{name: 'TaskDetails', params: { id: task.id },}" class="dropdown-item"> <i class="fas fa-eye"></i> View</router-link>
+                            </li>
                            
                             <li v-if="hasPermission('change_task')">
                               <router-link :to="{name: 'TaskEdit', params: { id: task.id },}" class="dropdown-item"> <i class="fas fa-edit"></i> Edit </router-link>
