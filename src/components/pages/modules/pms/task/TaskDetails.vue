@@ -101,7 +101,7 @@
                     </tr>
                      <tr>
                       <th scope="row"> Parent</th>
-                      <td>
+                      <td colspan="3">
                         {{ form_data.parent }}
                       </td>
                        <!-- <th scope="row"> Task category</th>
