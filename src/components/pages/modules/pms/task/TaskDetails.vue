@@ -6,6 +6,119 @@
       <div class="row">
        <h1>{{name}}</h1>
       </div>
+        <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0 table-bordered table-sm">
+                  <!-- <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Program</th>
+                      <th scope="col">Client</th>
+                      <th scope="col">Project Id</th>
+                      <th scope="col" title="Assign Date">AD</th>
+                      <th scope="col" title="Expected Start Date">ESD</th>
+                      <th scope="col" title="Start Date">SD</th>
+                      <th scope="col" title="Expected complete Date">ECD</th>
+                      <th scope="col" title="complete_date">CD</th>
+                      <th scope="col" title="Number Of Quantity">QTY</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead> -->
+                  <tbody  v-if="form_data">
+                    <tr>
+                      <th scope="row"> Task name</th>
+                      <td>{{ form_data.name }}</td>
+                      <th scope="row">Task ID</th>
+                      <td>
+                        {{ form_data.taskId }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> Sprint</th>
+                      <td > <span v-if="form_data.sprint.name"> {{ form_data.sprint.name }}</span> </td>
+                       <th scope="row"> Sprint ID</th>
+                      <td > <span v-if="form_data.sprint.sprintId"> {{ form_data.sprint.sprintId }}</span> </td>
+                     
+                    </tr>
+                    <tr>
+                      <th scope="row"> Version</th>
+                      <td > <span v-if="form_data.sprint.version && form_data.sprint.version.name"> {{ form_data.sprint.version.name }}</span> </td>
+                       <th scope="row"> Version ID</th>
+                      <td > <span v-if="form_data.sprint.version &&  form_data.sprint.version.versionId"> {{ form_data.sprint.version.versionId }}</span> </td>
+                     
+                    </tr>
+                     <tr>
+                        <th scope="row"> Project</th>
+                      <td>
+                        <span v-if="form_data.sprint.version && form_data.sprint.version.project"> {{ form_data.sprint.version.project.name }}</span>
+                      </td>
+                      <th scope="row"> Estimated duration</th>
+                      <td >{{ form_data.estimated_duration }}</td>
+                    </tr>
+                     <tr>
+                      <th scope="row"> Has target</th>
+                      <td>{{ form_data.has_target }}</td>
+                      <th scope="row"> Status</th>
+                      <!-- <td>
+                        <span v-if="form_data.status_list"> {{ form_data.status_list[form_data.status] }}</span>
+                      </td> -->
+                      <td>
+                        <span v-if="form_data.status"> {{ form_data.status }}</span>
+                      </td>
+                    </tr>
+                      <tr>
+                     
+                      <th scope="row"> Expected start date</th>
+                      <td>
+                        {{ form_data.expected_start_date }}
+                      </td>
+                       <th scope="row"> Start date</th>
+                      <td>{{ form_data.start_date }}</td>
+                    </tr>
+                      <tr>
+                     
+                      <th scope="row"> Expected complete date</th>
+                      <td>
+                        {{ form_data.expected_complete_date }}
+                      </td>
+                      <th scope="row"> Complete date</th>
+                      <td colspan="3">{{ form_data.complete_date }}</td>
+                    </tr>
+
+
+                    <tr>
+                     
+                      <th scope="row"> Progress</th>
+                      <td>
+                        {{ form_data.progress }}
+                      </td>
+                       <th scope="row"> Task category</th>
+                      <td>{{ form_data.category }}</td>
+                    </tr>
+                     <tr>
+                      <th scope="row"> Parent</th>
+                      <td>
+                        {{ form_data.parent }}
+                      </td>
+                       <!-- <th scope="row"> Task category</th>
+                      <td>{{ form_data.category }}</td> -->
+                    </tr>
+                     <tr>
+                      <th scope="row">Description</th>
+                      <td colspan="3">{{ form_data.description }}</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <CommentPost 
       v-if="task_id" 
       :content_type_id="content_type_id" 
@@ -42,6 +155,7 @@ export default {
   },
   data() {
     return {
+      form_data:null,
       object_id: null,
       content_type_id: null,
       task_id: null,
@@ -59,6 +173,7 @@ export default {
       axios.get(`tasks/${this.$route.params.id}/`).then(
         (response) => {
           // console.log("277", response.data);
+          this.form_data = response.data;
           this.task_id = response.data.id;
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;
