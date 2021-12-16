@@ -11,7 +11,7 @@
                   placeholder="Search..."
                   type="text"
                   class="form-control"
-                  v-model="comment_body"
+                  v-model="message"
                 />
               </div>
             </div>
@@ -25,7 +25,7 @@
                     waves-effect waves-light
                     pull-left
                   "
-                   @click="searchComment()"
+                   @click="searchNotification()"
                 >
                  
                   Search
@@ -93,7 +93,7 @@
                     waves-effect waves-light
                     pull-right
                   "
-                  @click="searchComment()" 
+                  @click="searchNotification()" 
                   
                 >
                   Search
@@ -108,16 +108,18 @@
          <div class="card comment_card_color">
         <div class="card-body">
           <div class="float-right">
+            <router-link to="/notification">
             <div class="checkbox checkbox-inline form-check form-check-inline">
-             <button class="btn btn-primary waves-effect waves-light btn-xs">Button</button>
+             <button class="btn btn-primary waves-effect waves-light btn-xs" >All</button>
             </div>
+            </router-link>
             <div
               class="
                 checkbox checkbox-success checkbox-inline
                 form-check form-check-inline
               "
             >
-            <button class="btn btn-primary waves-effect waves-light btn-xs"> small</button>
+            <button class="btn btn-primary waves-effect waves-light btn-xs" @click="searchNotification(seen = !seen)"> Unseen</button>
             </div>
           
           </div>
@@ -126,7 +128,7 @@
 
           <div class="row">
             <div class="col-md-12">
-              <div  v-for="(comment, k) in comment_list" :key="k">
+              <div  v-for="(comment, k) in notification_list" :key="k">
               <div
                 class="toast-bs-custom show mb-3"
                 role="alert"
@@ -140,7 +142,7 @@
                     class="avatar-sm rounded mr-2"
                     alt="..."
                   />
-                  <strong class="mr-auto">{{comment.first_name}} {{comment.last_name}}({{comment.created_by.username}})</strong>
+                  <strong class="mr-auto">By - {{comment.first_name}} {{comment.last_name}}({{comment.created_by.username}})</strong>
                   <small>{{comment.created_datetime}}</small>
                   <button
                     type="button"
@@ -152,7 +154,7 @@
                   </button>
                 </div>
                 <div class="toast-body">
-                  {{comment.comment_body}}
+                  {{comment.message}}
                 </div>
               </div>
              </div>
@@ -181,13 +183,14 @@ export default {
   },
   data() {
     return {
-     comment_list: null,
+     notification_list: null,
      content_type : null,
      content: null,
-     comment_body: null,
+     message: null,
      created_by: null,
      members: null,
      object_id: null,
+     seen: true,
       pagination: {
         count: null,
         next: null,
@@ -199,13 +202,14 @@ export default {
   },
   methods: {
    
-    getCommentList: function () {
-      let endPoint = "comment/";
+    getNotificationList: function () {
+      let endPoint = "notification/";
       var queryParam = {
         object_id: this.$route.query.object_id,
-        comment_body: this.$route.query.comment_body,
+        message: this.$route.query.message,
         content_type: this.$route.query.content_type,
         created_by: this.$route.query.created_by,
+        seen: this.$route.query.seen,
         page: this.$route.query.page,
       };
       axios
@@ -213,7 +217,7 @@ export default {
           params: queryParam,
         })
         .then((response) => {
-          this.comment_list = response.data.results;
+          this.notification_list = response.data.results;
           this.pagination.count = response.data.count;
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;
@@ -233,6 +237,7 @@ export default {
           console.log(error);
         });
     },
+  
 
      getMembers: function () {
       axios
@@ -245,14 +250,16 @@ export default {
           console.log(error);
         });
     },
-      searchComment() {
+      searchNotification() {
+        // console.log('251',this.seen)
       this.$router.push({
-        path: "comment",
+        path: "notification",
         query: {
           content_type: this.content,
-          comment_body: this.comment_body,
+          message: this.message,
           object_id: this.object_id,
           created_by: this.created_by,
+          seen: this.seen,
         },
       });
     },
@@ -263,12 +270,12 @@ export default {
     $route(to,from) {
     console.log("to",to)
     console.log("from",from)
-      this.getCommentList();
+      this.getNotificationList();
  
     }
   },
   created() {
-    this.getCommentList();
+    this.getNotificationList();
     this.getContentType()
     this.getMembers()
   },
