@@ -91,17 +91,93 @@
           </div>
         </div>
       </div>
-      <CommentPost 
-      v-if="version_id" 
-      :content_type_id="content_type_id" 
-      :object_id="object_id"
-      />
+         <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a
+                          class="nav-link active"
+                          id="home-tab"
+                          data-toggle="tab"
+                          href="#home"
+                          role="tab"
+                          aria-controls="home"
+                          aria-selected="false"
+                        >
+                          <span class="d-block d-sm-none"
+                            ><i class="fa fa-home"></i
+                          ></span>
+                          <span class="d-none d-sm-block">Comments</span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          class="nav-link"
+                          id="profile-tab"
+                          data-toggle="tab"
+                          href="#profile"
+                          role="tab"
+                          aria-controls="profile"
+                          aria-selected="false"
+                        >
+                          <span class="d-block d-sm-none"
+                            ><i class="fa fa-user"></i
+                          ></span>
+                          <span class="d-none d-sm-block">Files</span>
+                        </a>
+                      </li>
+                    </ul>
+
+                    <div class="tab-content p-3 border border-top-0">
+                      <div
+                        class="tab-pane active"
+                        id="home"
+                        role="tabpanel"
+                        aria-labelledby="home-tab"
+                      >
+                        <div>
+                          <CommentPost
+                            v-if="version_id"
+                            :content_type_id="content_type_id"
+                            :object_id="object_id"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="tab-pane"
+                        id="profile"
+                        role="tabpanel"
+                        aria-labelledby="profile-tab"
+                      >
+                        <FileUploader
+                          v-if="version_id"
+                          :content_type_id="content_type_id"
+                          :object_id="object_id"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end col -->
+              </div>
+              <!-- end row -->
+            </div>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+
+     
       <br><br>
        <div class="row">
         <!-- <div class="col-md-3"></div> -->
         <div class="col-md-12">
-          <FileUploader v-if="version_id"  :content_type_id="content_type_id" 
-      :object_id="object_id" />
+         
         </div>
       </div>
     </template>

@@ -70,10 +70,10 @@
                       </ul>
                     </div>
                     <div class="col-sm-9 col-lg-2 hidden-xs like_reply_padding">
-                      <ul class="list-unstyled list-inline media-detail">
+                      <!-- <ul class="list-unstyled list-inline media-detail">
                         <li class=""><a href="">Like</a></li>
                         <li class=""><a href="">Reply</a></li>
-                      </ul>
+                      </ul> -->
                     </div>
                   </div>
                 </div>

@@ -1,21 +1,194 @@
 <template>
-  <Layout>
+   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Program details" />
-     <div class="row">
-       <h1>{{name}}</h1>
+      <PageTitle title="Program Details" />
+
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0 table-bordered table-sm">
+                  <!-- <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Program</th>
+                      <th scope="col">Client</th>
+                      <th scope="col">Project Id</th>
+                      <th scope="col" title="Assign Date">AD</th>
+                      <th scope="col" title="Expected Start Date">ESD</th>
+                      <th scope="col" title="Start Date">SD</th>
+                      <th scope="col" title="Expected complete Date">ECD</th>
+                      <th scope="col" title="complete_date">CD</th>
+                      <th scope="col" title="Number Of Quantity">QTY</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead> -->
+                  <tbody v-if="form_data">
+                    <tr>
+                      <th scope="row"> Project name</th>
+                      <td>{{ form_data.name }}</td>
+                      <th scope="row"> Program ID</th>
+                      <td>
+                        {{ form_data.programId }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> Department</th>
+                      <td> <span v-if="form_data.department.name"> {{ form_data.department.name }}</span> </td>
+                      <th scope="row"> Members</th>
+                      <td>
+                        <!-- <span v-if="ProjectMembers"> {{ ProjectMembers }}</span> -->
+                        </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> no_of_project</th>
+                      <td><span> {{form_data.no_of_project }}</span></td>
+                      <th scope="row"> No of version</th>
+                      <td>
+                        {{ form_data.no_of_version }}
+                      </td>
+                    </tr>
+                     <tr>
+                      <th scope="row"> No of sprint</th>
+                      <td>{{ form_data.no_of_sprint }}</td>
+                      <th scope="row"> No of task</th>
+                      <td>
+                        {{ form_data.no_of_task }}
+                      </td>
+                    </tr>
+                     <tr>
+                      <th scope="row"> Total amount</th>
+                      <!-- <td>{{ form_data.total_amount }}</td> -->
+                      <th scope="row"> Status</th>
+                      <td>
+                        <span v-if="form_data.status_list"> {{ form_data.status_list[form_data.status] }}</span>
+                      </td>
+                    </tr>
+                      <tr>
+                      <th scope="row"> Assign date</th>
+                      <!-- <td>{{ form_data.assign_date }}</td> -->
+                      <th scope="row"> Expected start date</th>
+                      <td>
+                        <!-- {{ form_data.expected_start_date }} -->
+                      </td>
+                    </tr>
+                      <tr>
+                      <th scope="row"> Start date</th>
+                      <!-- <td>{{ form_data.start_date }}</td> -->
+                      <th scope="row"> Expected complete date</th>
+                      <td>
+                        <!-- {{ form_data.expected_complete_date }} -->
+                      </td>
+                    </tr>
+                     <tr>
+                      <th scope="row"> Complete date</th>
+                      <!-- <td colspan="3">{{ form_data.complete_date }}</td> -->
+                      <th scope="row"> Expected_complete_date</th>
+                      <td>
+                        <!-- {{ form_data.expected_complete_date }} -->
+                      </td>
+                    </tr>
+                     <tr>
+                      <th scope="row">Description</th>
+                      <td colspan="3">{{ form_data.description }}</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <CommentPost 
-      v-if="program_id" 
-      :content_type_id="content_type_id" 
-      :object_id="object_id"
-      />
-      <br><br>
+         <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a
+                          class="nav-link active"
+                          id="home-tab"
+                          data-toggle="tab"
+                          href="#home"
+                          role="tab"
+                          aria-controls="home"
+                          aria-selected="false"
+                        >
+                          <span class="d-block d-sm-none"
+                            ><i class="fa fa-home"></i
+                          ></span>
+                          <span class="d-none d-sm-block">Comments</span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          class="nav-link"
+                          id="profile-tab"
+                          data-toggle="tab"
+                          href="#profile"
+                          role="tab"
+                          aria-controls="profile"
+                          aria-selected="false"
+                        >
+                          <span class="d-block d-sm-none"
+                            ><i class="fa fa-user"></i
+                          ></span>
+                          <span class="d-none d-sm-block">Files</span>
+                        </a>
+                      </li>
+                    </ul>
+
+                    <div class="tab-content p-3 border border-top-0">
+                      <div
+                        class="tab-pane active"
+                        id="home"
+                        role="tabpanel"
+                        aria-labelledby="home-tab"
+                      >
+                        <div>
+                          <CommentPost
+                            v-if="program_id"
+                            :content_type_id="content_type_id"
+                            :object_id="object_id"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="tab-pane"
+                        id="profile"
+                        role="tabpanel"
+                        aria-labelledby="profile-tab"
+                      >
+                        <FileUploader
+                          v-if="program_id"
+                          :content_type_id="content_type_id"
+                          :object_id="object_id"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end col -->
+              </div>
+              <!-- end row -->
+            </div>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+ 
+       <br><br>
        <div class="row">
         <!-- <div class="col-md-3"></div> -->
         <div class="col-md-12">
-          <FileUploader v-if="program_id"  :content_type_id="content_type_id" 
-      :object_id="object_id" />
+        
         </div>
       </div>
     </template>
@@ -42,24 +215,21 @@ export default {
   },
   data() {
     return {
-       status_map:{
-        RU:"badge badge-primary", //Running
-        AS:"badge badge-info", //Assigned
-        CO:"badge badge-success", //Completed
-        PO:"badge badge-warning", //Postponed
-        PR:"badge badge-danger", //Problematic
-        UP:"badge badge-purple", //Upcoming
-      },
       program_id:null,
+      programId: null,
       content_type_id:null,
       object_id:null,
-      all_program_list: null,
       department: null,
-      departmentId: null,
       statusData: null,
       status: null,
       name: null,
+      no_of_project: null,
+      no_of_sprint: null,
+      no_of_task: null,
+      no_of_version: null,
+      description: null,
       programId: null,
+      form_data: null,
       pagination: {
         count: null,
         next: null,
@@ -79,6 +249,15 @@ export default {
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;
           this.name = response.data.name;
+          this.form_data = response.data;
+          // this.programId = response.data.programId;
+          // this.description = response.data.description;
+          // this.no_of_project = response.data.no_of_project;
+          // this.no_of_sprint = response.data.no_of_sprint;
+          // this.no_of_version = response.data.no_of_version;
+          // this.no_of_task = response.data.no_of_task;
+          // this.department = response.data.department.name;
+          // this.status = response.data.status;
 
         }
       ).catch((err) => {
