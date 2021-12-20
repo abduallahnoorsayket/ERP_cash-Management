@@ -7,6 +7,7 @@
       role="button"
       aria-haspopup="false"
       aria-expanded="false"
+      @click="latestNotificationList()"
     >
       <i class="mdi mdi-bell-outline noti-icon"></i>
       <span class="badge badge-danger rounded-circle noti-icon-badge">{{total_unseen}}</span>
@@ -111,7 +112,7 @@ export default {
   methods: {
     getNotificationList: function () {
       axios
-        .get("notification")
+        .get("notification?ordering=-created_at")
         .then((response) => {
           this.notification_list = response.data.results;
           this.total_unseen = response.data.total_unseen;
@@ -143,6 +144,9 @@ export default {
     },
     goToNotificationPage: function (notification) {
       this.$router.push('/program-details/' + notification.object_id)
+    },
+    latestNotificationList: function () {
+     this.getNotificationList();
     }
   },
   computed:{

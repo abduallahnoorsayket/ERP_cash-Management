@@ -25,7 +25,7 @@
                     waves-effect waves-light
                     pull-left
                   "
-                   @click="searchNotification()"
+                   @click="searchNotification(seen=null)"
                 >
                  
                   Search
@@ -93,7 +93,7 @@
                     waves-effect waves-light
                     pull-right
                   "
-                  @click="searchNotification()" 
+                  @click="searchNotification(seen=null)" 
                   
                 >
                   Search
@@ -104,7 +104,7 @@
         </div>
       </div>
     </div>
-        <div class="col-lg-8">
+        <div class="col-lg-9">
          <div class="card comment_card_color">
         <div class="card-body">
           <div class="float-right">
@@ -119,7 +119,7 @@
                 form-check form-check-inline
               "
             >
-            <button class="btn btn-primary waves-effect waves-light btn-xs" @click="searchNotification(seen = !seen)"> Unseen</button>
+            <button class="btn btn-primary waves-effect waves-light btn-xs" @click="searchNotification(seen=false)"> Unseen</button>
             </div>
           
           </div>
@@ -128,12 +128,13 @@
 
           <div class="row">
             <div class="col-md-12">
-              <div  v-for="(comment, k) in notification_list" :key="k">
+              <div  v-for="(notification, k) in notification_list" :key="k">
               <div
                 class="toast-bs-custom show mb-3"
                 role="alert"
                 data-delay="700"
                 data-autohide="false"
+              
                
               >
                 <div class="toast-header">
@@ -142,8 +143,8 @@
                     class="avatar-sm rounded mr-2"
                     alt="..."
                   />
-                  <strong class="mr-auto">By - {{comment.first_name}} {{comment.last_name}}({{comment.created_by.username}})</strong>
-                  <small>{{comment.created_datetime}}</small>
+                  <strong class="mr-auto">By - {{notification.first_name}} {{notification.last_name}}({{notification.created_by.username}})</strong>
+                  <small>{{notification.created_at}}</small>
                   <button
                     type="button"
                     class="ml-2 close"
@@ -152,9 +153,19 @@
                   >
                     <span aria-hidden="true">×</span>
                   </button>
+                  <button
+                    type="button"
+                    class="ml-2 close"
+                    data-dismiss="toast"
+                    aria-label="Close"
+                    v-if="!notification.views"
+                     @click="markAsSeen(notification)"
+                  >
+                    <span aria-hidden="true" title="Mark as seen">&#10003;</span>
+                  </button>
                 </div>
                 <div class="toast-body">
-                  {{comment.message}}
+                  {{notification.message}}
                 </div>
               </div>
              </div>
@@ -190,7 +201,7 @@ export default {
      created_by: null,
      members: null,
      object_id: null,
-     seen: true,
+     seen: null,
       pagination: {
         count: null,
         next: null,
@@ -264,7 +275,18 @@ export default {
       });
     },
     
-  
+  markAsSeen: function (notification) {
+        axios
+        .patch(`notification/${notification.id}/`,{
+          views: true
+        })
+        .then(() => {
+          this.getNotificationList();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   watch: {
     $route(to,from) {
@@ -284,5 +306,10 @@ export default {
 </script>
 
 <style  scoped>
-
+.unseen {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid white;
+}
 </style>
