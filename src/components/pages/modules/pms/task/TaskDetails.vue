@@ -101,11 +101,13 @@
                     </tr>
                      <tr>
                       <th scope="row"> Parent</th>
-                      <td colspan="3">
+                      <td>
                         {{ form_data.parent }}
                       </td>
-                       <!-- <th scope="row"> Task category</th>
-                      <td>{{ form_data.category }}</td> -->
+                       <th scope="row"> Target</th>
+                      <td>
+                        <!-- {{ form_data.category }} -->
+                      </td>
                     </tr>
                      <tr>
                       <th scope="row">Description</th>
@@ -155,6 +157,9 @@ export default {
   },
   data() {
     return {
+      assignee:null,
+      history:null,
+      target:null,
       form_data:null,
       object_id: null,
       content_type_id: null,
@@ -178,6 +183,12 @@ export default {
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;
           this.name = response.data.name;
+          this.target = response.data.target.map((element) => element.first_name)
+          .join(", ");
+          this.history = response.data.history.map((element) => element.first_name)
+          .join(", ");
+          this.assignee = response.data.assignee.map((element) => element.first_name)
+          .join(", ");
 
         }
       ).catch((err) => {
