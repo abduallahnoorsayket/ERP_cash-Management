@@ -311,10 +311,11 @@ export default {
         if (response.isConfirmed) {
           axios.delete("program/" + id + "/").then((response) => {
             if (response.status === 204) {
+              Swal.fire("Deleted!", "Program has been deleted!!", "success");
               this.getProgramList();
             }
           });
-          Swal.fire("Deleted!", "Program has been deleted!!", "success");
+          
         } else {
           Swal.fire("Cancelled", "Program has not been deleted !", "error");
         }

@@ -350,10 +350,11 @@ export default {
         if (response.isConfirmed) {
           axios.delete("projects/" + id + "/").then((response) => {
             if (response.status === 204) {
+               Swal.fire("Deleted!", "Project has been deleted!!", "success");
               this.getProjectList();
             }
           });
-          Swal.fire("Deleted!", "Project has been deleted!!", "success");
+         
         } else {
           Swal.fire("Cancelled", "Project has not been deleted !", "error");
         }

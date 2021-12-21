@@ -99,6 +99,7 @@
 
 <script>
 import axios from "@/axios";
+import NAVIGATE from "../../Navigation";
 // import Swal from "sweetalert2";
 export default {
   name: "NotificationHeader",
@@ -143,7 +144,8 @@ export default {
         });
     },
     goToNotificationPage: function (notification) {
-      this.$router.push('/program-details/' + notification.object_id)
+      let redirect_path = NAVIGATE[notification.content_type.app_label + "__" + notification.content_type.model]
+      this.$router.push(`/${redirect_path}/` + notification.object_id)
     },
     latestNotificationList: function () {
      this.getNotificationList();
