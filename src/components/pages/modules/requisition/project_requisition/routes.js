@@ -1,6 +1,7 @@
 import project_requisitionCreate from './project_requisitionCreate'
 import project_requisitionList from './project_requisitionList'
 import Project_requisitionEdit from './Project_requisitionEdit'
+import Project_requisitionDetails from './Project_requisitionDetails'
 
 
 const project_requisitionRoutes = [
@@ -23,7 +24,12 @@ const project_requisitionRoutes = [
         name: 'Project_requisitionEdit'
 
     },
-  
+    {
+        path: '/project-requisition-details/:id',
+        component: Project_requisitionDetails,
+        name: 'Project_requisitionDetails'
+
+    },
    
    
 

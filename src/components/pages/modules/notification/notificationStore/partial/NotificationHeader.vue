@@ -7,9 +7,10 @@
       role="button"
       aria-haspopup="false"
       aria-expanded="false"
+      @click="latestNotificationList()"
     >
       <i class="mdi mdi-bell-outline noti-icon"></i>
-      <span class="badge badge-danger rounded-circle noti-icon-badge">5</span>
+      <span class="badge badge-danger rounded-circle noti-icon-badge">{{total_unseen}}</span>
       <!-- <div class="noti-dot">
                 <span class="dot"></span>
                 <span class="pulse"></span>
@@ -38,13 +39,13 @@
           <!-- item-->
           <a href="javascript:void(0);" class="dropdown-item notify-item"
             v-for="(notify,i) in computedObj"
-          :key="i">
+          :key="i" :class="{ 'unseen': notify && !notify.views  }" @click="notificationDetails(notify)">
             <div class="notify-icon bg-soft-primary text-primary">
               <i class="mdi mdi-comment-account-outline"></i>
             </div>
-            <p class="notify-details">
-              Caleb Flakelar commented on Admin
-              <small class="noti-time">1 min ago</small>
+            <p class="notify-details" >
+             {{notify.message}}
+              <small class="noti-time">{{notify.created_at}}</small>
             </p>
           </a>
 
@@ -82,13 +83,16 @@
       </div>
 
       <!-- All-->
-      <a
+      <router-link to="/notification">
+     <a
         href="javascript:void(0);"
         class="dropdown-item text-primary notify-item notify-all"
       >
         View all
         <i class="fi-arrow-right"></i>
       </a>
+      </router-link>
+     
     </div>
   </li>
 </template>
@@ -102,19 +106,48 @@ export default {
     return {
       notification_list: [],
       limit: 3,
+      total_unseen: null
     };
   },
   methods: {
     getNotificationList: function () {
       axios
-        .get("notification")
+        .get("notification?ordering=-created_at")
         .then((response) => {
-          this.notification_list = response.data;
+          this.notification_list = response.data.results;
+          this.total_unseen = response.data.total_unseen;
         })
         .catch(function (error) {
           console.log(error);
         });
     },
+    notificationDetails: function (notification) {
+      console.log('124',notification.views)
+      if(notification.views) {
+        console.log('notify true go to object page')
+          this.goToNotificationPage(notification)
+      } else {
+        this.markAsSeen(notification)
+      }
+    },
+    markAsSeen: function (notification) {
+        axios
+        .patch(`notification/${notification.id}/`,{
+          views: true
+        })
+        .then(() => {
+          this.goToNotificationPage(notification)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    goToNotificationPage: function (notification) {
+      this.$router.push('/program-details/' + notification.object_id)
+    },
+    latestNotificationList: function () {
+     this.getNotificationList();
+    }
   },
   computed:{
   computedObj(){
@@ -127,5 +160,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.unseen {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid white;
+}
 </style>

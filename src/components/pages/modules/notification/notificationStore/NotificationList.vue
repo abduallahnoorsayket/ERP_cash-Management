@@ -11,7 +11,7 @@
                   placeholder="Search..."
                   type="text"
                   class="form-control"
-                  v-model="comment_body"
+                  v-model="message"
                 />
               </div>
             </div>
@@ -25,7 +25,7 @@
                     waves-effect waves-light
                     pull-left
                   "
-                   @click="searchComment()"
+                   @click="searchNotification(seen=null)"
                 >
                  
                   Search
@@ -93,7 +93,7 @@
                     waves-effect waves-light
                     pull-right
                   "
-                  @click="searchComment()" 
+                  @click="searchNotification(seen=null)" 
                   
                 >
                   Search
@@ -104,20 +104,22 @@
         </div>
       </div>
     </div>
-        <div class="col-lg-8">
+        <div class="col-lg-9">
          <div class="card comment_card_color">
         <div class="card-body">
           <div class="float-right">
+            <router-link to="/notification">
             <div class="checkbox checkbox-inline form-check form-check-inline">
-             <button class="btn btn-primary waves-effect waves-light btn-xs">Button</button>
+             <button class="btn btn-primary waves-effect waves-light btn-xs" >All</button>
             </div>
+            </router-link>
             <div
               class="
                 checkbox checkbox-success checkbox-inline
                 form-check form-check-inline
               "
             >
-            <button class="btn btn-primary waves-effect waves-light btn-xs"> small</button>
+            <button class="btn btn-primary waves-effect waves-light btn-xs" @click="searchNotification(seen=false)"> Unseen</button>
             </div>
           
           </div>
@@ -126,12 +128,13 @@
 
           <div class="row">
             <div class="col-md-12">
-              <div  v-for="(comment, k) in comment_list" :key="k">
+              <div  v-for="(notification, k) in notification_list" :key="k">
               <div
                 class="toast-bs-custom show mb-3"
                 role="alert"
                 data-delay="700"
                 data-autohide="false"
+              
                
               >
                 <div class="toast-header">
@@ -140,8 +143,8 @@
                     class="avatar-sm rounded mr-2"
                     alt="..."
                   />
-                  <strong class="mr-auto">{{comment.first_name}} {{comment.last_name}}({{comment.created_by.username}})</strong>
-                  <small>{{comment.created_datetime}}</small>
+                  <strong class="mr-auto">By - {{notification.first_name}} {{notification.last_name}}({{notification.created_by.username}})</strong>
+                  <small>{{notification.created_at}}</small>
                   <button
                     type="button"
                     class="ml-2 close"
@@ -150,9 +153,19 @@
                   >
                     <span aria-hidden="true">×</span>
                   </button>
+                  <button
+                    type="button"
+                    class="ml-2 close"
+                    data-dismiss="toast"
+                    aria-label="Close"
+                    v-if="!notification.views"
+                     @click="markAsSeen(notification)"
+                  >
+                    <span aria-hidden="true" title="Mark as seen">&#10003;</span>
+                  </button>
                 </div>
                 <div class="toast-body">
-                  {{comment.comment_body}}
+                  {{notification.message}}
                 </div>
               </div>
              </div>
@@ -181,13 +194,14 @@ export default {
   },
   data() {
     return {
-     comment_list: null,
+     notification_list: null,
      content_type : null,
      content: null,
-     comment_body: null,
+     message: null,
      created_by: null,
      members: null,
      object_id: null,
+     seen: null,
       pagination: {
         count: null,
         next: null,
@@ -199,13 +213,14 @@ export default {
   },
   methods: {
    
-    getCommentList: function () {
-      let endPoint = "comment/";
+    getNotificationList: function () {
+      let endPoint = "notification/";
       var queryParam = {
         object_id: this.$route.query.object_id,
-        comment_body: this.$route.query.comment_body,
+        message: this.$route.query.message,
         content_type: this.$route.query.content_type,
         created_by: this.$route.query.created_by,
+        seen: this.$route.query.seen,
         page: this.$route.query.page,
       };
       axios
@@ -213,7 +228,7 @@ export default {
           params: queryParam,
         })
         .then((response) => {
-          this.comment_list = response.data.results;
+          this.notification_list = response.data.results;
           this.pagination.count = response.data.count;
           this.pagination.next = response.data.next;
           this.pagination.previous = response.data.previous;
@@ -233,6 +248,7 @@ export default {
           console.log(error);
         });
     },
+  
 
      getMembers: function () {
       axios
@@ -245,30 +261,43 @@ export default {
           console.log(error);
         });
     },
-      searchComment() {
+      searchNotification() {
+        // console.log('251',this.seen)
       this.$router.push({
-        path: "comment",
+        path: "notification",
         query: {
           content_type: this.content,
-          comment_body: this.comment_body,
+          message: this.message,
           object_id: this.object_id,
           created_by: this.created_by,
+          seen: this.seen,
         },
       });
     },
     
-  
+  markAsSeen: function (notification) {
+        axios
+        .patch(`notification/${notification.id}/`,{
+          views: true
+        })
+        .then(() => {
+          this.getNotificationList();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   watch: {
     $route(to,from) {
     console.log("to",to)
     console.log("from",from)
-      this.getCommentList();
+      this.getNotificationList();
  
     }
   },
   created() {
-    this.getCommentList();
+    this.getNotificationList();
     this.getContentType()
     this.getMembers()
   },
@@ -277,5 +306,10 @@ export default {
 </script>
 
 <style  scoped>
-
+.unseen {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid white;
+}
 </style>

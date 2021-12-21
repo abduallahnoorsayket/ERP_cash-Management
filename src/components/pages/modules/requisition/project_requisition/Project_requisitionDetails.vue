@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template v-slot:module_content>
-      <PageTitle title="Project Details" />
+      <PageTitle title="Project Requisition Details" />
 
       <div class="row">
       </div>
@@ -29,72 +29,93 @@
                   </thead> -->
                   <tbody  v-if="form_data">
                     <tr>
-                      <th scope="row"> Project name</th>
-                      <td>{{ form_data.name }}</td>
+                      <th scope="row"> Project </th>
+                      <td > <span v-if="form_data.task && form_data.task.sprint && form_data.task.sprint.version.project"> {{ form_data.task.sprint.version.project.name }}</span></td>
                       <th scope="row"> Project ID</th>
-                      <td>
-                        {{ form_data.projectId }}
+                      <td >
+                      <span v-if="form_data.task && form_data.task.sprint && form_data.task.sprint.version.project">   {{ form_data.task.sprint.version.project.projectId }}</span>
                       </td>
                     </tr>
-                    <tr>
-                      <th scope="row"> Client</th>
-                      <td> <span v-if="form_data.client.name"> {{ form_data.client.name }}</span> </td>
-                      <th scope="row"> Members</th>
+                     <tr>
+                      <th scope="row"> Version</th>
+                      <td><span v-if="form_data.task && form_data.task.sprint && form_data.task.sprint.version"> {{ form_data.task.sprint.version.name }}</span></td>
+                      <th scope="row"> Version ID</th>
                       <td>
-                        <span v-if="ProjectMembers"> {{ ProjectMembers }}</span>
+                        <span v-if="form_data.task && form_data.task.sprint && form_data.task.sprint.version"> {{ form_data.task.sprint.version.versionId }}</span>
                         </td>
                     </tr>
                     <tr>
-                      <th scope="row"> Program</th>
-                      <td><span v-if="form_data.program.name"> {{ form_data.program.name }}</span></td>
-                      <th scope="row"> No of version</th>
+                      <th scope="row"> Sprint</th>
+                      <td><span v-if="form_data.task && form_data.task.sprint && form_data.task.sprint"> {{ form_data.task.sprint.name }}</span></td>
+                      <th scope="row"> Sprint ID</th>
                       <td>
-                        {{ form_data.no_of_version }}
-                      </td>
+                        <span v-if="form_data.task && form_data.task.sprint && form_data.task.sprint"> {{ form_data.task.sprint.sprintId }}</span>
+                        </td>
                     </tr>
                      <tr>
-                      <th scope="row"> No of sprint</th>
-                      <td>{{ form_data.no_of_sprint }}</td>
-                      <th scope="row"> No of task</th>
+                      <th scope="row"> Task</th>
+                      <td><span v-if="form_data.task && form_data.task.sprint && form_data.task"> {{ form_data.task.name }}</span></td>
+                      <th scope="row"> Task ID</th>
                       <td>
-                        {{ form_data.no_of_task }}
-                      </td>
+                        <span v-if="form_data.task && form_data.task.sprint && form_data.task"> {{ form_data.task.taskId }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> Created by</th>
+                      <td><span v-if="form_data.created_by"> {{ form_data.created_by.first_name+' '+form_data.created_by.last_name }}</span></td>
+                      <th scope="row"> Submitted for</th>
+                      <td>
+                        <span v-if="form_data.submitted_for"> {{ form_data.submitted_for.first_name+' '+form_data.submitted_for.last_name }}</span>
+                        </td>
                     </tr>
                      <tr>
-                      <th scope="row"> Total amount</th>
-                      <td>{{ form_data.total_amount }}</td>
-                      <th scope="row"> Status</th>
+                      <th scope="row"> Status update by</th>
+                      <td><span v-if="form_data.status_update_by"> {{ form_data.status_update_by.first_name+' '+form_data.status_update_by.last_name }}</span></td>
+                      <th scope="row"> Requisition count</th>
                       <td>
-                        <span v-if="form_data.status_list"> {{ form_data.status_list[form_data.status] }}</span>
-                      </td>
+                        <span v-if="form_data.requisition_count"> {{ form_data.requisition_count }}</span>
+                        </td>
                     </tr>
-                      <tr>
-                      <th scope="row"> Assign date</th>
-                      <td>{{ form_data.assign_date }}</td>
-                      <th scope="row"> Expected start date</th>
+                    <tr>
+                      <th scope="row"> Requisition sum</th>
+                      <td><span v-if="form_data.requisition_sum"> {{ form_data.requisition_sum }}</span></td>
+                      <th scope="row"> Requisition count pending</th>
                       <td>
-                        {{ form_data.expected_start_date }}
-                      </td>
+                        <span> {{ form_data.requisition_count_pending }}</span>
+                        </td>
                     </tr>
-                      <tr>
-                      <th scope="row"> Start date</th>
-                      <td>{{ form_data.start_date }}</td>
-                      <th scope="row"> Expected complete date</th>
+                    <tr>
+                      <th scope="row"> Requisition count rejected</th>
+                      <td><span > {{ form_data.requisition_count_rejected }}</span></td>
+                      <th scope="row"> Requisition count approved</th>
                       <td>
-                        {{ form_data.expected_complete_date }}
-                      </td>
-                    </tr>
-                     <tr>
-                      <th scope="row"> Complete date</th>
-                      <td colspan="3">{{ form_data.complete_date }}</td>
-                      <!-- <th scope="row"> Expected_complete_date</th>
-                      <td>
-                        {{ form_data.expected_complete_date }}
-                      </td> -->
+                        <span > {{ form_data.requisition_count_approved }}</span>
+                        </td>
                     </tr>
                      <tr>
-                      <th scope="row">Description</th>
-                      <td colspan="3">{{ form_data.description }}</td>
+                      <th scope="row"> Requisition count verified</th>
+                      <td><span > {{ form_data.requisition_count_verified }}</span></td>
+                      <th scope="row"> Status updated at </th>
+                      <td>
+                        <span > {{ form_data.status_updated_at }}</span>
+                        </td>
+                    </tr>
+                     <tr>
+                      <th scope="row"> Submitted date</th>
+                      <td><span > {{ form_data.submitted_date }}</span></td>
+                      <th scope="row"> Created at </th>
+                      <td>
+                        <span > {{ form_data.created_at }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                      
+                      <th scope="row"> Updated at </th>
+                      <td>
+                        <span > {{ form_data.updated_at }}</span>
+                        </td>
+                        <th scope="row"> Submitted date</th>
+                      <td><span > {{ form_data.submitted_date }}</span></td>
                     </tr>
 
                   </tbody>
@@ -206,7 +227,7 @@ import CommentPost from "@/components/layouts/partials/CommentPost";
 import FileUploader from "@/components/layouts/partials/FileUploader";
 
 export default {
-  name: "ProjectDetails",
+  name: "Project_requisitionDetails",
   components: {
     Layout,
     PageTitle,
@@ -215,6 +236,7 @@ export default {
   },
   data() {
     return {
+      requisition_details:[],
       form_data:null,
       ProjectMembers:null,
       object_id: null,
@@ -231,11 +253,12 @@ export default {
   },
   methods: {
     getProjectDetailsData: function () {
-      axios.get(`projects/${this.$route.params.id}/`).then(
+      axios.get(`project_requisition/${this.$route.params.id}/`).then(
         (response) => {
           // console.log("277", response.data);
           this.form_data = response.data;
           this.project_id = response.data.id;
+          this.requisition_details = response.data.detail;
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;
           this.name = response.data.name;
