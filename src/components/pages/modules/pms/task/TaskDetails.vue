@@ -4,7 +4,6 @@
       <PageTitle title="Task Details" />
 
       <div class="row">
-        <h1>{{ name }}</h1>
       </div>
       <div class="row">
         <div class="col-lg-12">
@@ -128,13 +127,16 @@
                       <th scope="row">Task category</th>
                       <td>{{ form_data.category }}</td>
                     </tr>
-                    <tr>
-                      <th scope="row">Parent</th>
-                      <td colspan="3">
+                     <tr>
+                      <th scope="row"> Parent</th>
+                      <td>
                         {{ form_data.parent }}
                       </td>
-                      <!-- <th scope="row"> Task category</th>
-                      <td>{{ form_data.category }}</td> -->
+                       <th scope="row"> Target</th>
+                      <td>
+                        <!-- {{ form_data.category }} -->
+                      </td>
+
                     </tr>
                     <tr>
                       <th scope="row">Description</th>
@@ -256,7 +258,11 @@ export default {
   },
   data() {
     return {
-      form_data: null,
+      assignee:null,
+      history:null,
+      target:null,
+      form_data:null,
+
       object_id: null,
       content_type_id: null,
       task_id: null,
@@ -280,10 +286,17 @@ export default {
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;
           this.name = response.data.name;
-        })
-        .catch((err) => {
-          console.log("error", err);
-        });
+          this.target = response.data.target.map((element) => element.first_name)
+          .join(", ");
+          this.history = response.data.history.map((element) => element.first_name)
+          .join(", ");
+          this.assignee = response.data.assignee.map((element) => element.first_name)
+          .join(", ");
+
+        }
+      ).catch((err) => {
+        console.log("error", err)
+      })
     },
     // async CommentLoad() {
     //   this.project_id = null;

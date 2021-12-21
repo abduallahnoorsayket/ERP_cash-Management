@@ -37,14 +37,14 @@
                     </tr>
                     <tr>
                       <th scope="row"> Department</th>
-                      <td> <span v-if="form_data.department.name"> {{ form_data.department.name }}</span> </td>
-                      <th scope="row"> Members</th>
+                      <td colspan="3"> <span v-if="form_data.department.name"> {{ form_data.department.name }}</span> </td>
+                      <!-- <th scope="row"> Members</th>
                       <td>
-                        <!-- <span v-if="ProjectMembers"> {{ ProjectMembers }}</span> -->
-                        </td>
+                        <span v-if="ProjectMembers"> {{ ProjectMembers }}</span>
+                        </td> -->
                     </tr>
                     <tr>
-                      <th scope="row"> no_of_project</th>
+                      <th scope="row"> No of project</th>
                       <td><span> {{form_data.no_of_project }}</span></td>
                       <th scope="row"> No of version</th>
                       <td>
@@ -60,36 +60,19 @@
                       </td>
                     </tr>
                      <tr>
-                      <th scope="row"> Total amount</th>
+                      <!-- <th scope="row"> Total amount</th> -->
                       <!-- <td>{{ form_data.total_amount }}</td> -->
                       <th scope="row"> Status</th>
                       <td>
                         <span v-if="form_data.status_list"> {{ form_data.status_list[form_data.status] }}</span>
                       </td>
-                    </tr>
-                      <tr>
-                      <th scope="row"> Assign date</th>
-                      <!-- <td>{{ form_data.assign_date }}</td> -->
-                      <th scope="row"> Expected start date</th>
+                      <th scope="row">Created at</th>
                       <td>
-                        <!-- {{ form_data.expected_start_date }} -->
+                        {{ form_data.created_at }}
                       </td>
                     </tr>
                       <tr>
-                      <th scope="row"> Start date</th>
-                      <!-- <td>{{ form_data.start_date }}</td> -->
-                      <th scope="row"> Expected complete date</th>
-                      <td>
-                        <!-- {{ form_data.expected_complete_date }} -->
-                      </td>
-                    </tr>
-                     <tr>
-                      <th scope="row"> Complete date</th>
-                      <!-- <td colspan="3">{{ form_data.complete_date }}</td> -->
-                      <th scope="row"> Expected_complete_date</th>
-                      <td>
-                        <!-- {{ form_data.expected_complete_date }} -->
-                      </td>
+                      
                     </tr>
                      <tr>
                       <th scope="row">Description</th>
@@ -183,8 +166,7 @@
         </div>
         <!-- end col -->
       </div>
- 
-       <br><br>
+
        <div class="row">
         <!-- <div class="col-md-3"></div> -->
         <div class="col-md-12">
@@ -215,8 +197,16 @@ export default {
   },
   data() {
     return {
+      form_data:null,
+       status_map:{
+        RU:"badge badge-primary", //Running
+        AS:"badge badge-info", //Assigned
+        CO:"badge badge-success", //Completed
+        PO:"badge badge-warning", //Postponed
+        PR:"badge badge-danger", //Problematic
+        UP:"badge badge-purple", //Upcoming
+      },
       program_id:null,
-      programId: null,
       content_type_id:null,
       object_id:null,
       department: null,
@@ -229,7 +219,6 @@ export default {
       no_of_version: null,
       description: null,
       programId: null,
-      form_data: null,
       pagination: {
         count: null,
         next: null,
@@ -245,6 +234,7 @@ export default {
       axios.get(`program/${this.$route.params.id}/`).then(
         (response) => {
           // console.log("277", response.data);
+          this.form_data = response.data;
           this.program_id = response.data.id;
           this.content_type_id = response.data.content_type.id;
           this.object_id = response.data.content_type.object_id;

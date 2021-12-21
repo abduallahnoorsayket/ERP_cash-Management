@@ -403,6 +403,18 @@
                             <i class="fa fa-cog ml-1"></i>
                           </button>
                           <ul class="dropdown-menu">
+                            <!-- v-if="hasPermission('view_version')" -->
+                             <li >
+                              <router-link
+                                :to="{
+                                  name: 'Project_requisitionDetails',
+                                  params: { id: req.id },
+                                }"
+                                class="dropdown-item"
+                              >
+                                <i class="fas fa-eye"></i> View
+                              </router-link>
+                            </li>
                             <li v-if="can_edit_requisition">
                               <router-link
                                 :to="{
