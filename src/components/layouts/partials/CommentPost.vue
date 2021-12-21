@@ -56,7 +56,7 @@
                     alt=""
                 /></a>
                 <div class="media-body">
-                  <h4 class="media-heading">{{comment.created_by.first_name}}{{comment.created_by.first_name}}({{comment.created_by.username}})</h4>
+                  <h5 class="media-heading">{{comment.created_by.first_name}}{{comment.created_by.first_name}}({{comment.created_by.username}})</h5>
                   <p>
                    {{comment.comment_body}}
                   </p>
@@ -293,7 +293,7 @@ export default {
   margin-right: 10px;
 }
 .comment_width {
-  max-width: 70px !important;
+  max-width: 50px !important;
 }
 .like_reply_padding {
   padding-left: 82px;

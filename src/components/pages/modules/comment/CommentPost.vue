@@ -263,7 +263,7 @@ export default {
   margin-right: 10px;
 }
 .comment_width {
-  max-width: 70px !important;
+  max-width: 50px !important;
 }
 .like_reply_padding {
   padding-left: 82px;
