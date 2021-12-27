@@ -170,11 +170,12 @@
                       <th>Project</th>
                       <th>Version</th>
                       <th>Sprint</th>
-                      <th scope="col" title="Expected Start Date">ESD</th>
+                      <th>Dates</th>
+                      <!-- <th scope="col" title="Expected Start Date">ESD</th>
                       <th scope="col" title="Start Date">SD</th>
                       <th scope="col" title="Expected complete Date">ECD</th>
-                      <th scope="col" title="complete_date">CD</th>
-                      <th scope="col" title="estimated_duration">ED</th>
+                      <th scope="col" title="complete_date">CD</th>-->
+                      <th scope="col" title="estimated_duration">ED</th> 
                       <th scope="col" >Progress</th>
                       <th scope="col" >Total</th>
                       <th scope="col">Status</th>
@@ -193,17 +194,19 @@
                       data-target=".bs-example-modal-xl"
                       @click="modal_task(task.id)"  
                       >
-                      {{ task.name }}
+                      {{ task.category.name }}
                       </a>
                       </th>
                       <td>{{ task.taskId }}</td>
                       <td>{{ task.sprint.version.project.name }}</td>
                       <td>{{ task.sprint.version.name }}</td>
                       <td>{{ task.sprint.name }}</td>
-                      <td>{{ task.expected_start_date }}</td>
-                      <td>{{ task.start_date }}</td>
-                      <td>{{ task.expected_complete_date }}</td>
-                      <td>{{ task.complete_date }}</td>
+                      <td>
+                        <span title="Expected Start Date" class="badge badge-primary"> ESD:-{{ task.expected_start_date }}</span><br/>
+                        <span title="Start Date" class="badge badge-dark">SD:-{{ task.start_date }}</span><br/>
+                        <span title="Expeced Complete Date" class="badge badge-info">ECD:-{{ task.expected_complete_date }}</span><br/>
+                        <span title="Complete Date" class="badge badge-success">CD:-{{ task.complete_date }}</span>
+                      </td>                      
                       <td>{{ task.estimated_duration }}</td>
                       <td>{{ task.progress }}</td>
                       <td>
@@ -659,7 +662,7 @@ export default {
           this.modal_version = response.data.sprint.version.name
           this.modal_version_id = response.data.sprint.version.versionId
           this.modal_project = response.data.sprint.version.project.name
-          this.modal_task_name = response.data.name
+          this.modal_task_name = response.data.category.name
           this.modal_taskId = response.data.taskId
           this.modal_progress = response.data.progress
           this.modal_status = response.data.status
