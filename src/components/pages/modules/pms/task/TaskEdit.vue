@@ -29,7 +29,7 @@
                   </select>
                  <ValidationError :error="errors.category" v-if="errors" />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
@@ -40,7 +40,7 @@
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
                    <ValidationError :error="errors.name" v-if="errors" />
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label> Start Date</label>

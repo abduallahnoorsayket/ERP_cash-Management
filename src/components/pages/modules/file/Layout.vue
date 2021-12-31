@@ -1,7 +1,7 @@
 <template>
   <ModuleLayout>
     <template v-slot:module_header_menu>
-      <Header></Header>
+      <!-- <Header></Header> -->
       
     </template>
 
@@ -14,12 +14,12 @@
 
 <script>
 import ModuleLayout from "../../../layouts/ModuleLayout.vue";
-import Header from "./partials/Header.vue";
+// import Header from "./partials/Header.vue";
 export default {
   name: "Layout",
   components: {
     ModuleLayout,
-    Header,
+    // Header,
   },
 };
 </script>

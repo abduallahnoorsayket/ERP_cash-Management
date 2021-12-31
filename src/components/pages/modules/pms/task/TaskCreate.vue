@@ -10,7 +10,7 @@
               
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Task Category <span class="asterisk">*</span></label>
+                  <label>Task Name <span class="asterisk">*</span></label>
                   <select
                     class="form-control"
                     data-toggle="select2"
@@ -29,7 +29,7 @@
                   </select>
                  <ValidationError :error="errors.category" v-if="errors" />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>Name <span class="asterisk">*</span></label>
                   <input
                     type="text"
@@ -40,9 +40,9 @@
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
                    <ValidationError :error="errors.name" v-if="errors" />
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label> Start Date</label>
                   <input
                     type="date"
@@ -51,7 +51,7 @@
                     data-mask-format="00/00/0000"
                     v-model="start_date"
                   />
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label> Expected Start Date <span class="asterisk">*</span></label>
@@ -227,7 +227,7 @@
                 </div>
 
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>Complete Date</label>
                   <input
                     type="date"
@@ -239,7 +239,7 @@
                     :class="{ 'parsley-error': errors && errors.complete_date }"
                   />
                    <ValidationError :error="errors.complete_date" v-if="errors" />
-                </div>
+                </div> -->
 
                
           <label>Estimated Duration <span class="asterisk">*</span></label> 
@@ -524,7 +524,7 @@ export default {
           console.log(error);
         });
     },
-     getSprint: function () {
+    getSprint: function () {
       axios
         .get("sprint_short?version=" + this.version)
         .then((response) => {
@@ -544,7 +544,7 @@ export default {
         });
     },
 
-      getParents: function () {
+    getParents: function () {
       axios
         .get("task_short?sprint=" + this.sprint)
         .then((response) => {
@@ -559,7 +559,7 @@ export default {
         });
     },
 
-      getMember: function () {
+    getMember: function () {
       axios
         .get("project_member?project=" + this.project)
         .then((response) => {
@@ -653,6 +653,25 @@ export default {
     },
     setDuration : function () {
       this.estimated_duration =  this.da +' '+ this.hrs +':'+ this.mins + ':00'
+    },
+    dateDiff : function () {
+      if(this.expected_start_date && this.expected_complete_date) {
+        let fromDateObj = new Date(this.expected_start_date);
+        let toDateObj = new Date(this.expected_complete_date);
+        let diffTime = Math.ceil(toDateObj - fromDateObj);
+        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        if(diffDays > 0){
+          this.da = diffDays;
+          this.hrs = 0;
+          this.mins = 0;
+          this.setDuration();
+        }else{
+          this.expected_complete_date = null;
+          this.da = this.hrs = this.mins = this.estimated_duration = null;
+
+          alert("Date is not correct")
+        }
+      }
     }
   },
   created() {
@@ -663,6 +682,14 @@ export default {
     this.getUnit();
     this.getTaskCategory();
   },
+  watch: {
+    expected_start_date: function(){
+      this.dateDiff();
+    },
+    expected_complete_date: function(){
+      this.dateDiff();
+    }
+  }
 };
 </script>
 
