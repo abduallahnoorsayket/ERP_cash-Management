@@ -19,7 +19,7 @@
                   <ValidationError :error="errors.name" v-if="errors" />
                 </div>
 
-                 <div class="form-group">
+                <div class="form-group">
                   <label>User Permissions</label>
                   <div class="p-listbox p-component">
                     <!-- <div class="p-listbox-header">
@@ -41,10 +41,13 @@
                       >
                         <div
                           class="module-permission-section"
-                            v-for="(module_obj, perm_index) in user_permissions" :key="perm_index"
+                          v-for="(module_obj, perm_index) in user_permissions"
+                          :key="perm_index"
                         >
                           <div class="main-card lastActivityCard">
-                            <h5 class="listTitle">{{ module_obj.module }} Module</h5>
+                            <h5 class="listTitle">
+                              {{ module_obj.module }} Module
+                            </h5>
                           </div>
                           <div class="row module">
                             <div class="col-md-12">
@@ -53,18 +56,20 @@
                                   <input
                                     type="checkbox"
                                     class="form-check-input"
-                                     @click="ModuleClick($event, perm_index)" :id="'module_'+perm_index"
+                                    @click="ModuleClick($event, perm_index)"
+                                    :id="'module_' + perm_index"
                                   />
                                   <span class="checkmark"></span>
-                                      {{module_obj.module}} Module
+                                  {{ module_obj.module }} Module
                                 </label>
                               </div>
                             </div>
                           </div>
                           <template
-                           v-for="(model, m_index) in module_obj.models" :key="m_index"
+                            v-for="(model, m_index) in module_obj.models"
+                            :key="m_index"
                           >
-                           <div class="row submodule">
+                            <div class="row submodule">
                               <div class="col-md-12">
                                 <div class="p-listbox-item">
                                   <label
@@ -74,7 +79,15 @@
                                     <input
                                       type="checkbox"
                                       class="form-check-input"
-                                       @click="ModelClick($event, perm_index, m_index)" :id="'module_'+perm_index+'_model_'+m_index"
+                                      @click="
+                                        ModelClick($event, perm_index, m_index)
+                                      "
+                                      :id="
+                                        'module_' +
+                                        perm_index +
+                                        '_model_' +
+                                        m_index
+                                      "
                                     />
                                     <span class="checkmark"></span>
                                     {{ model.name }}
@@ -85,7 +98,10 @@
                             <div class="row permission_name">
                               <div
                                 class="col-sm-6 col-md-6 col-xl-3"
-                                  v-for="(permission, model_index) in model.permissions" :key="model_index"
+                                v-for="(
+                                  permission, model_index
+                                ) in model.permissions"
+                                :key="model_index"
                               >
                                 <div class="p-listbox-item">
                                   <label
@@ -95,25 +111,21 @@
                                     <input
                                       type="checkbox"
                                       class="form-check-input"
-                                      :value="permission.id"  v-model="form_data.permissions"
+                                      :value="permission.id"
+                                      :id="permission.id"
+                                      v-model="form_data.permissions"
                                     />
                                     <span class="checkmark"></span>
                                     {{ permission.name.slice(3) }}
                                   </label>
                                 </div>
-                                 <!-- <ValidationError
+                                <!-- <ValidationError
                       :error="errors.permissions"
                       v-if="errors"
                     /> -->
-                                
                               </div>
-                             
                             </div>
-                           
-                           
                           </template>
-                          
-                           
                         </div>
                       </div>
                     </div>
@@ -147,12 +159,9 @@
                       v-if="errors"
                     />
                   </div> -->
-                
-                
                 </div>
-
               </div>
-             
+
               <div class="col-md-12">
                 <div class="form-group">
                   <button
@@ -200,31 +209,37 @@ export default {
     };
   },
   methods: {
-     ModuleClick(e, module_index){
+    async ModuleClick(e, module_index) {
       // console.log(this.permissions[module_index]['models']);
-        this.user_permissions[module_index]['models'].forEach((element, key) => {
+      await this.user_permissions[module_index]["models"].forEach(
+        (element, key) => {
           // console.log(e, module_index, key);
-          document.getElementById('module_'+module_index+'_model_'+key).checked = e.target.checked;
-          this.ModelClick(e, module_index, key)
-        })
-        
-  
+          document.getElementById(
+            "module_" + module_index + "_model_" + key
+          ).checked = e.target.checked;
+           this.ModelClick(e, module_index, key);
+        }
+      );
     },
-    ModelClick(e, module_index, model_index){
-      if(e.target.checked) {
+    async ModelClick(e, module_index, model_index) {
+      if (e.target.checked) {
         //push id in permissions object
-        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+       await this.user_permissions[module_index]["models"][model_index][
+          "permissions"
+        ].forEach((element) => {
           this.form_data.permissions.push(element.id);
-        })
-      }else{
-        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+        });
+      } else {
+       await this.user_permissions[module_index]["models"][model_index][
+          "permissions"
+        ].forEach((element) => {
           // this.selectedPermissions.push(element.id);
           let index = this.form_data.permissions.indexOf(element.id);
           if (index !== -1) {
             // console.log(this.selectedPermissions.splice(index));
-            this.form_data.permissions.splice(index,1);
+            this.form_data.permissions.splice(index, 1);
           }
-        })
+        });
       }
     },
     getPermission: function () {
@@ -285,5 +300,4 @@ export default {
 .cus_check_padding label {
   padding-left: 8px;
 }
-
 </style>
