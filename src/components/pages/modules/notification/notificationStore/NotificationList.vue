@@ -164,8 +164,8 @@
                     <span aria-hidden="true" title="Mark as seen">&#10003;</span>
                   </button>
                 </div>
-                <div class="toast-body">
-                  {{notification.message}}
+                <div class="toast-body cursor_notification" @click="notificationDetails(notification)">
+                 <a> {{notification.message}} </a>
                 </div>
               </div>
              </div>
@@ -184,7 +184,7 @@
 <script>
 import axios from "@/axios";
 // import Swal from "sweetalert2";
-// import permissions from "@/permisson";
+import NAVIGATE from "../Navigation";
 import Pagination from "@/components/layouts/partials/Pagination";
 
 export default {
@@ -249,18 +249,21 @@ export default {
         });
     },
   
-
-     getMembers: function () {
-      axios
-        .get("project_member")
-        .then((response) => {
-          // console.log("252", response.data);
-          this.members = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    notificationDetails: function (notification) {
+      // console.log('124',notification.views)
+      if(notification.views) {
+        console.log('notify true go to object page')
+          this.goToNotificationPage(notification)
+      } else {
+        this.markAsSeen(notification)
+      }
     },
+     goToNotificationPage: function (notification) {
+      let redirect_path = NAVIGATE[notification.content_type.app_label + "__" + notification.content_type.model]
+      this.$router.push(`/${redirect_path}/` + notification.object_id)
+      // this.$router.push(`/project-requisition-details/` + notification.object_id)
+    },
+
       searchNotification() {
         // console.log('251',this.seen)
       this.$router.push({
@@ -282,6 +285,17 @@ export default {
         })
         .then(() => {
           this.getNotificationList();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+      getMembers: function () {
+      axios
+        .get("project_member")
+        .then((response) => {
+          // console.log("252", response.data);
+          this.members = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -311,5 +325,8 @@ export default {
     text-decoration: none;
     background-color: #f8f9fa;
     border-bottom: 1px solid white;
+}
+.cursor_notification {
+  cursor: pointer;
 }
 </style>
