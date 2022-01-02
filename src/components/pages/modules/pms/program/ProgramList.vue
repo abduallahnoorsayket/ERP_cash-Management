@@ -310,16 +310,21 @@ export default {
       }).then((response) => {
         if (response.isConfirmed) {
           axios.delete("program/" + id + "/").then((response) => {
+          
             if (response.status === 204) {
               Swal.fire("Deleted!", "Program has been deleted!!", "success");
               this.getProgramList();
             }
-          });
+
+          }).catch(function (error) {
+            console.error('320',error.response.status)
+           Swal.fire("Server error!", error.response.data.details, "error");
+        });;
           
         } else {
           Swal.fire("Cancelled", "Program has not been deleted !", "error");
         }
-      });
+      })
     },
  
     getStatus: function () {

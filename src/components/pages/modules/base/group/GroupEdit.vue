@@ -93,7 +93,7 @@
                                     <input
                                       type="checkbox"
                                       class="form-check-input"
-                                       :value="permission.id"  v-model="form_data.permissions"
+                                       :value="permission.id" :id="permission.id"  v-model="form_data.permissions"
                                     />
                                     <span class="checkmark"></span>
                                      {{ permission.name.slice(3) }}
@@ -196,9 +196,9 @@ export default {
     };
   },
   methods: {
-       ModuleClick(e, module_index){
+     async  ModuleClick(e, module_index){
       // console.log(this.permissions[module_index]['models']);
-        this.user_permissions[module_index]['models'].forEach((element, key) => {
+      await  this.user_permissions[module_index]['models'].forEach((element, key) => {
           // console.log(e, module_index, key);
           document.getElementById('module_'+module_index+'_model_'+key).checked = e.target.checked;
           this.ModelClick(e, module_index, key)
@@ -206,14 +206,14 @@ export default {
         
   
     },
-    ModelClick(e, module_index, model_index){
+   async ModelClick(e, module_index, model_index){
       if(e.target.checked) {
         //push id in permissions object
-        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+      await  this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
           this.form_data.permissions.push(element.id);
         })
       }else{
-        this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
+      await  this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
           // this.selectedPermissions.push(element.id);
           let index = this.form_data.permissions.indexOf(element.id);
           if (index !== -1) {

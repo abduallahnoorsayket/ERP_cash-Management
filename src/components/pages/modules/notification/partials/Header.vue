@@ -11,22 +11,7 @@
           </li>
 
           <li class="has-submenu" v-if="hasModelPermission('projectrequisition')">
-            <a href="#">
-              <i class="fas fa-store"></i>Comment List
-              <div class="arrow-down"></div
-            ></a>
-            <ul class="submenu">
-              <li v-if="hasPermission('view_projectrequisition')">
-                <router-link to="/project-requisition-list"
-                  >Comment List</router-link
-                >
-              </li>
-              <li v-if="hasPermission('add_projectrequisition')">
-                <router-link to="/project-requisition-create"
-                  >Project requisition Create</router-link
-                >
-              </li>
-            </ul>
+           
           </li>
         </ul>
 
