@@ -125,7 +125,7 @@
                         {{ form_data.progress }}
                       </td>
                       <th scope="row">Task category</th>
-                      <td>{{ form_data.category }}</td>
+                      <td>{{ form_data.category.name }}</td>
                     </tr>
                      <tr>
                       <th scope="row"> Parent</th>
