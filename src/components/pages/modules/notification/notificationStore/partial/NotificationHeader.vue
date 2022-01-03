@@ -43,7 +43,7 @@
             <div class="notify-icon bg-soft-primary text-primary">
               <i class="mdi mdi-comment-account-outline"></i>
             </div>
-            <p class="notify-details" >
+            <p class="notify-details" :title="notify.message">
              {{notify.message}}
               <small class="noti-time">{{notify.created_at}}</small>
             </p>
@@ -123,7 +123,7 @@ export default {
         });
     },
     notificationDetails: function (notification) {
-      console.log('124',notification.views)
+      // console.log('124',notification.views)
       if(notification.views) {
         console.log('notify true go to object page')
           this.goToNotificationPage(notification)

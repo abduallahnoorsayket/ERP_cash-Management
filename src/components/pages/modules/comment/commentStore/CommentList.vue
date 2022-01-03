@@ -108,7 +108,7 @@
       <div class="row"></div>
       <div class="card comment_card_color">
         <div class="card-body">
-          <div class="float-right">
+          <!-- <div class="float-right">
             <div class="checkbox checkbox-inline form-check form-check-inline">
               <input
                 class="form-check-input"
@@ -155,9 +155,9 @@
                 Year
               </label>
             </div>
-          </div>
+          </div> -->
 
-          <h4 class="header-title mb-4">Card with Checkbox</h4>
+          <!-- <h4 class="header-title mb-4">Comment List</h4> -->
 
           <div class="row">
             <div class="col-md-12">
@@ -196,14 +196,14 @@
           </div>
         </div>
       </div>
-      <Pagination :pagination="pagination" />
+   
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-9">
-    
+    <div class="col-md-12">
+      <Pagination :pagination="pagination" />
     </div>
+ 
   </div>
 </template>
 

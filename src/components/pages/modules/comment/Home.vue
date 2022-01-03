@@ -4,7 +4,7 @@
       
       <PageTitle title="Comment "/>
         <CommentList/>
-        <CommentPost/>
+        <!-- <CommentPost/> -->
     </template>
   </Layout>
 </template>
@@ -13,14 +13,14 @@
 import Layout from "./Layout.vue";
 import PageTitle from '@/components/layouts/partials/PageTitle'
 import CommentList from '../comment/commentStore/CommentList.vue'
-import CommentPost from './CommentPost.vue'
+// import CommentPost from './CommentPost.vue'
 export default {
   name: "Home",
   components: {
     Layout,
     PageTitle,
     CommentList,
-    CommentPost
+    // CommentPost
   },
   data() {
     return {};

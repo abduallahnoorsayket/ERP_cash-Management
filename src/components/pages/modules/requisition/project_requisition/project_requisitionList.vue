@@ -141,7 +141,7 @@
                 </div>
                 <div class="col-lg-3">
                 <div class="form-group">
-                  <label>Task Category</label>
+                  <label>Task Name</label>
                   <select
                     class="form-control"
                     data-toggle="select2"
