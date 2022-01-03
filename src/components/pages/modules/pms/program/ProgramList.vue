@@ -319,7 +319,7 @@ export default {
           }).catch(function (error) {
             console.error('320',error.response.status)
            Swal.fire("Server error!", error.response.data.details, "error");
-        });;
+        });
           
         } else {
           Swal.fire("Cancelled", "Program has not been deleted !", "error");
