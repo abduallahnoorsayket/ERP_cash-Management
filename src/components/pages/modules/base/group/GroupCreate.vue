@@ -13,7 +13,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="form_data.name"
+                    v-model="name"
                     :class="{ 'parsley-error': errors && errors.name }"
                   />
                   <ValidationError :error="errors.name" v-if="errors" />
@@ -113,7 +113,7 @@
                                       class="form-check-input"
                                       :value="permission.id"
                                       :id="permission.id"
-                                      v-model="form_data.permissions"
+                                      v-model="selectedPermissions"
                                     />
                                     <span class="checkmark"></span>
                                     {{ permission.name.slice(3) }}
@@ -202,10 +202,11 @@ export default {
       errors: null,
       user_permissions: null,
       searchQuery: null,
-      form_data: {
-        name: null,
-        permissions: [],
-      },
+      name: null,
+      selectedPermissions: []
+      // form_data: {
+       
+      // },
     };
   },
   methods: {
@@ -227,17 +228,17 @@ export default {
        await this.user_permissions[module_index]["models"][model_index][
           "permissions"
         ].forEach((element) => {
-          this.form_data.permissions.push(element.id);
+          this.selectedPermissions.push(element.id);
         });
       } else {
        await this.user_permissions[module_index]["models"][model_index][
           "permissions"
         ].forEach((element) => {
           // this.selectedPermissions.push(element.id);
-          let index = this.form_data.permissions.indexOf(element.id);
+          let index = this.selectedPermissions.indexOf(element.id);
           if (index !== -1) {
             // console.log(this.selectedPermissions.splice(index));
-            this.form_data.permissions.splice(index, 1);
+            this.selectedPermissions.splice(index, 1);
           }
         });
       }
@@ -255,7 +256,10 @@ export default {
 
     submitUserForm: function () {
       axios
-        .post("groups/", this.form_data)
+        .post("groups/",{
+          name: this.name,
+          permissions: this.selectedPermissions,
+        })
         .then(() => {
           Swal.fire({
             icon: "success",
