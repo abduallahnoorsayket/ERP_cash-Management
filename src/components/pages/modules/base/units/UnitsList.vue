@@ -66,7 +66,7 @@
                           <button
                             type="button"
                             class="
-                              btn btn-primary btn-sm
+                              btn btn-primary btn-xs
                               dropdown-toggle
                               waves-effect waves-light
                             "
