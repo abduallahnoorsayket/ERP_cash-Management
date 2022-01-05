@@ -135,7 +135,7 @@ export default {
     };
   },
   methods: {
-    getClientList: function (e) {
+    getClientList: function () {
       let endPoint = "clients/";
       var queryParam = {
         name: this.$route.query.name,

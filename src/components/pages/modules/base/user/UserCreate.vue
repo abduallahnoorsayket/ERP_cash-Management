@@ -219,7 +219,8 @@
                                       type="checkbox"
                                       class="form-check-input"
                                         :value="permission.id"
-                                        :id="permission.id"  v-model="form_data.user_permissions"
+                                        :id="'perm_'+ permission.id"  
+                                        v-model="form_data.user_permissions"
                                     />
                                     <span class="checkmark"></span>
                                     {{ permission.name.slice(3) }}
@@ -340,7 +341,10 @@ export default {
       if(e.target.checked) {
         //push id in permissions object
       await  this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
-          this.form_data.user_permissions.push(element.id);
+          if(!this.form_data.user_permissions.includes(element.id)) {
+            this.form_data.user_permissions.push(element.id);
+            document.getElementById('perm_'+element.id).checked = e.target.checked;
+          }
         })
       }else{
       await  this.user_permissions[module_index]['models'][model_index]['permissions'].forEach( element => {
@@ -349,6 +353,7 @@ export default {
           if (index !== -1) {
             // console.log(this.selectedPermissions.splice(index));
             this.form_data.user_permissions.splice(index,1);
+            document.getElementById('perm_'+element.id).checked = e.target.checked;
           }
         })
       }

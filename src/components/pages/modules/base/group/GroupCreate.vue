@@ -114,6 +114,7 @@
                                       :value="permission.id"
                                       :id="permission.id"
                                       v-model="selectedPermissions"
+                                    
                                     />
                                     <span class="checkmark"></span>
                                     {{ permission.name.slice(3) }}
@@ -211,14 +212,14 @@ export default {
   },
   methods: {
     async ModuleClick(e, module_index) {
-      // console.log(this.permissions[module_index]['models']);
+      // console.log('214',module_index);
       await this.user_permissions[module_index]["models"].forEach(
         (element, key) => {
-          // console.log(e, module_index, key);
+          console.log(module_index, key);
           document.getElementById(
             "module_" + module_index + "_model_" + key
           ).checked = e.target.checked;
-           this.ModelClick(e, module_index, key);
+            this.ModelClick(e, module_index, key);
         }
       );
     },
@@ -228,7 +229,9 @@ export default {
        await this.user_permissions[module_index]["models"][model_index][
           "permissions"
         ].forEach((element) => {
-          this.selectedPermissions.push(element.id);
+         if(!this.selectedPermissions.includes(element.id)) {
+            this.selectedPermissions.push(element.id);
+         }
         });
       } else {
        await this.user_permissions[module_index]["models"][model_index][
