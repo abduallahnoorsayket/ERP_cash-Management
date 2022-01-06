@@ -97,7 +97,7 @@
         <div class="logo-box">
           <a href="#" class="logo text-center logo-light">
             <span class="logo-lg">
-              <img src="assets/images/logo1.png" alt="" height="16" />
+              <img src="/assets/images/logo1.png" alt="" height="16" />
               <!-- <span class="logo-lg-text-light">Flacto</span> -->
             </span>
             <span class="logo-sm">

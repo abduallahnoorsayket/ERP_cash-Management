@@ -112,7 +112,7 @@
                                       type="checkbox"
                                       class="form-check-input"
                                       :value="permission.id"
-                                      :id="permission.id"
+                                      :id="'perm_'+permission.id"
                                       v-model="selectedPermissions"
                                     
                                     />
@@ -231,6 +231,7 @@ export default {
         ].forEach((element) => {
          if(!this.selectedPermissions.includes(element.id)) {
             this.selectedPermissions.push(element.id);
+            document.getElementById('perm_'+element.id).checked = e.target.checked;
          }
         });
       } else {
@@ -242,6 +243,7 @@ export default {
           if (index !== -1) {
             // console.log(this.selectedPermissions.splice(index));
             this.selectedPermissions.splice(index, 1);
+             document.getElementById('perm_'+element.id).checked = e.target.checked;
           }
         });
       }

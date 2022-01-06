@@ -175,7 +175,7 @@
                       <th scope="col" title="Start Date">SD</th>
                       <th scope="col" title="Expected complete Date">ECD</th>
                       <th scope="col" title="complete_date">CD</th>-->
-                      <th scope="col" title="estimated_duration">ED</th> 
+                      <th scope="col" title="estimated_duration">Durations</th> 
                       <th scope="col" >Progress</th>
                       <th scope="col" >Total</th>
                       <th scope="col">Status</th>
@@ -207,7 +207,10 @@
                         <span title="Expeced Complete Date" class="badge badge-info">ECD:-{{ task.expected_complete_date }}</span><br/>
                         <span title="Complete Date" class="badge badge-success">CD:-{{ task.complete_date }}</span>
                       </td>                      
-                      <td>{{ task.estimated_duration }}</td>
+                      <td>
+                        <span title="Estimate Duration" class="badge badge-dark">ED:-{{ task.estimated_duration }}</span>
+                        <br><span title="Real Duration" class="badge badge-purple">RD:-{{ task.duration }}</span>
+                        </td>
                       <td>{{ task.progress }}</td>
                       <td>
                         <span class="badge badge-info">Total:- {{ task.total_amount }}</span> <br/>

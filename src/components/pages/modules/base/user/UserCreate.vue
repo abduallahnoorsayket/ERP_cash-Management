@@ -139,7 +139,7 @@
                         v-model="form_data.groups"
                         :value="g.id"
                       />
-                      <label for="checkbox"> {{ g.name }} </label>
+                      <label :for="'checkbox'+g.id"> {{ g.name }} </label>
                     </div>
                     <ValidationError :error="errors.groups" v-if="errors" />
                   </div>
@@ -147,17 +147,7 @@
                  <div class="form-group">
                   <label>User Permissions</label>
                    <div class="p-listbox p-component">
-                    <!-- <div class="p-listbox-header">
-                      <div class="p-listbox-filter-container">
-                        <input
-                          type="text"
-                          class="p-listbox-filter p-inputtext p-component"
-                          v-model="searchQuery"
-                          placeholder="Filter"
-                        />
-                        <span class="p-listbox-filter-icon pi pi-search"></span>
-                      </div>
-                    </div> -->
+                
                     <div class="p-listbox-list-wrapper">
                       <div
                         role="listbox"
