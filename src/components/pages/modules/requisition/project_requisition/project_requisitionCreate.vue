@@ -248,7 +248,10 @@
                     </table>
                   </div>
                 </div>
-
+                            <SingleFileUploader
+                          :content_type_id="content_type_id"
+                          :object_id="object_id"
+                        />
                 <div class="form-group">
                   <button
                     @submit.prevent="submitUserForm"
@@ -274,6 +277,7 @@ import Layout from "../Layout.vue";
 import PageTitle from "@/components/layouts/partials/PageTitle";
 import Swal from "sweetalert2";
 import ValidationError from "@/components/layouts/partials/ValidationError.vue";
+import SingleFileUploader from "@/components/layouts/partials/SingleFileUploader";
 
 export default {
   name: "project_requisitionCreate",
@@ -281,6 +285,7 @@ export default {
     Layout,
     PageTitle,
     ValidationError,
+    SingleFileUploader
   },
   data() {
     return {
@@ -302,6 +307,9 @@ export default {
       units: null,
       all_total: 0.0,
       has_target: null,
+      object_id: null,
+      content_type_id: null,
+      requisition_id: null,
       dom_repeats: [
         {
           item: null,
