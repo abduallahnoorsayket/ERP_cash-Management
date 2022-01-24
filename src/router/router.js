@@ -2,6 +2,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
 /*Custom Components Importing*/
 import Login from '../components/pages/Login'
+import Profile from '../components/pages/Profile'
 import Dashboard from '../components/pages/Dashboard'
 import Home from '../components/pages/modules/pms/Home'
 import BaseHome from '../components/pages/modules/base/Home'
@@ -86,18 +87,24 @@ const baseRoutes = [
     name: 'commentHome'
 
   },
-   {
+  {
     path: '/files-list',
     component: FilesList,
     name: 'FilesList'
 
-  }, 
-   {
+  },
+  {
     path: '/notification',
-     component: Notification,
-     name: 'Notification'
+    component: Notification,
+    name: 'Notification'
 
-}, 
+  },
+  {
+    path: '/profile',
+    component: Profile,
+    name: 'Profile'
+
+  },
 
 
 ];
@@ -117,7 +124,7 @@ const routes = [].concat(
   groupRoutes,
   project_requisitionRoutes,
   programRoutes,
-  
+
 );
 
 

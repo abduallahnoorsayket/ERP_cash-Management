@@ -57,10 +57,10 @@
               </a>
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <router-link to="/profile" href="javascript:void(0);" class="dropdown-item notify-item">
                 <i class="mdi mdi-settings-outline"></i>
                 <span>Settings</span>
-              </a>
+              </router-link>
 
               <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
